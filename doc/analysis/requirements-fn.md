@@ -9,12 +9,14 @@ El sistema permitirá a los usuarios consultar el precio actual por kilogramo de
 
 **✅ Criterios de aceptación**
 
-- [ ] La consulta se debe realizar desde la vista de consulta de precios.
-- [ ] El usuario podrá seleccionar el producto **"Tomate Chonto"**.
-- [ ] El usuario podrá elegir la ciudad **"Medellín"**.
-- [ ] El usuario podrá seleccionar la plaza **"Plaza Minorista"**.
-- [ ] El sistema mostrará el precio actual por kilogramo del producto.
-- [ ] El sistema indicará la fecha de la última actualización del precio.
+> **Scenario:** Mostrar precio actual de Tomate Chonto en Medellín  
+> - **Given** que el usuario ha accedido al sistema  
+> - **And** está en la vista de consulta de precios  
+> - **When** selecciona el producto *"Tomate Chonto"*  
+> - **And** elige la ciudad *"Medellín"*  
+> - **And** selecciona la plaza *"Plaza Minorista"*  
+> - **Then** el sistema mostrará el precio actual por kilogramo del producto  
+> - **And** se indicará la fecha de la última actualización del precio
 
 ---
 
@@ -34,9 +36,12 @@ El sistema mostrará cómo ha cambiado el precio de cada producto a lo largo del
 
 **✅ Criterios de aceptación**
 
-- [ ] El usuario debe poder consultar el producto **"Papa Criolla"**.
-- [ ] Al hacer clic en **"Ver historial de precios"**, se mostrará un gráfico o tabla con la evolución del precio por kilogramo durante el último año.
-- [ ] Se indicarán claramente los periodos de aumento, disminución o estabilidad.
+> **Scenario:** Visualizar gráfico histórico de precios de Papa Criolla  
+> - **Given** que el usuario ha accedido al sistema  
+> - **And** ha consultado el producto *"Papa Criolla"*  
+> - **When** hace clic en *"Ver historial de precios"*  
+> - **Then** el sistema mostrará un gráfico o tabla con la evolución del precio por kilogramo durante el último año  
+> - **And** se indicarán claramente los periodos de aumento, disminución o estabilidad
 
 ---
 
@@ -56,9 +61,12 @@ El sistema utilizará modelos de aprendizaje automático entrenados con datos hi
 
 **✅ Criterios de aceptación**
 
-- [ ] El usuario debe poder seleccionar el producto **"Aguacate Hass"**.
-- [ ] Al hacer clic en **"Ver predicción de precios"**, se mostrará una estimación del precio por kilogramo para los próximos 7 días.
-- [ ] El sistema indicará el nivel de confianza de la predicción.
+> **Scenario:** Mostrar predicción de precio para Aguacate Hass  
+> - **Given** que el usuario ha accedido al sistema  
+> - **And** ha seleccionado el producto *"Aguacate Hass"*  
+> - **When** hace clic en *"Ver predicción de precios"*  
+> - **Then** el sistema mostrará una estimación del precio por kilogramo para los próximos meses  
+> - **And** se indicará el nivel de confianza de la predicción
 
 ---
 
@@ -78,10 +86,12 @@ El sistema permitirá comparar el precio de un mismo producto entre varias plaza
 
 **✅ Criterios de aceptación**
 
-- [ ] El usuario debe poder seleccionar el producto **"Cebolla Cabezona"**.
-- [ ] El usuario podrá elegir la ciudad **"Medellín"**.
-- [ ] El sistema mostrará los precios por kilogramo en todas las plazas de mercado disponibles en esa ciudad.
-- [ ] La información se ordenará de menor a mayor precio.
+> **Scenario:** Comparar precio de Cebolla Cabezona en Medellín  
+> - **Given** que el usuario ha accedido al sistema  
+> - **And** ha seleccionado el producto *"Cebolla Cabezona"*  
+> - **When** elige la ciudad *"Medellín"*  
+> - **Then** el sistema mostrará los precios por kilogramo en todas las plazas de mercado disponibles en esa ciudad  
+> - **And** ordenará la información de menor a mayor precio
 
 ---
 
@@ -101,12 +111,15 @@ El sistema permitirá a los usuarios registrarse y autenticarse para acceder a u
 
 **✅ Criterios de aceptación**
 
-**Escenario: Registro de usuario**
-- [ ] Si el usuario no tiene cuenta y proporciona datos personales y una contraseña válida, el sistema creará la cuenta y redirigirá al perfil.
-
-**Escenario: Acceso al historial**
-- [ ] Si el usuario inicia sesión y consulta el producto **"Frijol Cargamanto"**, este se agregará al historial de consultas.
-- [ ] El usuario podrá ver la lista de productos consultados recientemente.
+> **Scenario:** Registro de usuario y consulta del historial  
+> - **Given** que el usuario no tiene cuenta  
+> - **When** ingresa sus datos personales y una contraseña válida  
+> - **And** hace clic en *"Registrarse"*  
+> - **Then** el sistema creará una cuenta y redirigirá al usuario a su perfil  
+> - **Given** que el usuario ha iniciado sesión  
+> - **When** consulta el producto *"Frijol Cargamanto"*  
+> - **Then** ese producto será agregado al historial de consultas  
+> - **And** el usuario podrá ver una lista de los productos consultados recientemente
 
 ---
 
