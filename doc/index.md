@@ -57,3 +57,11 @@ Este proyecto está orientado a brindar valor principalmente a:
 
 - **El País – La inflación en Colombia baja al 5,20 % en 2024:**  
   https://elpais.com/america-colombia/2025-01-10/la-inflacion-en-colombia-baja-al-520-en-2024-pero-encara-leves-sintomas-de-presion-al-bolsillo.html
+
+  ---
+
+## 🗂️ Tabla de Navegación
+
+| 🚀 Sección | 📄 Descripción |
+|------------|----------------|
+| [📊 Análisis](./analysis/index.md) | Contiene los requisitos funcionales y no funcionales del sistema |
