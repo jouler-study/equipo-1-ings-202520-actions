@@ -95,17 +95,17 @@ El sistema debe llevar un registro interno (log) de las acciones relevantes real
 Además, el sistema debe cumplir con lo establecido por la Ley 1581 de 2012 de protección de datos personales en Colombia (régimen de habeas data), lo cual implica que ningún dato sensible del usuario podrá ser registrado en los logs sin su consentimiento, y se debe garantizar el derecho a conocer, actualizar y eliminar su información personal.
 
 ### Criterios de aceptación
-Cada acción del usuario debe generar un evento registrado con: ID del usuario (si está autenticado), tipo de acción, fecha y hora.
+* Cada acción del usuario debe generar un evento registrado con: ID del usuario (si está autenticado), tipo de acción, fecha y hora.
 
-Los registros deben almacenarse en un archivo de log o base de datos con acceso restringido al administrador del sistema.
+* Los registros deben almacenarse en un archivo de log o base de datos con acceso restringido al administrador del sistema.
 
-El sistema debe contar con una función de consulta de logs para propósitos de auditoría interna.
+* El sistema debe contar con una función de consulta de logs para propósitos de auditoría interna.
 
-No se deben registrar datos sensibles (como contraseñas, números de identificación, correos personales, etc.) en los logs.
+* No se deben registrar datos sensibles (como contraseñas, números de identificación, correos personales, etc.) en los logs.
 
-El usuario debe poder solicitar la eliminación de su historial de acciones de acuerdo con la normativa de habeas data.
+* El usuario debe poder solicitar la eliminación de su historial de acciones de acuerdo con la normativa de habeas data.
 
-Los registros deben conservarse por un período no mayor a 30 días salvo justificación técnica o legal.
+* Los registros deben conservarse por un período no mayor a 30 días salvo justificación técnica o legal.
 
 ### Prioridad 
 P3
