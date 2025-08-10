@@ -21,7 +21,7 @@ El sistema permitirá a los usuarios consultar el precio actual por kilogramo de
 ---
 
 > **📌 Prioridad:**  
-> Por definir
+> P0
 
 ---
 
@@ -46,7 +46,7 @@ El sistema mostrará cómo ha cambiado el precio de cada producto a lo largo del
 ---
 
 > **📌 Prioridad:**  
-> Por definir
+> P0
 
 ---
 
@@ -71,7 +71,7 @@ El sistema utilizará modelos de aprendizaje automático entrenados con datos hi
 ---
 
 > **📌 Prioridad:**  
-> Por definir
+> P0
 
 ---
 
@@ -96,34 +96,39 @@ El sistema permitirá comparar el precio de un mismo producto entre varias plaza
 ---
 
 > **📌 Prioridad:**  
-> Por definir
+> P1
 
 ---
 
-# 🔐 **F-05 – Registro e inicio de sesión de usuarios con historial**
+# 🔐 **F-05 – Registro de usuarios **
 
 ---
 
 **📝 Descripción**  
-El sistema permitirá a los usuarios registrarse y autenticarse para acceder a una funcionalidad adicional: guardar un historial de los productos que han consultado, facilitando su seguimiento en el tiempo.
+El sistema permitirá a los usuarios registrarse mediante nombre, correo electrónico y contraseña, validando que la información cumpla con los requisitos establecidos. Una vez registrado, el usuario podrá acceder a las funcionalidades del sistema según su rol.
 
 ---
 
 **✅ Criterios de aceptación**
 
-> **Scenario:** Registro de usuario y consulta del historial  
-> - **Given** que el usuario no tiene cuenta  
-> - **When** ingresa sus datos personales y una contraseña válida  
-> - **And** hace clic en *"Registrarse"*  
-> - **Then** el sistema creará una cuenta y redirigirá al usuario a su perfil  
-> - **Given** que el usuario ha iniciado sesión  
-> - **When** consulta el producto *"Frijol Cargamanto"*  
-> - **Then** ese producto será agregado al historial de consultas  
-> - **And** el usuario podrá ver una lista de los productos consultados recientemente
+> **Scenario:** Registrar un nuevo usuario con correo electrónico  
+> - **Given** que el usuario accede a la pantalla de registro  
+> - **When** el usuario ingresa nombre, correo y contraseña válidos  
+> - **Then** el sistema crea una nueva cuenta y muestra un mensaje de bienvenida  
+
+> **Scenario:** Validar correo existente en el registro  
+> - **Given** que el usuario ingresa un correo que ya está registrado  
+> - **When** intenta completar el registro  
+> - **Then** el sistema muestra un mensaje indicando que el correo ya está en uso  
+
+> **Scenario:** Validar formato de contraseña  
+> - **Given** que el usuario ingresa una contraseña  
+> - **When** la contraseña no cumple con los requisitos mínimos  
+> - **Then** el sistema muestra un mensaje indicando las reglas de seguridad  
 
 ---
 
 > **📌 Prioridad:**  
-> Por definir
+> P0
 
 ---
