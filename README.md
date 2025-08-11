@@ -31,7 +31,7 @@ En esta carpeta se encuentra un `index.md` que ofrece el contexto general del pr
 
 ---
 
-# � Equipo  
+#  Equipo  
 **`equipo-1-ings-202520`**  
 
 ### 🌟 Integrantes:
