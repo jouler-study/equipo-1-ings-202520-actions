@@ -132,3 +132,153 @@ El sistema permitirá a los usuarios registrarse mediante nombre, correo electr�
 > P0
 
 ---
+
+# 🔑 F-06 – Inicio de sesión
+
+---
+
+**📝 Descripción**  
+El sistema permitirá a los usuarios iniciar sesión en su cuenta mediante correo electrónico y contraseña válidos. Contará con mecanismos de seguridad para bloqueo temporal por múltiples intentos fallidos y ofrecerá la opción de recuperación de contraseña a través de correo electrónico.  
+
+---
+
+**✅ Criterios de aceptación**  
+
+> **Scenario:** Iniciar sesión con credenciales válidas  
+> - **Given** que el usuario está en la pantalla de inicio de sesión  
+> - **When** ingresa su correo y contraseña correctos  
+> - **Then** el sistema permite el acceso a su cuenta  
+
+> **Scenario:** Bloqueo por múltiples intentos fallidos  
+> - **Given** que el usuario ingresa una contraseña incorrecta tres veces seguidas  
+> - **When** intenta iniciar sesión nuevamente  
+> - **Then** el sistema bloquea temporalmente la cuenta y envía un correo de recuperación  
+
+> **Scenario:** Recuperación de contraseña  
+> - **Given** que el usuario olvidó su contraseña  
+> - **When** solicita recuperación  
+> - **Then** el sistema envía un enlace de restablecimiento al correo registrado  
+
+---
+
+> **📌 Prioridad:** 
+P0  
+
+---
+
+# 🍎 F-07 – Creación y cálculo del valor mensual de la canasta personalizada
+
+---
+
+**📝 Descripción**  
+El sistema permitirá a los usuarios crear canastas personalizadas con diferentes alimentos y cantidades definidas, asignándoles un nombre para su identificación. Adicionalmente, el sistema calculará el valor total mensual de la canasta con base en los precios actualizados de cada alimento en el mes seleccionado, permitiendo una estimación precisa de gastos.  
+
+---
+
+**✅ Criterios de aceptación**  
+
+> **Scenario:** Crear canasta personalizada  
+> - **Given** que el usuario ha iniciado sesión  
+> - **When** el usuario selecciona varios alimentos y sus cantidades  
+> - **Then** el sistema guarda la canasta con un nombre definido por el usuario  
+
+> **Scenario:** Calcular valor mensual de la canasta  
+> - **Given** que el usuario tiene una canasta personalizada guardada  
+> - **When** el usuario solicita el valor total mensual  
+> - **Then** el sistema calcula el precio sumando el valor actual de cada alimento en el mes seleccionado  
+
+---
+
+> **📌 Prioridad:** 
+P2  
+
+---
+
+# 🛠️ F-08 – Gestión de perfil de usuario
+
+---
+
+**📝 Descripción**  
+El sistema permitirá a los usuarios autenticados modificar sus datos personales y cambiar su contraseña, garantizando que la información actualizada se almacene correctamente y que los cambios de contraseña sean confirmados por correo electrónico como medida de seguridad.  
+
+---
+
+**✅ Criterios de aceptación**  
+
+> **Scenario:** Editar información personal  
+> - **Given** que el usuario ha iniciado sesión  
+> - **When** modifica su nombre o datos de contacto  
+> - **Then** el sistema guarda los cambios y confirma la actualización  
+
+> **Scenario:** Cambiar contraseña  
+> - **Given** que el usuario está autenticado  
+> - **When** solicita cambiar su contraseña e ingresa la actual y la nueva  
+> - **Then** el sistema actualiza la contraseña y envía confirmación al correo  
+
+---
+
+> **📌 Prioridad:** 
+P1  
+
+---
+
+# 📂 F-09 – Administración de datos
+
+---
+
+**📝 Descripción**  
+El sistema permitirá a los administradores gestionar la información de precios de los alimentos, incluyendo la carga de datos desde archivos, la edición manual de precios y la eliminación de registros incorrectos. Estas acciones garantizarán que la información disponible para los usuarios sea precisa y actualizada.  
+
+---
+
+**✅ Criterios de aceptación**  
+
+> **Scenario:** Cargar datos de precios manualmente  
+> - **Given** que el administrador ha iniciado sesión  
+> - **When** carga un archivo con datos de precios  
+> - **Then** el sistema valida el formato y actualiza la base de datos  
+
+> **Scenario:** Editar precio de un alimento  
+> - **Given** que el administrador está en el panel de gestión  
+> - **When** selecciona un alimento y modifica su precio  
+> - **Then** el sistema guarda los cambios y registra la fecha de actualización  
+
+> **Scenario:** Eliminar registro de precio erróneo  
+> - **Given** que el administrador detecta un dato incorrecto  
+> - **When** solicita eliminarlo  
+> - **Then** el sistema lo elimina y actualiza las consultas de precios  
+
+---
+
+> **📌 Prioridad:** 
+P2  
+
+---
+
+# 📈 F-10 – Evolución histórica y predicción del valor de la canasta personalizada
+
+---
+
+**📝 Descripción**  
+El sistema permitirá a los usuarios visualizar la evolución del valor mensual de su canasta personalizada en un rango de tiempo definido, así como obtener una predicción estimada de su valor en meses futuros, apoyándose en datos históricos y modelos de proyección.  
+
+---
+
+**✅ Criterios de aceptación**  
+
+> **Scenario:** Mostrar evolución del valor mensual de la canasta  
+> - **Given** que el usuario tiene una canasta personalizada  
+> - **When** el usuario selecciona un rango de meses  
+> - **Then** el sistema muestra cómo ha variado el valor total de la canasta por mes  
+
+> **Scenario:** Predecir valor mensual futuro de la canasta  
+> - **Given** que el usuario tiene una canasta personalizada  
+> - **When** el usuario solicita la predicción  
+> - **Then** el sistema muestra el valor estimado de la canasta para meses futuros  
+
+---
+
+> **📌 Prioridad:** 
+P3  
+
+---
