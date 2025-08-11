@@ -100,7 +100,7 @@ El sistema permitirá comparar el precio de un mismo producto entre varias plaza
 
 ---
 
-# 🔐 **F-05 – Registro de usuarios **
+# 🔐 F-05 – Registro de usuarios 
 
 ---
 
