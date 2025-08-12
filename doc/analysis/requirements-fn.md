@@ -282,3 +282,224 @@ El sistema permitirá a los usuarios visualizar la evolución del valor mensual 
 P3  
 
 ---
+
+# 🔍 F-11 – Búsqueda rápida de productos
+
+---
+
+**📝 Descripción**  
+El sistema permitirá a los usuarios encontrar rápidamente un producto escribiendo su nombre en un buscador, evitando la navegación manual por múltiples menús o categorías.
+---
+
+**✅ Criterios de aceptación**  
+
+> **Scenario:** Buscar producto
+> - **Given** que el usuario escribe el nombre del producto en el buscador
+> - **When** presiona "Enter"
+> - **Then** el sistema muestra los resultados relacionados con el término ingresado
+
+---
+
+> **📌 Prioridad:** 
+P3
+
+---
+
+# 💡 F-12 – Sugerencias de búsqueda
+
+---
+
+**📝 Descripción**  
+El sistema mostrará sugerencias automáticas mientras el usuario escribe en el campo de búsqueda, agilizando la localización de productos y reduciendo errores tipográficos.
+---
+
+**✅ Criterios de aceptación**  
+
+> **Scenario:** Mostrar sugerencias al escribir
+> - **Given** que el usuario comienza a escribir en el buscador
+> - **When** el sistema detecta coincidencias parciales
+> - **Then** muestra una lista de sugerencias relacionadas que el usuario puede seleccionar
+
+---
+
+> **📌 Prioridad:** 
+P3
+
+---
+
+# 🚪 F-13 – Acceso sin registro
+
+---
+
+**📝 Descripción**  
+El sistema permitirá que ciertos módulos sean accesibles sin necesidad de crear una cuenta, para facilitar el uso inmediato por parte de nuevos usuarios.
+---
+
+**✅ Criterios de aceptación**  
+
+> **Scenario:** Consultar datos sin estar registrado
+> - **Given** que el usuario no ha iniciado sesión
+> - **When** accede a un módulo público (ej. consulta de precios generales)
+> - **Then** el sistema muestra la información disponible sin solicitar registro
+
+---
+
+> **📌 Prioridad:** 
+P2
+
+---
+
+# 📊 F-14 – Panel de resumen rápido
+
+---
+
+**📝 Descripción**  
+El sistema mostrará un panel con los productos que más han subido o bajado de precio en un periodo determinado, permitiendo identificar variaciones significativas de forma inmediata.
+---
+
+**✅ Criterios de aceptación**  
+
+> **Scenario:** Mostrar top de variaciones
+> - **Given** que el usuario ingresa al panel de resumen
+> - **When** el sistema procesa los datos del periodo seleccionado
+> - **Then** muestra una lista con los 5 productos con mayor subida y los 5 con mayor bajada
+
+---
+
+> **📌 Prioridad:** 
+P3
+
+---
+
+# 🗂️ F-15 – Filtrado por categoría de producto
+
+---
+
+**📝 Descripción**  
+El sistema permitirá filtrar la búsqueda de productos por categorías como “Verduras”, “Frutas” o “Cárnicos”, ayudando a enfocar la consulta en un tipo de alimento específico.
+---
+
+**✅ Criterios de aceptación**  
+
+> **Scenario:** Filtrar por categoría
+> - **Given** que el usuario está en la pantalla de búsqueda
+> - **When** selecciona una categoría como "Verduras"
+> - **Then** el sistema muestra únicamente los productos pertenecientes a esa categoría
+
+---
+
+> **📌 Prioridad:** 
+P3
+
+---
+
+# ✅ F-16 – Lista de compras (Checklist)
+
+---
+
+**📝 Descripción**  
+El sistema permitirá al usuario crear y gestionar una lista de compras con los productos seleccionados, pudiendo marcar aquellos que ya han sido adquiridos.
+---
+
+**✅ Criterios de aceptación**  
+
+> **Scenario:** Crear y actualizar checklist
+> - **Given** que el usuario está en la sección de checklist
+> - **When** añade, elimina o marca productos
+> - **Then** el sistema guarda y muestra los cambios en tiempo real
+
+---
+
+> **📌 Prioridad:** 
+P4
+
+---
+
+# ♿ F-17 – Modo accesible
+
+---
+
+**📝 Descripción**  
+El sistema contará con un modo accesible que mejore la experiencia de usuarios con discapacidades visuales o motoras, adaptando tipografía, contraste y soporte para lectores de pantalla.
+---
+
+**✅ Criterios de aceptación**  
+
+> **Scenario:** Activar modo accesible
+> - **Given** que el usuario ingresa a la configuración
+> - **When** activa el modo accesible
+> - **Then** la interfaz adapta los elementos visuales y habilita soporte para tecnologías asistivas
+
+---
+
+> **📌 Prioridad:** 
+P4
+
+---
+
+# 💰 F-18 – Comparativa de precios con salario mínimo
+
+---
+
+**📝 Descripción**  
+El sistema permitirá comparar el gasto estimado en un producto o canasta con el salario mínimo vigente, para visualizar su impacto en el presupuesto.
+---
+
+**✅ Criterios de aceptación**  
+
+> **Scenario:** Calcular impacto en salario mínimo
+> - **Given** que el usuario consulta un producto
+> - **When** selecciona la opción "Comparar con salario mínimo"
+> - **Then** el sistema muestra el porcentaje del salario que representa el gasto
+
+---
+
+> **📌 Prioridad:** 
+P4
+
+---
+
+# 📜 F-19 – Historial de predicciones
+
+---
+
+**📝 Descripción**  
+El sistema permitirá a los usuarios acceder a predicciones realizadas en el pasado, con su fecha y nivel de precisión, para evaluar la efectividad de los pronósticos.
+---
+
+**✅ Criterios de aceptación**  
+
+> **Scenario:** Ver predicciones anteriores
+> - **Given** que el usuario ingresa al módulo de predicciones
+> - **When** "Historial"
+> - **Then** el sistema lista las predicciones anteriores con su fecha y precisión calculada
+
+---
+
+> **📌 Prioridad:** 
+P4
+
+---
+
+# 📊 F-20 – Análisis por temporada del comportamiento de precios
+
+---
+
+**📝 Descripción**  
+El sistema permitirá a los usuarios analizar el comportamiento histórico de los precios de un producto según la temporada del año, identificando tendencias estacionales que faciliten prever posibles alzas o bajas recurrentes en determinadas épocas.
+---
+
+**✅ Criterios de aceptación**  
+
+> **Scenario:** Mostrar comportamiento estacional de un producto
+> - **Given** que el usuario consulta un producto
+> - **When** activa el filtro "Por temporada"
+> - **Then** el sistema muestra un gráfico que refleja la variación de precios por mes, resaltando patrones recurrentes
+
+---
+
+> **📌 Prioridad:** 
+P2
+
+---
+
