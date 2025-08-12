@@ -1,4 +1,4 @@
-# NF-001 – Usabilidad  
+# NF-01 – Usabilidad  
 ## Interfaz intuitiva para usuarios no técnicos
 
 ### Descripción  
@@ -24,7 +24,7 @@ Se recomienda seguir las pautas de diseño centrado en el usuario:
 
 ----
 
-# NF-002 – Compatibilidad  
+# NF-02 – Compatibilidad  
 ## Soporte multiplataforma y responsive
 
 ### Descripción  
@@ -42,7 +42,7 @@ Se recomienda implementar diseño web responsive usando **CSS Grid**, **Flexbox*
 
 ----
 
-# NF-003 – Seguridad  
+# NF-03 – Seguridad  
 ## Protección de los datos del usuario
 
 ### Descripción  
@@ -64,7 +64,7 @@ Si se implementa autenticación, se recomienda:
 
 ----
 
-# NF-004 – Mantenibilidad  
+# NF-04 – Mantenibilidad  
 ## Código limpio y bien documentado
 
 ### Descripción  
@@ -86,7 +86,7 @@ Para documentar:
 - Aplicar control de versiones con **Git** y mantener **commits descriptivos y frecuentes**
 
 ----
-# NF-005 – Trazabilidad de acciones del usuario
+# NF-05 – Trazabilidad de acciones del usuario
 ## Registro de eventos y acciones realizadas por los usuarios
 
 ### Descripción  
