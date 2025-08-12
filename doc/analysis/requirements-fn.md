@@ -289,6 +289,7 @@ P3
 
 **📝 Descripción**  
 El sistema permitirá a los usuarios encontrar rápidamente un producto escribiendo su nombre en un buscador, evitando la navegación manual por múltiples menús o categorías.
+
 ---
 
 **✅ Criterios de aceptación**  
@@ -311,6 +312,7 @@ P3
 
 **📝 Descripción**  
 El sistema mostrará sugerencias automáticas mientras el usuario escribe en el campo de búsqueda, agilizando la localización de productos y reduciendo errores tipográficos.
+
 ---
 
 **✅ Criterios de aceptación**  
@@ -333,6 +335,7 @@ P3
 
 **📝 Descripción**  
 El sistema permitirá que ciertos módulos sean accesibles sin necesidad de crear una cuenta, para facilitar el uso inmediato por parte de nuevos usuarios.
+
 ---
 
 **✅ Criterios de aceptación**  
@@ -355,6 +358,7 @@ P2
 
 **📝 Descripción**  
 El sistema mostrará un panel con los productos que más han subido o bajado de precio en un periodo determinado, permitiendo identificar variaciones significativas de forma inmediata.
+
 ---
 
 **✅ Criterios de aceptación**  
@@ -377,6 +381,7 @@ P3
 
 **📝 Descripción**  
 El sistema permitirá filtrar la búsqueda de productos por categorías como “Verduras”, “Frutas” o “Cárnicos”, ayudando a enfocar la consulta en un tipo de alimento específico.
+
 ---
 
 **✅ Criterios de aceptación**  
@@ -399,6 +404,7 @@ P3
 
 **📝 Descripción**  
 El sistema permitirá al usuario crear y gestionar una lista de compras con los productos seleccionados, pudiendo marcar aquellos que ya han sido adquiridos.
+
 ---
 
 **✅ Criterios de aceptación**  
@@ -421,6 +427,7 @@ P4
 
 **📝 Descripción**  
 El sistema contará con un modo accesible que mejore la experiencia de usuarios con discapacidades visuales o motoras, adaptando tipografía, contraste y soporte para lectores de pantalla.
+
 ---
 
 **✅ Criterios de aceptación**  
@@ -443,6 +450,7 @@ P4
 
 **📝 Descripción**  
 El sistema permitirá comparar el gasto estimado en un producto o canasta con el salario mínimo vigente, para visualizar su impacto en el presupuesto.
+
 ---
 
 **✅ Criterios de aceptación**  
@@ -465,6 +473,7 @@ P4
 
 **📝 Descripción**  
 El sistema permitirá a los usuarios acceder a predicciones realizadas en el pasado, con su fecha y nivel de precisión, para evaluar la efectividad de los pronósticos.
+
 ---
 
 **✅ Criterios de aceptación**  
@@ -487,6 +496,7 @@ P4
 
 **📝 Descripción**  
 El sistema permitirá a los usuarios analizar el comportamiento histórico de los precios de un producto según la temporada del año, identificando tendencias estacionales que faciliten prever posibles alzas o bajas recurrentes en determinadas épocas.
+
 ---
 
 **✅ Criterios de aceptación**  
