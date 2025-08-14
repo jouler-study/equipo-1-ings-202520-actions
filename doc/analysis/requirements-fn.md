@@ -332,7 +332,7 @@ El sistema mostrará sugerencias automáticas mientras el usuario escribe en el 
 ---
 
 > **📌 Prioridad:** 
-P3
+P2
 
 ---
 
@@ -356,9 +356,15 @@ El sistema permitirá que ciertos módulos sean accesibles sin necesidad de crea
 
 **📌 Módulos públicos permitidos sin registro**  
 - Consulta de precios generales (sin filtros personalizados)  
-- Predicciones generales (sin precisión histórica ni datos personalizados)  
+- Predicciones generales
 - Información corporativa, de contacto y soporte básico  
 - Documentación pública y sección de ayuda/FAQ  
+
+---
+
+**📌 Restricciones adicionales**  
+- El límite de **10 consultas diarias** se aplicará por dirección IP y/o identificador temporal del navegador.  
+- Al superar el límite, el sistema mostrará un mensaje invitando a registrarse para continuar con el acceso ilimitado.  
 
 ---
 
