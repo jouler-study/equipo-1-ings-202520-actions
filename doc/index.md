@@ -32,7 +32,6 @@ Este proyecto está orientado a brindar valor principalmente a:
 
 - 👩 Personas que viven solas y deben planificar de forma precisa su presupuesto alimentario.
 - 👨‍👩‍👧 Familias que buscan anticiparse a variaciones en los precios para optimizar sus compras.
-- 🧓 Adultos mayores que podrían beneficiarse de una herramienta fácil de usar y visual.
 - 📊 Consumidores conscientes o comunidades organizadas interesadas en analizar y prever el comportamiento del mercado.
 - 🧠 Estudiantes o pequeños investigadores que necesitan acceso visual e interactivo a datos históricos sin conocimientos avanzados en análisis de datos.
 
