@@ -114,99 +114,99 @@ P3
 Se recomienda el uso de un sistema de logging como logging en Python. Para cumplir con la Ley 1581 de 2012, se deben establecer políticas claras sobre el tratamiento de datos personales, visibles en la plataforma. Los logs deben estar protegidos y ser accesibles solo por personal autorizado. Si se escala el sistema, considerar el uso de servicios como AWS CloudWatch, ELK Stack o herramientas de auditoría con encriptación.
 
 ----
-# NF-006 – Rendimiento  
+# 📚 NF-06 – Rendimiento  
 ## Respuesta rápida en consultas y generación de gráficas
 
 ### Descripción  
 El sistema debe garantizar que las consultas de datos y la generación de gráficas se realicen en menos de 3 segundos en condiciones normales de uso, optimizando el rendimiento mediante estrategias de indexación, caché y procesamiento eficiente.
 
-### Criterios de aceptación
-- El tiempo máximo de respuesta para consultas y gráficos debe ser ≤ 3 segundos.  
+### 🔎 Criterios de aceptación
+- El tiempo máximo de respuesta para consultas y gráficos debe ser ≤ 5 segundos.  
 - Bajo condiciones de estrés (100 usuarios concurrentes) el tiempo no debe superar los 5 segundos.  
 - Deben ejecutarse pruebas de rendimiento periódicas para verificar el cumplimiento.  
 
-### Prioridad  
+### 📌 Prioridad  
 P1
 
-### Notas de implementación  
+### 📖 Notas de implementación  
 - Utilizar técnicas de caché para datos consultados con frecuencia.  
 - Implementar consultas SQL optimizadas y estructuras de datos adecuadas.  
 - Usar paginación en listados grandes para reducir carga.  
 
 ----
 
-# NF-007 – Disponibilidad  
+# 📚 NF-07 – Disponibilidad  
 ## Alta disponibilidad del servicio
 
 ### Descripción  
 El sistema debe estar disponible y accesible al menos el 99 % del tiempo, excluyendo periodos de mantenimiento programado, para garantizar la continuidad del servicio a los usuarios.
 
-### Criterios de aceptación
+### 🔎 Criterios de aceptación
 - El uptime mensual debe ser ≥ 99 %.  
 - Los mantenimientos programados deben notificarse con al menos 48 horas de anticipación.  
 - Implementación de redundancia y balanceo de carga para reducir caídas.  
 
-### Prioridad  
+### 📌 Prioridad  
 P1
 
-### Notas de implementación  
+### 📖 Notas de implementación  
 - Usar infraestructura en la nube con redundancia geográfica.  
 - Configurar monitoreo y alertas en tiempo real.  
 
 ----
 
-# NF-008 – Escalabilidad  
+# 📚 NF-08 – Escalabilidad  
 ## Capacidad de crecimiento sin interrupciones
 
 ### Descripción  
 La arquitectura debe permitir aumentar la capacidad de almacenamiento y procesamiento sin interrumpir el servicio, soportando al menos un 100 % de crecimiento de datos en un año.
 
-### Criterios de aceptación
+### 🔎 Criterios de aceptación
 - El sistema soporta duplicar la carga de datos y usuarios sin caída de rendimiento.  
 - No se requieren cambios de arquitectura para escalar horizontal o verticalmente.  
 
-### Prioridad  
+### 📌 Prioridad  
 P2
 
-### Notas de implementación  
+### 📖 Notas de implementación  
 - Utilizar arquitectura basada en microservicios.  
 - Base de datos escalable (sharding o replicación).  
 
 ----
 
-# NF-009 – Confiabilidad y calidad de datos  
+# 📚 NF-09 – Confiabilidad y calidad de datos  
 ## Información verificada y actualizada
 
 ### Descripción  
 Toda la información mostrada debe provenir de fuentes verificadas y estar actualizada para garantizar que las decisiones de los usuarios se basen en datos confiables.
 
-### Criterios de aceptación
+### 🔎 Criterios de aceptación
 - El 100 % de los datos provienen de fuentes oficiales (ej. DANE, SIPSA).  
 - Los datos se actualizan según el calendario oficial de publicación.  
 - El sistema valida y registra la fecha de la última actualización.  
 
-### Prioridad  
+### 📌 Prioridad  
 P4
 
-### Notas de implementación  
+### 📖 Notas de implementación  
 - Integración directa con APIs oficiales.  
 - Mecanismos de validación de integridad de datos.  
 
 ----
-# NF-010 – Eficiencia en uso de recursos  
+# 📚 NF-10 – Eficiencia en uso de recursos  
 ## Optimización de CPU y memoria
 
 ### Descripción  
 El sistema debe mantener un uso de CPU por debajo del 70 % y de memoria por debajo del 75 % incluso en condiciones de carga máxima, evitando cuellos de botella y degradación del servicio.
 
-### Criterios de aceptación
+### 🔎 Criterios de aceptación
 - CPU ≤ 70 % en condiciones de máxima carga.  
 - Memoria ≤ 75 % en condiciones de máxima carga.  
 - Monitoreo en tiempo real del uso de recursos.  
 
-### Prioridad  
+### 📌 Prioridad  
 P3
 
-### Notas de implementación  
+### 📖 Notas de implementación  
 - Uso de consultas y algoritmos eficientes.  
 - Implementar escalado automático cuando se detecte sobrecarga.
