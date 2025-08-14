@@ -207,7 +207,7 @@ El sistema permitirá a los usuarios autenticados modificar sus datos personales
 
 > **Scenario:** Editar información personal  
 > - **Given** que el usuario ha iniciado sesión  
-> - **When** modifica su nombre o datos de contacto  
+> - **When** modifica su nombre u otra información básica del perfil 
 > - **Then** el sistema guarda los cambios y confirma la actualización  
 
 > **Scenario:** Cambiar contraseña  
@@ -222,7 +222,7 @@ P1
 
 ---
 
-# 📂 F-09 – Administración de datos
+# 📂 F-09 – Administración de datos de precios
 
 ---
 
