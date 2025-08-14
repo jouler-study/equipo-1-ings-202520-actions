@@ -302,7 +302,7 @@ El sistema permitirá a los usuarios encontrar rápidamente un producto escribie
 ---
 
 > **📌 Prioridad:** 
-P3
+P2
 
 ---
 
@@ -344,6 +344,14 @@ El sistema permitirá que ciertos módulos sean accesibles sin necesidad de crea
 > - **Given** que el usuario no ha iniciado sesión
 > - **When** accede a un módulo público (ej. consulta de precios generales)
 > - **Then** el sistema muestra la información disponible sin solicitar registro
+
+---
+
+**📌 Módulos públicos permitidos sin registro**  
+- Consulta de precios generales (sin filtros personalizados)  
+- Predicciones generales (sin precisión histórica ni datos personalizados)  
+- Información corporativa, de contacto y soporte básico  
+- Documentación pública y sección de ayuda/FAQ  
 
 ---
 
@@ -435,7 +443,20 @@ El sistema contará con un modo accesible que mejore la experiencia de usuarios 
 > **Scenario:** Activar modo accesible
 > - **Given** que el usuario ingresa a la configuración
 > - **When** activa el modo accesible
-> - **Then** la interfaz adapta los elementos visuales y habilita soporte para tecnologías asistivas
+> - **Then** la interfaz adapta los elementos visuales y habilita soporte para tecnologías asistivas, incluyendo:  
+>   - Lectores de pantalla (NVDA, JAWS, VoiceOver, TalkBack)  
+>   - Navegación por teclado  
+>   - Comandos por voz  
+>   - Modos de alto contraste  
+>   - Ajuste de tamaño de texto  
+>   - Resaltado de foco de interacción  
+
+---
+
+**📌 Alcance de accesibilidad**  
+- **Discapacidades visuales**: baja visión, daltonismo, ceguera parcial o total.  
+- **Discapacidades motoras**: limitación para usar mouse o gestos táctiles precisos.  
+- **Discapacidades cognitivas leves**: dificultad para procesar información visual rápidamente.  
 
 ---
 
@@ -455,10 +476,15 @@ El sistema permitirá comparar el gasto estimado en un producto o canasta con el
 
 **✅ Criterios de aceptación**  
 
-> **Scenario:** Calcular impacto en salario mínimo
-> - **Given** que el usuario consulta un producto
-> - **When** selecciona la opción "Comparar con salario mínimo"
-> - **Then** el sistema muestra el porcentaje del salario que representa el gasto
+> **Scenario:** Calcular impacto en salario mínimo  
+> - **Given** que el usuario consulta un producto o canasta  
+> - **When** selecciona la opción "Comparar con salario mínimo"  
+> - **Then** el sistema muestra el porcentaje del **salario mínimo mensual vigente** que representa el gasto, considerando la cifra actualizada oficialmente por el gobierno.
+
+---
+
+**📌 Consideraciones**  
+- El salario mínimo se actualizará automáticamente cada año con base en la normativa oficial.  
 
 ---
 
@@ -480,7 +506,7 @@ El sistema permitirá a los usuarios acceder a predicciones realizadas en el pas
 
 > **Scenario:** Ver predicciones anteriores
 > - **Given** que el usuario ingresa al módulo de predicciones
-> - **When** "Historial"
+> - **When** selecciona la opción "Historial"
 > - **Then** el sistema lista las predicciones anteriores con su fecha y precisión calculada
 
 ---
