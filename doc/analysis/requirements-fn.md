@@ -12,11 +12,18 @@ El sistema permitirá a los usuarios consultar el precio actual por kilogramo de
 > **Scenario:** Mostrar precio actual de Tomate Chonto en Medellín  
 > - **Given** que el usuario ha accedido al sistema  
 > - **And** está en la vista de consulta de precios  
-> - **When** selecciona el producto *"Tomate Chonto"*  
+> - **When** realiza la búsqueda del producto *"Tomate Chonto"*  
 > - **And** elige la ciudad *"Medellín"*  
 > - **And** selecciona la plaza *"Plaza Minorista"*  
 > - **Then** el sistema mostrará el precio actual por kilogramo del producto  
 > - **And** se indicará la fecha de la última actualización del precio
+
+> **Scenario:** Producto no encontrado   
+> - **Given** que el usuario está en la vista de consulta de precios
+> - **And** ha ingresado el nombre de un producto
+> - **When** el sistema no encuentra coincidencias en la base de datos   
+> - **Then**  muestra el mensaje "No se encontraron resultados para su búsqueda"
+> - **And** ofrece la opción de realizar una nueva búsqueda
 
 ---
 
