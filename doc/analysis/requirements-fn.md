@@ -363,7 +363,7 @@ El sistema permitirá que ciertos módulos sean accesibles sin necesidad de crea
 ---
 
 **📌 Restricciones adicionales**  
-- El límite de **10 consultas diarias** se aplicará por dirección IP y/o identificador temporal del navegador.  
+- El límite de **10 consultas mensuales** se aplicará por dirección IP y/o identificador temporal del navegador.  
 - Al superar el límite, el sistema mostrará un mensaje invitando a registrarse para continuar con el acceso ilimitado.  
 
 ---
