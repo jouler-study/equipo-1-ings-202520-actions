@@ -448,7 +448,7 @@ P4
 
 ---
 
-## 💰 F-18 – Comparativa de precios con salario mínimo
+## 💰 F-19 – Comparativa de precios con salario mínimo
 
 **📝 Descripción**  
 El sistema permitirá comparar el gasto estimado en un producto o canasta con el salario mínimo vigente, para visualizar su impacto en el presupuesto.
@@ -471,7 +471,7 @@ P4
 
 ---
 
-## 📜 F-19 – Historial de predicciones
+## 📜 F-20 – Historial de predicciones
 
 **📝 Descripción**  
 El sistema permitirá a los usuarios acceder a predicciones realizadas en el pasado, con su fecha y nivel de precisión, para evaluar la efectividad de los pronósticos.
@@ -491,7 +491,7 @@ P4
 
 ---
 
-## 📊 F-20 – Análisis por temporada del comportamiento de precios
+## 📊 F-21 – Análisis por temporada del comportamiento de precios
 
 **📝 Descripción**  
 El sistema permitirá a los usuarios analizar el comportamiento histórico de los precios de un producto según la temporada del año, identificando tendencias estacionales que faciliten prever posibles alzas o bajas recurrentes en determinadas épocas.
