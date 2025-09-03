@@ -26,6 +26,8 @@ El sistema permitirá a los usuarios consultar el precio actual por kilogramo de
 > **📌 Prioridad:**  
 > P0
 
+> **Puntos:** 
+2
 ---
 
 ## 📊 F-02 – Visualización de la variación histórica de precios
@@ -48,6 +50,8 @@ El sistema mostrará cómo ha cambiado el precio de cada producto a lo largo del
 > **📌 Prioridad:**  
 > P0
 
+> **Puntos:** 
+2
 ---
 
 ## 🔮 F-03 – Predicción de precios futuros
@@ -69,6 +73,9 @@ El sistema utilizará modelos de aprendizaje automático entrenados con datos hi
 
 > **📌 Prioridad:**  
 > P0
+
+> **Puntos:** 
+3
 
 ---
 
@@ -92,6 +99,8 @@ El sistema permitirá comparar el precio de un mismo producto entre varias plaza
 > **📌 Prioridad:**  
 > P1
 
+> **Puntos:** 
+1
 ---
 
 ## 🔐 F-05 – Registro de usuarios 
@@ -122,6 +131,9 @@ El sistema permitirá a los usuarios registrarse mediante nombre, correo electr�
 > **📌 Prioridad:**  
 > P0
 
+> **Puntos:** 
+3
+
 ---
 
 ## 🔑 F-06 – Inicio de sesión
@@ -150,6 +162,8 @@ El sistema permitirá a los usuarios iniciar sesión en su cuenta mediante corre
 > **📌 Prioridad:** 
 P0  
 
+> **Puntos:** 
+5
 ---
 
 ## 🍎 F-07 – Creación y cálculo del valor mensual de la canasta personalizada
@@ -172,6 +186,8 @@ El sistema permitirá a los usuarios crear canastas personalizadas con diferente
 > **📌 Prioridad:** 
 P2  
 
+> **Puntos:** 
+5
 ---
 
 ## 🛠️ F-08 – Gestión de perfil de usuario
@@ -194,6 +210,8 @@ El sistema permitirá a los usuarios autenticados modificar sus datos personales
 > **📌 Prioridad:** 
 P1  
 
+> **Puntos:** 
+2
 ---
 
 ## 📂 F-09 – Administración de datos de precios
@@ -221,6 +239,9 @@ El sistema permitirá a los administradores gestionar la información de precios
 > **📌 Prioridad:** 
 P2  
 
+> **Puntos:** 
+5
+
 ---
 
 ## 📈 F-10 – Evolución histórica y predicción del valor de la canasta personalizada
@@ -243,6 +264,9 @@ El sistema permitirá a los usuarios visualizar la evolución del valor mensual 
 > **📌 Prioridad:** 
 P3  
 
+> **Puntos:** 
+5
+
 ---
 
 ## 🔍 F-11 – Búsqueda rápida de productos
@@ -260,6 +284,8 @@ El sistema permitirá a los usuarios encontrar rápidamente un producto escribie
 > **📌 Prioridad:** 
 P2
 
+> **Puntos:** 
+1
 ---
 
 ## 💡 F-12 – Sugerencias de búsqueda
@@ -277,6 +303,8 @@ El sistema mostrará sugerencias automáticas mientras el usuario escribe en el 
 > **📌 Prioridad:** 
 P2
 
+> **Puntos:** 
+3
 ---
 
 ## 🚪 F-13 – Acceso sin registro
@@ -304,6 +332,8 @@ El sistema permitirá que ciertos módulos sean accesibles sin necesidad de crea
 > **📌 Prioridad:** 
 P2
 
+> **Puntos:** 
+3
 ---
 
 ## 📊 F-14 – Panel de resumen rápido
@@ -320,6 +350,9 @@ El sistema mostrará un panel con los productos que más han subido o bajado de 
 
 > **📌 Prioridad:** 
 P3
+
+> **Puntos:** 
+3
 
 ---
 
@@ -338,6 +371,8 @@ El sistema permitirá filtrar la búsqueda de productos por categorías como “
 > **📌 Prioridad:** 
 P3
 
+> **Puntos:** 
+1
 ---
 
 ## ✅ F-16 – Lista de compras (Checklist)
@@ -355,37 +390,65 @@ El sistema permitirá al usuario crear y gestionar una lista de compras con los 
 > **📌 Prioridad:** 
 P4
 
+> **Puntos:** 
+2
 ---
 
-## ♿ F-17 – Modo accesible
+## ♿ F-17 – Modo de alto contraste y tipografía adaptable
 
-**📝 Descripción**  
-El sistema contará con un modo accesible que mejore la experiencia de usuarios con discapacidades visuales o motoras, adaptando tipografía, contraste y soporte para lectores de pantalla.
+**📝 Descripción**
+El sistema contará con un modo que permita a los usuarios con discapacidades visuales, como baja visión, daltonismo o ceguera parcial, ajustar el contraste de la interfaz y el tamaño de la tipografía. Esto mejorará la legibilidad y la experiencia visual.
 
-**✅ Criterios de aceptación**  
+**✅ Criterios de aceptación**
+**Scenario:** Activar opciones de alto contraste y tipografía
 
-> **Scenario:** Activar modo accesible
-> - **Given** que el usuario ingresa a la configuración
-> - **When** activa el modo accesible
-> - **Then** la interfaz adapta los elementos visuales y habilita soporte para tecnologías asistivas, incluyendo:  
->   - Lectores de pantalla (NVDA, JAWS, VoiceOver, TalkBack)  
->   - Navegación por teclado  
->   - Comandos por voz  
->   - Modos de alto contraste  
->   - Ajuste de tamaño de texto  
->   - Resaltado de foco de interacción  
+- **Given** que el usuario ingresa a la configuración de accesibilidad  
+- **When** ajusta las opciones de alto contraste o el tamaño del texto  
+- **Then** la interfaz adapta los elementos visuales, aplicando:  
+  - Modo de alto contraste (por ejemplo, esquemas de color blanco y negro o alto contraste personalizado).  
+  - Ajuste del tamaño de la fuente para aumentar la legibilidad.  
+  - Resaltado de los elementos de interacción para mejorar el foco visual.  
 
-**📌 Alcance de accesibilidad**  
-- **Discapacidades visuales**: baja visión, daltonismo, ceguera parcial o total.  
-- **Discapacidades motoras**: limitación para usar mouse o gestos táctiles precisos.  
-- **Discapacidades cognitivas leves**: dificultad para procesar información visual rápidamente.  
+**📌 Alcance de accesibilidad**
+- Discapacidades visuales: baja visión, daltonismo, ceguera parcial o total.  
+- Discapacidades cognitivas leves: dificultad para procesar información visual rápidamente.  
 
-> **📌 Prioridad:** 
-P4
+**📌 Prioridad**
+P4 
+
+> **Puntos:** 
+2
 
 ---
 
-## 💰 F-18 – Comparativa de precios con salario mínimo
+## ♿ F-18 – Navegación asistida por teclado 
+
+**📝 Descripción**
+El sistema debe permitir la navegación completa a través del teclado para usuarios con discapacidades motoras o visuales. Esto garantiza que puedan interactuar con la interfaz sin necesidad de un mouse y que el sistema sea compatible con tecnologías asistivas, como lectores de pantalla.
+
+**✅ Criterios de aceptación**
+**Scenario:** Navegar con el teclado y tecnologías asistivas
+
+- **Given** que el usuario ha activado la navegación por teclado o está usando un lector de pantalla  
+- **When** presiona la tecla Tab o Shift + Tab  
+- **Then** el sistema permite navegar por todos los elementos interactivos de la interfaz de forma lógica y secuencial, incluyendo:  
+  - Navegación por teclado (tecla Tab para avanzar, Shift + Tab para retroceder, Enter para seleccionar).  
+   
+
+**📌 Alcance de accesibilidad**
+- Discapacidades motoras: limitación para usar mouse o gestos táctiles precisos.  
+- Discapacidades visuales: baja visión, ceguera parcial o total.  
+
+**📌 Prioridad**
+P4 
+
+> **Puntos:** 
+2
+
+
+---
+
+## 💰 F-19 – Comparativa de precios con salario mínimo
 
 **📝 Descripción**  
 El sistema permitirá comparar el gasto estimado en un producto o canasta con el salario mínimo vigente, para visualizar su impacto en el presupuesto.
@@ -403,9 +466,12 @@ El sistema permitirá comparar el gasto estimado en un producto o canasta con el
 > **📌 Prioridad:** 
 P4
 
+> **Puntos:** 
+3
+
 ---
 
-## 📜 F-19 – Historial de predicciones
+## 📜 F-20 – Historial de predicciones
 
 **📝 Descripción**  
 El sistema permitirá a los usuarios acceder a predicciones realizadas en el pasado, con su fecha y nivel de precisión, para evaluar la efectividad de los pronósticos.
@@ -420,9 +486,12 @@ El sistema permitirá a los usuarios acceder a predicciones realizadas en el pas
 > **📌 Prioridad:** 
 P4
 
+> **Puntos:** 
+3
+
 ---
 
-## 📊 F-20 – Análisis por temporada del comportamiento de precios
+## 📊 F-21 – Análisis por temporada del comportamiento de precios
 
 **📝 Descripción**  
 El sistema permitirá a los usuarios analizar el comportamiento histórico de los precios de un producto según la temporada del año, identificando tendencias estacionales que faciliten prever posibles alzas o bajas recurrentes en determinadas épocas.
@@ -437,4 +506,6 @@ El sistema permitirá a los usuarios analizar el comportamiento histórico de lo
 > **📌 Prioridad:** 
 P2
 
+> **Puntos:** 
+5
 ---
