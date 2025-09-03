@@ -357,12 +357,12 @@ P4
 
 ---
 
-# ♿ F-17 – Modo de alto contraste y tipografía adaptable
+## ♿ F-17 – Modo de alto contraste y tipografía adaptable
 
-## 📝 Descripción
+**📝 Descripción**
 El sistema contará con un modo que permita a los usuarios con discapacidades visuales, como baja visión, daltonismo o ceguera parcial, ajustar el contraste de la interfaz y el tamaño de la tipografía. Esto mejorará la legibilidad y la experiencia visual.
 
-## ✅ Criterios de aceptación
+**✅ Criterios de aceptación**
 **Scenario:** Activar opciones de alto contraste y tipografía
 - **Given** que el usuario ingresa a la configuración de accesibilidad  
 - **When** ajusta las opciones de alto contraste o el tamaño del texto  
@@ -371,21 +371,21 @@ El sistema contará con un modo que permita a los usuarios con discapacidades vi
   - Ajuste del tamaño de la fuente para aumentar la legibilidad.  
   - Resaltado de los elementos de interacción para mejorar el foco visual.  
 
-## 📌 Alcance de accesibilidad
+**📌 Alcance de accesibilidad**
 - Discapacidades visuales: baja visión, daltonismo, ceguera parcial o total.  
 - Discapacidades cognitivas leves: dificultad para procesar información visual rápidamente.  
 
-## 📌 Prioridad
+**📌 Prioridad**
 P4 
 
 ---
 
-# ♿ F-18 – Navegación asistida por teclado 
+## ♿ F-18 – Navegación asistida por teclado 
 
-## 📝 Descripción
+**📝 Descripción**
 El sistema debe permitir la navegación completa a través del teclado para usuarios con discapacidades motoras o visuales. Esto garantiza que puedan interactuar con la interfaz sin necesidad de un mouse y que el sistema sea compatible con tecnologías asistivas, como lectores de pantalla.
 
-## ✅ Criterios de aceptación
+**✅ Criterios de aceptación**
 **Scenario:** Navegar con el teclado y tecnologías asistivas
 - **Given** que el usuario ha activado la navegación por teclado o está usando un lector de pantalla  
 - **When** presiona la tecla Tab o Shift + Tab  
@@ -393,11 +393,11 @@ El sistema debe permitir la navegación completa a través del teclado para usua
   - Navegación por teclado (tecla Tab para avanzar, Shift + Tab para retroceder, Enter para seleccionar).  
    
 
-## 📌 Alcance de accesibilidad
+**📌 Alcance de accesibilidad**
 - Discapacidades motoras: limitación para usar mouse o gestos táctiles precisos.  
 - Discapacidades visuales: baja visión, ceguera parcial o total.  
 
-## 📌 Prioridad
+**📌 Prioridad**
 P4 
 
 
