@@ -357,35 +357,53 @@ P4
 
 ---
 
-## ♿ F-17 – Modo accesible
+# ♿ F-17 – Modo de alto contraste y tipografía adaptable
 
-**📝 Descripción**  
-El sistema contará con un modo accesible que mejore la experiencia de usuarios con discapacidades visuales o motoras, adaptando tipografía, contraste y soporte para lectores de pantalla.
+## 📝 Descripción
+El sistema contará con un modo que permita a los usuarios con discapacidades visuales, como baja visión, daltonismo o ceguera parcial, ajustar el contraste de la interfaz y el tamaño de la tipografía. Esto mejorará la legibilidad y la experiencia visual.
 
-**✅ Criterios de aceptación**  
+## ✅ Criterios de aceptación
+**Scenario:** Activar opciones de alto contraste y tipografía
+- **Given** que el usuario ingresa a la configuración de accesibilidad  
+- **When** ajusta las opciones de alto contraste o el tamaño del texto  
+- **Then** la interfaz adapta los elementos visuales, aplicando:  
+  - Modo de alto contraste (por ejemplo, esquemas de color blanco y negro o alto contraste personalizado).  
+  - Ajuste del tamaño de la fuente para aumentar la legibilidad.  
+  - Resaltado de los elementos de interacción para mejorar el foco visual.  
 
-> **Scenario:** Activar modo accesible
-> - **Given** que el usuario ingresa a la configuración
-> - **When** activa el modo accesible
-> - **Then** la interfaz adapta los elementos visuales y habilita soporte para tecnologías asistivas, incluyendo:  
->   - Lectores de pantalla (NVDA, JAWS, VoiceOver, TalkBack)  
->   - Navegación por teclado  
->   - Comandos por voz  
->   - Modos de alto contraste  
->   - Ajuste de tamaño de texto  
->   - Resaltado de foco de interacción  
+## 📌 Alcance de accesibilidad
+- Discapacidades visuales: baja visión, daltonismo, ceguera parcial o total.  
+- Discapacidades cognitivas leves: dificultad para procesar información visual rápidamente.  
 
-**📌 Alcance de accesibilidad**  
-- **Discapacidades visuales**: baja visión, daltonismo, ceguera parcial o total.  
-- **Discapacidades motoras**: limitación para usar mouse o gestos táctiles precisos.  
-- **Discapacidades cognitivas leves**: dificultad para procesar información visual rápidamente.  
-
-> **📌 Prioridad:** 
-P4
+## 📌 Prioridad
+P4 
 
 ---
 
-## 💰 F-18 – Comparativa de precios con salario mínimo
+# ♿ F-18 – Navegación asistida por teclado 
+
+## 📝 Descripción
+El sistema debe permitir la navegación completa a través del teclado para usuarios con discapacidades motoras o visuales. Esto garantiza que puedan interactuar con la interfaz sin necesidad de un mouse y que el sistema sea compatible con tecnologías asistivas, como lectores de pantalla.
+
+## ✅ Criterios de aceptación
+**Scenario:** Navegar con el teclado y tecnologías asistivas
+- **Given** que el usuario ha activado la navegación por teclado o está usando un lector de pantalla  
+- **When** presiona la tecla Tab o Shift + Tab  
+- **Then** el sistema permite navegar por todos los elementos interactivos de la interfaz de forma lógica y secuencial, incluyendo:  
+  - Navegación por teclado (tecla Tab para avanzar, Shift + Tab para retroceder, Enter para seleccionar).  
+   
+
+## 📌 Alcance de accesibilidad
+- Discapacidades motoras: limitación para usar mouse o gestos táctiles precisos.  
+- Discapacidades visuales: baja visión, ceguera parcial o total.  
+
+## 📌 Prioridad
+P4 
+
+
+---
+
+## 💰 F-19 – Comparativa de precios con salario mínimo
 
 **📝 Descripción**  
 El sistema permitirá comparar el gasto estimado en un producto o canasta con el salario mínimo vigente, para visualizar su impacto en el presupuesto.
@@ -405,7 +423,7 @@ P4
 
 ---
 
-## 📜 F-19 – Historial de predicciones
+## 📜 F-20 – Historial de predicciones
 
 **📝 Descripción**  
 El sistema permitirá a los usuarios acceder a predicciones realizadas en el pasado, con su fecha y nivel de precisión, para evaluar la efectividad de los pronósticos.
@@ -422,7 +440,7 @@ P4
 
 ---
 
-## 📊 F-20 – Análisis por temporada del comportamiento de precios
+## 📊 F-21 – Análisis por temporada del comportamiento de precios
 
 **📝 Descripción**  
 El sistema permitirá a los usuarios analizar el comportamiento histórico de los precios de un producto según la temporada del año, identificando tendencias estacionales que faciliten prever posibles alzas o bajas recurrentes en determinadas épocas.
