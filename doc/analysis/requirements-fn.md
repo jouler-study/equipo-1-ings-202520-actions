@@ -26,6 +26,8 @@ El sistema permitirá a los usuarios consultar el precio actual por kilogramo de
 > **📌 Prioridad:**  
 > P0
 
+> **Puntos:** 
+2
 ---
 
 ## 📊 F-02 – Visualización de la variación histórica de precios
@@ -48,6 +50,8 @@ El sistema mostrará cómo ha cambiado el precio de cada producto a lo largo del
 > **📌 Prioridad:**  
 > P0
 
+> **Puntos:** 
+2
 ---
 
 ## 🔮 F-03 – Predicción de precios futuros
@@ -69,6 +73,9 @@ El sistema utilizará modelos de aprendizaje automático entrenados con datos hi
 
 > **📌 Prioridad:**  
 > P0
+
+> **Puntos:** 
+3
 
 ---
 
@@ -92,6 +99,8 @@ El sistema permitirá comparar el precio de un mismo producto entre varias plaza
 > **📌 Prioridad:**  
 > P1
 
+> **Puntos:** 
+1
 ---
 
 ## 🔐 F-05 – Registro de usuarios 
@@ -122,6 +131,9 @@ El sistema permitirá a los usuarios registrarse mediante nombre, correo electr�
 > **📌 Prioridad:**  
 > P0
 
+> **Puntos:** 
+3
+
 ---
 
 ## 🔑 F-06 – Inicio de sesión
@@ -150,6 +162,8 @@ El sistema permitirá a los usuarios iniciar sesión en su cuenta mediante corre
 > **📌 Prioridad:** 
 P0  
 
+> **Puntos:** 
+5
 ---
 
 ## 🍎 F-07 – Creación y cálculo del valor mensual de la canasta personalizada
@@ -172,6 +186,8 @@ El sistema permitirá a los usuarios crear canastas personalizadas con diferente
 > **📌 Prioridad:** 
 P2  
 
+> **Puntos:** 
+5
 ---
 
 ## 🛠️ F-08 – Gestión de perfil de usuario
@@ -194,6 +210,8 @@ El sistema permitirá a los usuarios autenticados modificar sus datos personales
 > **📌 Prioridad:** 
 P1  
 
+> **Puntos:** 
+2
 ---
 
 ## 📂 F-09 – Administración de datos de precios
@@ -221,6 +239,9 @@ El sistema permitirá a los administradores gestionar la información de precios
 > **📌 Prioridad:** 
 P2  
 
+> **Puntos:** 
+5
+
 ---
 
 ## 📈 F-10 – Evolución histórica y predicción del valor de la canasta personalizada
@@ -243,6 +264,9 @@ El sistema permitirá a los usuarios visualizar la evolución del valor mensual 
 > **📌 Prioridad:** 
 P3  
 
+> **Puntos:** 
+5
+
 ---
 
 ## 🔍 F-11 – Búsqueda rápida de productos
@@ -260,6 +284,8 @@ El sistema permitirá a los usuarios encontrar rápidamente un producto escribie
 > **📌 Prioridad:** 
 P2
 
+> **Puntos:** 
+1
 ---
 
 ## 💡 F-12 – Sugerencias de búsqueda
@@ -277,6 +303,8 @@ El sistema mostrará sugerencias automáticas mientras el usuario escribe en el 
 > **📌 Prioridad:** 
 P2
 
+> **Puntos:** 
+3
 ---
 
 ## 🚪 F-13 – Acceso sin registro
@@ -304,6 +332,8 @@ El sistema permitirá que ciertos módulos sean accesibles sin necesidad de crea
 > **📌 Prioridad:** 
 P2
 
+> **Puntos:** 
+3
 ---
 
 ## 📊 F-14 – Panel de resumen rápido
@@ -320,6 +350,9 @@ El sistema mostrará un panel con los productos que más han subido o bajado de 
 
 > **📌 Prioridad:** 
 P3
+
+> **Puntos:** 
+3
 
 ---
 
@@ -338,6 +371,8 @@ El sistema permitirá filtrar la búsqueda de productos por categorías como “
 > **📌 Prioridad:** 
 P3
 
+> **Puntos:** 
+1
 ---
 
 ## ✅ F-16 – Lista de compras (Checklist)
@@ -355,6 +390,8 @@ El sistema permitirá al usuario crear y gestionar una lista de compras con los 
 > **📌 Prioridad:** 
 P4
 
+> **Puntos:** 
+2
 ---
 
 ## ♿ F-17 – Modo accesible
@@ -403,6 +440,9 @@ El sistema permitirá comparar el gasto estimado en un producto o canasta con el
 > **📌 Prioridad:** 
 P4
 
+> **Puntos:** 
+3
+
 ---
 
 ## 📜 F-19 – Historial de predicciones
@@ -419,6 +459,9 @@ El sistema permitirá a los usuarios acceder a predicciones realizadas en el pas
 
 > **📌 Prioridad:** 
 P4
+
+> **Puntos:** 
+3
 
 ---
 
@@ -437,4 +480,6 @@ El sistema permitirá a los usuarios analizar el comportamiento histórico de lo
 > **📌 Prioridad:** 
 P2
 
+> **Puntos:** 
+5
 ---
