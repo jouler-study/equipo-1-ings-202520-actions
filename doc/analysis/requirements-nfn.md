@@ -22,6 +22,9 @@ Se recomienda seguir las pautas de diseño centrado en el usuario:
 5. Retroalimentación inmediata y útil.  
 6. Medición del impacto mediante satisfacción y comportamiento de usuarios.
 
+> *Puntos:*
+> 5
+
 ----
 
 # 📚 NF-02 – Compatibilidad  
@@ -39,6 +42,9 @@ P2
 
 ### 📖 Notas de implementación  
 Se recomienda implementar diseño web responsive usando **CSS Grid**, **Flexbox** o frameworks como **Bootstrap**.
+
+> *Puntos:*
+> 5
 
 ----
 
@@ -61,6 +67,8 @@ Si se implementa autenticación, se recomienda:
 - Uso de **tokens JWT**  
 - Almacenamiento de contraseñas con **hashing (bcrypt, Argon2)** y sal  
 
+> *Puntos:*
+> 5
 
 ----
 
@@ -85,36 +93,62 @@ Para documentar:
 - Usar **Sphinx** o **Markdown**  
 - Aplicar control de versiones con **Git** y mantener **commits descriptivos y frecuentes**
 
+> *Puntos:*
+> 1
+
 ----
-# 📚 NF-05 – Trazabilidad de acciones del usuario
-## Registro de eventos y acciones realizadas por los usuarios
+
+# 📚 NF-05 – Configuración de Google Tag Manager  
+## Implementación centralizada de etiquetas y scripts
 
 ### Descripción  
-El sistema debe llevar un registro interno (log) de las acciones relevantes realizadas por los usuarios dentro de la aplicación, como búsquedas de productos, comparaciones entre precios, visualización de predicciones y cambios en configuraciones. Esta trazabilidad permite monitorear el comportamiento del sistema, detectar errores o usos indebidos, y mejorar la toma de decisiones futuras basada en datos reales de uso.
-
-Además, el sistema debe cumplir con lo establecido por la Ley 1581 de 2012 de protección de datos personales en Colombia (régimen de habeas data), lo cual implica que ningún dato sensible del usuario podrá ser registrado en los logs sin su consentimiento, y se debe garantizar el derecho a conocer, actualizar y eliminar su información personal.
+El sistema debe contar con la correcta configuración de **Google Tag Manager (GTM)** para facilitar la administración de etiquetas, píxeles de seguimiento y scripts sin necesidad de modificar el código fuente directamente. Esto permitirá un control centralizado, seguro y eficiente de las integraciones de analítica y marketing.  
 
 ### 🔎 Criterios de aceptación
-* Cada acción del usuario debe generar un evento registrado con: ID del usuario (si está autenticado), tipo de acción, fecha y hora.
+- GTM debe estar correctamente configurado en todos los entornos (producción, pruebas).  
+- Se debe verificar el correcto disparo de etiquetas mediante la vista previa de GTM.  
+- La configuración debe ser documentada y accesible para el equipo de desarrollo y marketing.  
+- Solo personal autorizado podrá gestionar las etiquetas en GTM.  
 
-* Los registros deben almacenarse en un archivo de log o base de datos con acceso restringido al administrador del sistema.
-
-* El sistema debe contar con una función de consulta de logs para propósitos de auditoría interna.
-
-* No se deben registrar datos sensibles (como contraseñas, números de identificación, correos personales, etc.) en los logs.
-
-* El usuario debe poder solicitar la eliminación de su historial de acciones de acuerdo con la normativa de habeas data.
-
-* Los registros deben conservarse por un período no mayor a 30 días salvo justificación técnica o legal.
-
-### 📌 Prioridad 
-P3
+### 📌 Prioridad  
+P2  
 
 ### 📖 Notas de implementación  
-Se recomienda el uso de un sistema de logging como logging en Python. Para cumplir con la Ley 1581 de 2012, se deben establecer políticas claras sobre el tratamiento de datos personales, visibles en la plataforma. Los logs deben estar protegidos y ser accesibles solo por personal autorizado. Si se escala el sistema, considerar el uso de servicios como AWS CloudWatch, ELK Stack o herramientas de auditoría con encriptación.
+- Usar cuentas y contenedores oficiales de la organización en GTM.  
+- Definir un procedimiento para pruebas y despliegues de nuevas etiquetas.  
+- Evitar la duplicación de scripts para garantizar rendimiento.  
+
+> **Puntos:**  
+3  
 
 ----
-# 📚 NF-06 – Rendimiento  
+
+# 📚 NF-06 – Taggeo del sitio  
+## Seguimiento de interacciones clave de los usuarios
+
+### Descripción  
+El sitio debe estar correctamente taggeado para recolectar información sobre interacciones clave (clics, búsquedas, navegación, conversiones). Esto permitirá obtener métricas precisas sobre el comportamiento de los usuarios y mejorar la toma de decisiones.  
+
+### 🔎 Criterios de aceptación
+- Cada acción relevante (clic en botones principales, consultas, navegación en secciones críticas) debe generar un evento en el sistema de analítica.  
+- El taggeo debe ser probado y validado con herramientas como **Google Tag Assistant** o el panel de depuración de GA4.  
+- No se deben capturar datos sensibles de los usuarios durante el proceso de taggeo.  
+- Los eventos recolectados deben ser visibles en Google Analytics en un plazo máximo de 24 horas.  
+
+### 📌 Prioridad  
+P2  
+
+### 📖 Notas de implementación  
+- Seguir las recomendaciones de **Google Analytics 4 (GA4)**.  
+- Documentar todos los eventos configurados y su propósito.  
+- Garantizar cumplimiento con la Ley 1581 de 2012 y normativas de protección de datos.  
+
+> **Puntos:**  
+3
+
+----
+
+# 📚 NF-07 – Rendimiento  
 ## Respuesta rápida en consultas y generación de gráficas
 
 ### Descripción  
@@ -131,11 +165,14 @@ P1
 ### 📖 Notas de implementación  
 - Utilizar técnicas de caché para datos consultados con frecuencia.  
 - Implementar consultas SQL optimizadas y estructuras de datos adecuadas.  
-- Usar paginación en listados grandes para reducir carga.  
+- Usar paginación en listados grandes para reducir carga.
+
+> *Puntos:*
+> 5 
 
 ----
 
-# 📚 NF-07 – Disponibilidad  
+# 📚 NF-08 – Disponibilidad  
 ## Alta disponibilidad del servicio
 
 ### Descripción  
@@ -153,9 +190,12 @@ P1
 - Usar infraestructura en la nube con redundancia geográfica.  
 - Configurar monitoreo y alertas en tiempo real.  
 
+> *Puntos:*
+> 3
+
 ----
 
-# 📚 NF-08 – Escalabilidad  
+# 📚 NF-09 – Escalabilidad  
 ## Capacidad de crecimiento sin interrupciones
 
 ### Descripción  
@@ -172,9 +212,12 @@ P2
 - Utilizar arquitectura basada en microservicios.  
 - Base de datos escalable (sharding o replicación).  
 
+> *Puntos:*
+> 3
+
 ----
 
-# 📚 NF-09 – Confiabilidad y calidad de datos  
+# 📚 NF-10 – Confiabilidad y calidad de datos  
 ## Información verificada y actualizada
 
 ### Descripción  
@@ -190,10 +233,13 @@ P4
 
 ### 📖 Notas de implementación  
 - Integración directa con APIs oficiales.  
-- Mecanismos de validación de integridad de datos.  
+- Mecanismos de validación de integridad de datos.
+
+> *Puntos:*
+> 2
 
 ----
-# 📚 NF-10 – Eficiencia en uso de recursos  
+# 📚 NF-11 – Eficiencia en uso de recursos  
 ## Optimización de CPU y memoria
 
 ### Descripción  
@@ -210,3 +256,6 @@ P3
 ### 📖 Notas de implementación  
 - Uso de consultas y algoritmos eficientes.  
 - Implementar escalado automático cuando se detecte sobrecarga.
+
+> *Puntos:*
+> 5
