@@ -549,7 +549,40 @@ El sistema permitirá a los usuarios consultar la información detallada de cada
 📌 Prioridad:
 P1
 
-Puntos:
+> **Puntos:**  
 1
 ---
 
+## 🏷️ F-27 – Gestión de estado de plazas  
+
+**📝 Descripción**  
+El sistema permitirá a los administradores **activar o desactivar plazas de mercado** según su operatividad, evitando que aparezcan en búsquedas las plazas temporalmente cerradas o que ya no funcionan.  
+
+**✅ Criterios de aceptación**  
+
+> **Scenario:** Activar una plaza de mercado  
+> - **Given** que soy un administrador autenticado  
+> - **And** existe una plaza registrada en estado "Inactiva"  
+> - **When** selecciono la opción *"Activar plaza"*  
+> - **Then** el sistema cambia el estado de la plaza a **"Activa"**  
+> - **And** la plaza vuelve a aparecer en las búsquedas y listados públicos  
+
+> **Scenario:** Desactivar una plaza de mercado  
+> - **Given** que soy un administrador autenticado  
+> - **And** existe una plaza registrada en estado "Activa"  
+> - **When** selecciono la opción *"Desactivar plaza"*  
+> - **Then** el sistema cambia el estado de la plaza a **"Inactiva"**  
+> - **And** la plaza deja de mostrarse en las búsquedas y listados públicos  
+
+> **Scenario:** Validar plazas inactivas en búsquedas  
+> - **Given** que un usuario realiza una búsqueda de plazas o consulta precios  
+> - **When** existen plazas con estado **"Inactiva"**  
+> - **Then** el sistema no mostrará dichas plazas en los resultados  
+
+> **📌 Prioridad:**  
+> P0  
+
+> **Puntos:**  
+> 1
+
+---
