@@ -76,7 +76,6 @@ El sistema utilizará modelos de aprendizaje automático entrenados con datos hi
 
 > **Puntos:** 
 3
-
 ---
 
 ## ⚖️ F-04 – Comparación de precios entre plazas de mercado
@@ -133,7 +132,6 @@ El sistema permitirá a los usuarios registrarse mediante nombre, correo electr�
 
 > **Puntos:** 
 3
-
 ---
 
 ## 🔑 F-06 – Inicio de sesión
@@ -241,7 +239,6 @@ P2
 
 > **Puntos:** 
 5
-
 ---
 
 ## 📈 F-10 – Evolución histórica y predicción del valor de la canasta personalizada
@@ -266,7 +263,6 @@ P3
 
 > **Puntos:** 
 5
-
 ---
 
 ## 🔍 F-11 – Búsqueda rápida de productos
@@ -353,7 +349,6 @@ P3
 
 > **Puntos:** 
 3
-
 ---
 
 ## 🗂️ F-15 – Filtrado por categoría de producto
@@ -418,7 +413,6 @@ P4
 
 > **Puntos:** 
 2
-
 ---
 
 ## ♿ F-18 – Navegación asistida por teclado 
@@ -444,8 +438,6 @@ P4
 
 > **Puntos:** 
 2
-
-
 ---
 
 ## 💰 F-19 – Comparativa de precios con salario mínimo
@@ -468,7 +460,6 @@ P4
 
 > **Puntos:** 
 3
-
 ---
 
 ## 📜 F-20 – Historial de predicciones
@@ -488,7 +479,6 @@ P4
 
 > **Puntos:** 
 3
-
 ---
 
 ## 📊 F-21 – Análisis por temporada del comportamiento de precios
@@ -509,3 +499,57 @@ P2
 > **Puntos:** 
 5
 ---
+
+## 🏪 F-22 – Gestión de plazas de mercado (CRUD)
+
+**📝 Descripción**
+El sistema permitirá a los administradores crear, consultar, actualizar y eliminar plazas de mercado. Cada plaza contará con información básica como nombre, dirección, ciudad, coordenadas geográficas, estado (activa/inactiva) y horarios de funcionamiento.
+
+**✅ Criterios de aceptación**
+
+**Scenario:** Crear una nueva plaza de mercado
+- **Given** que soy un administrador autenticado
+- **When** registro una nueva plaza con datos válidos
+- **Then** el sistema debe crear la plaza con estado "Activa" y confirmación exitosa
+
+**Scenario:** Editar información de plaza existente
+- **Given** que existe una plaza registrada llamada "Plaza Mayorista"
+- **When** modifico sus horarios de funcionamiento
+- **Then** el sistema actualiza los datos y muestra un mensaje de confirmación
+
+**Scenario:** Eliminar plaza de mercado
+- **Given** que existe una plaza activa llamada "Plaza Minorista"
+- **When** selecciono la opción de eliminar
+- **Then** el sistema elimina la plaza del listado y registra el evento en el historial
+
+📌 Prioridad:
+P0
+
+Puntos:
+2
+---
+
+## 🏬 F-23 – Consulta de información detallada de plaza
+
+**📝 Descripción**
+El sistema permitirá a los usuarios consultar la información detallada de cada plaza de mercado, incluyendo dirección completa, horarios de funcionamiento, número de comerciantes, tipos de productos disponibles y datos de contacto si están disponibles.
+
+**✅ Criterios de aceptación**
+
+**Scenario:** Visualizar información de una plaza
+- **Given** que el usuario accede al listado de plazas
+- **When** selecciona "Plaza Minorista"
+- **Then** el sistema muestra dirección, horarios, comerciantes activos, productos y datos de contacto disponibles
+
+**Scenario:** Mostrar ubicación en mapa
+- **Given** que el usuario consulta la información de "Plaza Mayorista"
+- **When** accede a la sección de ubicación
+- **Then** el sistema despliega la ubicación geográfica en un mapa interactivo
+
+📌 Prioridad:
+P1
+
+Puntos:
+1
+---
+
