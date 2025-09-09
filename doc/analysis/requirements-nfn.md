@@ -1,5 +1,3 @@
-# Requisitos no funcionales
-
 # 📚 NF-01 – Usabilidad  
 ## Interfaz intuitiva para usuarios no técnicos
 
@@ -29,7 +27,28 @@ Se recomienda seguir las pautas de diseño centrado en el usuario:
 
 ----
 
-# 📚 NF-02 – Seguridad  
+# 📚 NF-02 – Compatibilidad  
+## Soporte multiplataforma y responsive
+
+### Descripción  
+La aplicación debe poder ejecutarse correctamente en diferentes sistemas operativos (Inicialmente Windows y Android; iOS, Linux en una fase posterior) y adaptarse a distintas resoluciones de pantalla, desde dispositivos móviles hasta pantallas de escritorio. Esto permite que cualquier usuario acceda sin importar su equipo.
+
+### 🔎 Criterios de aceptación
+- La interfaz se debe ver correctamente en resoluciones desde 360x640 hasta 1920x1080.  
+- La app debe funcionar correctamente en navegadores modernos (Chrome, Firefox, Safari, Edge).
+
+### 📌 Prioridad  
+P2
+
+### 📖 Notas de implementación  
+Se recomienda implementar diseño web responsive usando **CSS Grid**, **Flexbox** o frameworks como **Bootstrap**.
+
+> *Puntos:*
+> 5
+
+----
+
+# 📚 NF-03 – Seguridad  
 ## Protección de los datos del usuario
 
 ### Descripción  
@@ -53,7 +72,7 @@ Si se implementa autenticación, se recomienda:
 
 ----
 
-# 📚 NF-03 – Mantenibilidad  
+# 📚 NF-04 – Mantenibilidad  
 ## Código limpio y bien documentado
 
 ### Descripción  
@@ -79,7 +98,7 @@ Para documentar:
 
 ----
 
-# 📚 NF-04 – Configuración de Google Tag Manager  
+# 📚 NF-05 – Configuración de Google Tag Manager  
 ## Implementación centralizada de etiquetas y scripts
 
 ### Descripción  
@@ -104,7 +123,7 @@ P2
 
 ----
 
-# 📚 NF-05 – Taggeo del sitio  
+# 📚 NF-06 – Taggeo del sitio  
 ## Seguimiento de interacciones clave de los usuarios
 
 ### Descripción  
@@ -129,7 +148,31 @@ P2
 
 ----
 
-# 📚 NF-06 – Disponibilidad  
+# 📚 NF-07 – Rendimiento  
+## Respuesta rápida en consultas y generación de gráficas
+
+### Descripción  
+El sistema debe garantizar que las consultas de datos y la generación de gráficas se realicen en menos de 3 segundos en condiciones normales de uso, optimizando el rendimiento mediante estrategias de indexación, caché y procesamiento eficiente.
+
+### 🔎 Criterios de aceptación
+- El tiempo máximo de respuesta para consultas y gráficos debe ser ≤ 5 segundos.  
+- Bajo condiciones de estrés (100 usuarios concurrentes) el tiempo no debe superar los 5 segundos.  
+- Deben ejecutarse pruebas de rendimiento periódicas para verificar el cumplimiento.  
+
+### 📌 Prioridad  
+P1
+
+### 📖 Notas de implementación  
+- Utilizar técnicas de caché para datos consultados con frecuencia.  
+- Implementar consultas SQL optimizadas y estructuras de datos adecuadas.  
+- Usar paginación en listados grandes para reducir carga.
+
+> *Puntos:*
+> 5 
+
+----
+
+# 📚 NF-08 – Disponibilidad  
 ## Alta disponibilidad del servicio
 
 ### Descripción  
@@ -152,7 +195,7 @@ P1
 
 ----
 
-# 📚 NF-07 – Escalabilidad  
+# 📚 NF-09 – Escalabilidad  
 ## Capacidad de crecimiento sin interrupciones
 
 ### Descripción  
@@ -174,7 +217,7 @@ P2
 
 ----
 
-# 📚 NF-08 – Confiabilidad y calidad de datos  
+# 📚 NF-10 – Confiabilidad y calidad de datos  
 ## Información verificada y actualizada
 
 ### Descripción  
@@ -196,7 +239,7 @@ P4
 > 2
 
 ----
-# 📚 NF-09 – Eficiencia en uso de recursos  
+# 📚 NF-11 – Eficiencia en uso de recursos  
 ## Optimización de CPU y memoria
 
 ### Descripción  
