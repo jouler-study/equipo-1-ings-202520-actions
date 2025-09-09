@@ -28,6 +28,7 @@ En esta carpeta se encuentra un `index.md` que ofrece el contexto general del pr
 | [📊 Navegación análisis](./doc/analysis/index.md) | Documento de navegación hacia los requisitos funcionales y no funcionales. |
 | [📝 Requisitos Funcionales](./doc/analysis/requirements-fn.md) | Documento con la descripción de los requisitos funcionales. |
 | [⚙️ Requisitos No Funcionales](./doc/analysis/requirements-nfn.md) | Documento con la descripción de los requisitos no funcionales. |
+| [⚙️ Definición MVP](./doc/analysis/mvp.md) | Documento con los requisitos funcionales y no funcionales que harán parte del Mínimo Producto Viable (MVP). |
 
 ---
 

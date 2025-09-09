@@ -544,7 +544,7 @@ El sistema permitirá a los usuarios consultar la información detallada de cada
 **Scenario:** Mostrar ubicación en mapa
 - **Given** que el usuario consulta la información de "Plaza Mayorista"
 - **When** accede a la sección de ubicación
-- **Then** el sistema despliega la ubicación geográfica en un mapa interactivo
+- **Then** el sistema despliega la ubicación geográfica en un mapa interactivo utilizando servicios de Google Maps
 
 📌 Prioridad:
 P1
