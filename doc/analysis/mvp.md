@@ -8,6 +8,8 @@
 * F-05  – Registro de usuarios
 * F-06 – Inicio de sesión
 * F-11 – Búsqueda rápida de productos
+* F-22 – Gestión de plazas de mercado (CRUD)
+* F-23 – Consulta de información detallada de plaza
 
 ## 📚 Requisitos no funcionales 
 
