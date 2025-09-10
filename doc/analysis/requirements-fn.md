@@ -546,14 +546,14 @@ El sistema permitirá a los usuarios consultar la información detallada de cada
 - **When** accede a la sección de ubicación
 - **Then** el sistema despliega la ubicación geográfica en un mapa interactivo utilizando servicios de Google Maps
 
-📌 Prioridad:
+> **📌 Prioridad:**  
 P1
 
-> **Puntos:**  
+> **Puntos:** 
 1
 ---
 
-## 🏷️ F-27 – Gestión de estado de plazas  
+## 🏷️ F-24 – Gestión de estado de plazas  
 
 **📝 Descripción**  
 El sistema permitirá a los administradores **activar o desactivar plazas de mercado** según su operatividad, evitando que aparezcan en búsquedas las plazas temporalmente cerradas o que ya no funcionan.  
@@ -586,3 +586,54 @@ El sistema permitirá a los administradores **activar o desactivar plazas de mer
 > 1
 
 ---
+## 🏪 F-25 - Historial de plazas de mercado 
+
+**📝 Descripción**
+El sistema mantendrá un registro histórico de todas las plazas de mercado que han existido en el sistema, incluyendo fechas de creación, modificación y desactivación, para mantener la trazabilidad de los datos históricos de precios.
+
+**✅ Criterios de aceptación** 
+
+> **Scenario:** Registrar creación de una plaza de mercado
+> - **Given**  que un usuario crea una nueva plaza de mercado
+> - **When** la plaza de mercado se guarda en el sistema
+> - **Then** el sistema deberá registrar la fecha y hora de creación
+> - **And** el sistema deberá registrar el usuario responsable de la creación
+
+> **Scenario:** Registrar modificación de una plaza de mercado
+> - **Given** que existe una plaza de mercado registrada
+> - **And** un usuario edita uno o más de sus datos (excepto el estado)
+> - **When** el cambio es guardado
+> - **Then** el sistema deberá registrar la fecha y hora de la modificación
+> - **And** el sistema deberá registrar el usuario responsable
+> - **And** el sistema deberá registrar el valor anterior y el nuevo valor de cada campo modificado
+
+> **Scenario:** Registrar cambio de estado de una plaza de mercado
+> - **Given** que existe una plaza de mercado registrada
+> - **And** un administrador cambia su estado (activa/inactiva) 
+> - **When** el cambio de estado es guardado
+> - **Then** el sistema deberá añadir el evento al historial de la plaza
+> - **And** se deberá registrar fecha, hora y usuario que realizó el cambio
+
+> **Scenario:** Consultar historial de una plaza de mercado
+> - **Given** que existe una plaza de mercado con registros históricos
+> - **When** un usuario autorizado consulta el historial de esa plaza
+> - **Then** el sistema deberá mostrar todos los eventos en orden cronológico
+> - **And** el historial deberá incluir creación, modificaciones y cambios de estado
+
+> **Scenario:** Mantener trazabilidad de precios históricos
+> - **Given** que existen registros de precios asociados a una plaza de mercado
+> - **When** un usuario consulta dichos precios históricos
+> - **Then** el sistema deberá mostrar la información de la plaza asociada
+> - **And** deberá mantener la referencia incluso si la plaza está inactiva
+
+> **Scenario:** Garantizar integridad del historial
+> - **Given** que existe un registro en el historial de una plaza
+> - **When** un usuario intenta eliminar o alterar el historial
+> - **Then** el sistema no deberá permitirlo
+> - **And** el historial deberá conservarse intacto para trazabilidad
+
+> **📌 Prioridad:**  
+> P4
+
+> **Puntos:**  
+> 2
