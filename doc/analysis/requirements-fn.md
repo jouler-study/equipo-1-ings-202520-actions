@@ -637,3 +637,36 @@ El sistema mantendrá un registro histórico de todas las plazas de mercado que 
 
 > **Puntos:**  
 > 2
+---
+
+## 🗂️ F-26 – Filtrado de búsqueda por plaza de mercado 
+
+**📝 Descripción**
+El sistema permitirá a los usuarios filtrar la búsqueda de productos por plaza de mercado específica, mostrando únicamente los precios y productos disponibles en la plaza seleccionada.
+
+**✅ Criterios de aceptación** 
+
+> **Scenario:** Filtrar productos en plaza seleccionada
+> - **Given** soy un usuario en la página de consulta de precios
+> - **When** selecciono "Plaza Mayorista" como filtro
+> - **And** busco el producto "Tomate"
+> - **Then** el sistema debe mostrar solo precios de tomate en "Plaza Mayorista"
+> - **And** debe indicar el nombre de la plaza en los resultados
+
+> **Scenario:** Búsqueda sin seleccionar plaza
+> - **Given** estoy en la página de consulta de precios
+> - **When** realizo una búsqueda de "Cebolla" sin aplicar ningún filtro de plaza
+> - **Then** el sistema debe mostrar los precios de todas las plazas disponibles para "Cebolla"
+> - **And** debe incluir el nombre de cada plaza junto al resultado
+
+> **Scenario:** Persistencia del filtro seleccionado
+> - **Given** he aplicado un filtro por "Plaza Mayorista"
+> - **When** realizo una nueva búsqueda de "Fríjol"
+> - **Then** el sistema debe mantener "Plaza Mayorista" como filtro activo
+> - **And** mostrar únicamente resultados correspondientes a esa plaza
+
+> **📌 Prioridad:**  
+> P1
+
+> **Puntos:**  
+> 2
