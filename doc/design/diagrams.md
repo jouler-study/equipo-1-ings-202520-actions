@@ -53,3 +53,13 @@
 ![Diagrama de secuencia: Eliminar plaza](design_images/Diagrama_12_SEC_Eliminar_Plaza.png)
 
 ![Diagrama de secuencia: Recuperación de contraseña](design_images/Diagrama_13_SEC_Recuperacion_contrasena.png)
+
+## 🧩 Diagrama de Componentes
+
+![Diagrama de Componentes](design_images/Diagrama_Componentes_PLAZE.png)
+
+## 🗄️ Diagrama Relacional
+
+![Modelo Relacional](design_images/Modelo_Relacional.png)
+
+![Modelo Relacional - Relaciones Explícitas](design_images/Modelo_Relacional_Relaciones_Explicitas.png)
