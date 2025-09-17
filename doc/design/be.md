@@ -75,3 +75,29 @@ Framework que simplifica el desarrollo de aplicaciones Java, proporcionando conf
 - **Código más extenso** comparado con otros frameworks.
 - Puede requerir **mucha configuración inicial**.
 - **Menos integrado con ciencia de datos**, tiene limitadas opciones nativas para Machine learning.
+  
+## 🎯 Framework Seleccionado: **FastAPI (Python)**  
+
+### ✅ Justificación  
+Después de comparar diferentes frameworks (FastAPI, Django, Express.js y Spring Boot), se selecciona **FastAPI** por las siguientes razones:  
+
+1. **Alto rendimiento y concurrencia** gracias a su arquitectura asíncrona (ASGI).  
+2. **Integración nativa con librerías de ciencia de datos y machine learning** (Pandas, NumPy, Scikit-learn, TensorFlow), lo cual facilita exponer modelos predictivos como APIs REST.  
+3. **Documentación automática (Swagger/OpenAPI)** que acelera el desarrollo, las pruebas y la integración con frontend.  
+4. **Tipado fuerte y validación automática de datos**, lo que mejora la confiabilidad del sistema.  
+5. **Sintaxis sencilla y curva de aprendizaje moderada**, permitiendo incorporar nuevos desarrolladores rápidamente.  
+6. **Flexibilidad en el manejo de bases de datos** (SQL y NoSQL).  
+
+### ⚖️ Alternativas descartadas  
+- **Django**: robusto, pero excesivo y menos eficiente para APIs puras.  
+- **Express.js**: flexible y popular, pero con poca integración con ML y mayor trabajo en seguridad.  
+- **Spring Boot**: muy potente en sistemas empresariales, pero con curva de aprendizaje alta y poco orientado a ciencia de datos.  
+
+### 🚀 Conclusión  
+**FastAPI es la mejor opción** porque combina:  
+- Rendimiento y escalabilidad  
+- Compatibilidad con análisis avanzado y ML  
+- Documentación automática  
+- Desarrollo ágil y mantenible  
+
+El único reto identificado es la configuración manual de algunos módulos (ej. autenticación), pero se considera manejable frente a las ventajas que aporta.  
