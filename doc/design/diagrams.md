@@ -63,3 +63,33 @@
 ![Modelo Relacional](design_images/Modelo_Relacional.png)
 
 ![Modelo Relacional - Relaciones Explícitas](design_images/Modelo_Relacional_Relaciones_Explicitas.png)
+
+## Diagramas ad hoc
+
+Las componentes de los diagramas ad hoc se representan:
+
+![Componentes diagramas](design_images/Componentes_diagramas.png)
+
+> Diagramas ad hoc
+
+![¿Cómo se relacionan productos, plazas y ciudades para mostrar un precio actualizado con su fecha?](design_images/AH-01.png)
+
+![¿Cómo se almacena y representa gráficamente el historial de precios de cada producto?](design_images/AH-02.png)
+
+![¿Qué datos históricos alimentan el modelo y cómo se muestra la predicción con su nivel de confianza?](design_images/AH-03.png)
+
+![¿Qué validaciones deben aplicarse al correo y la contraseña al crear un usuario nuevo?](design_images/AH-04.png)
+
+![¿Qué reglas de seguridad rigen el inicio de sesión y la recuperación de contraseñas?](design_images/AH-05.png)
+
+![¿Qué atributos mínimos debe tener una plaza y cómo se gestiona su ciclo de vida (crear, editar, eliminar)?](design_images/AH-06.png)
+
+![¿Qué campos deben indexarse para permitir una búsqueda rápida y precisa de productos?](design_images/AH-07.png)
+
+![¿Qué atributos mínimos debe tener una plaza y cómo se gestiona su ciclo de vida (crear, editar, eliminar)?](design_images/AH-08.png)
+
+![¿Qué información adicional de una plaza debe mostrarse al usuario y cómo se integra con mapas?](design_images/AH-09.png)
+
+![¿Cómo impacta en las búsquedas y listados el cambio de estado de una plaza (activa/inactiva)?](design_images/AH-10.png)
+
+![¿Cómo se aplican y persisten los filtros por plaza en las consultas de productos?](design_images/AH-11.png)
