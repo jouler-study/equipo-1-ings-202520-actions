@@ -1,4 +1,4 @@
-# Diseños Wireframe
+# Diseños de los Wireframes
 ## /homepage
 ![/homepage](design_images/UX-homepage.png)
 

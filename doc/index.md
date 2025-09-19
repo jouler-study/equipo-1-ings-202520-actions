@@ -64,3 +64,4 @@ Este proyecto está orientado a brindar valor principalmente a:
 | 🚀 Sección | 📄 Descripción |
 |------------|----------------|
 | [📊 Análisis](./analysis/index.md) | Contiene los requisitos funcionales y no funcionales del sistema |
+| [🎨 Diseño](./design/index.md) | Contiene los diseño UX/UI, los UML y las decisiones Backend y Frontend |
