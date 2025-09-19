@@ -35,3 +35,6 @@
 
 ## Eliminación de plazas
 ![Eliminación de plazas](design_images/UI-Formulario_Eliminacion_plazas.png)
+
+## Enlace a los diseños finales 
+https://www.figma.com/design/UhVFcmVNAdS7Q0PAOukCsY/UI-Plaze-formularios-de-ingreso?node-id=0-1&t=zbXmDVk0Vds1Pv7u-1
