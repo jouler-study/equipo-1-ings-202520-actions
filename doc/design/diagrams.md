@@ -56,7 +56,7 @@
 
 ## 🧩 Diagrama de Componentes
 
-![Diagrama de Componentes](design_images/Diagrama_Componentes_PLAZE.drawio.png)
+![Diagrama de Componentes](design_images/Diagrama_Componentes_PLAZE.png)
 
 ## 🗄️ Diagrama Relacional
 
