@@ -64,3 +64,8 @@ Este proyecto está orientado a brindar valor principalmente a:
 | 🚀 Sección | 📄 Descripción |
 |------------|----------------|
 | [📊 Análisis](./analysis/index.md) | Contiene los requisitos funcionales y no funcionales del sistema |
+| [🎨 Diseño](./design/index.md) | Contiene los diseño UX/UI, los UML y las decisiones Backend y Frontend |
+
+## 🗂️ URL tablero Backlog
+
+[URL tablero backlog en Trello](https://trello.com/invite/b/68ca209a936a1d5703ec940c/ATTI4753e6b685c56cda2c032ec58f45add8F5F2C155/backlog)
