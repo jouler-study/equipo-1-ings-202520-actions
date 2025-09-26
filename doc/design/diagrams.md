@@ -1,30 +1,8 @@
 # Diagramas UML
 
-## 📈 Diagramas de Casos de uso
+## 📈 Diagrama de Casos de uso
 
-![Caso de uso gestión de usuarios: registro](design_images/CU-01.png)
-
-![Caso de uso gestión de usuarios: inicio de sesión](design_images/CU-02.png)
-
-![Caso de uso consulta de precios: consultar precio actual de producto](design_images/CU-03.png)
-
-![Caso de uso consulta de precios: búsqueda rápida de productos](design_images/CU-04.png)
-
-![Caso de uso consulta de precios: filtrar búsqueda por plaza](design_images/CU-05.png)
-
-![Caso de uso análisis de precios: visualizar historial de precios](design_images/CU-06.png)
-
-![Caso de uso análisis de precios: consultar predicción de precios](design_images/CU-07.png)
-
-![Caso de uso análisis de precios: crear plaza de mercado](design_images/CU-08.png)
-
-![Caso de uso análisis de precios: consultar información de plaza](design_images/CU-09.png)
-
-![Caso de uso análisis de precios: actualizar plaza de mercado](design_images/CU-10.png)
-
-![Caso de uso análisis de precios: gestionar estado de plaza](design_images/CU-11.png)
-
-![Caso de uso análisis de precios: eliminar plaza de mercado](design_images/CU-12.png)
+![Diagrama de casos de uso](design_images/CU-01.png)
 
 ## 🔄 Diagramas de Secuencia
 
@@ -66,32 +44,4 @@
 ![Modelo Relacional - Relaciones Explícitas](design_images/Modelo_Relacional_Relaciones_Explicitas.jpg)
 
 
-## Diagramas ad hoc
-
-Las componentes de los diagramas ad hoc se representan:
-
-![Componentes diagramas](design_images/Componentes_diagramas.png)
-
-> Diagramas ad hoc
-
-![¿Cómo se relacionan productos, plazas y ciudades para mostrar un precio actualizado con su fecha?](design_images/AH-01.png)
-
-![¿Cómo se almacena y representa gráficamente el historial de precios de cada producto?](design_images/AH-02.png)
-
-![¿Qué datos históricos alimentan el modelo y cómo se muestra la predicción con su nivel de confianza?](design_images/AH-03.png)
-
-![¿Qué validaciones deben aplicarse al correo y la contraseña al crear un usuario nuevo?](design_images/AH-04.png)
-
-![¿Qué reglas de seguridad rigen el inicio de sesión y la recuperación de contraseñas?](design_images/AH-05.png)
-
-![¿Qué atributos mínimos debe tener una plaza y cómo se gestiona su ciclo de vida (crear, editar, eliminar)?](design_images/AH-06.png)
-
-![¿Qué campos deben indexarse para permitir una búsqueda rápida y precisa de productos?](design_images/AH-07.png)
-
-![¿Qué atributos mínimos debe tener una plaza y cómo se gestiona su ciclo de vida (crear, editar, eliminar)?](design_images/AH-08.png)
-
-![¿Qué información adicional de una plaza debe mostrarse al usuario y cómo se integra con mapas?](design_images/AH-09.png)
-
-![¿Cómo impacta en las búsquedas y listados el cambio de estado de una plaza (activa/inactiva)?](design_images/AH-10.png)
-
-![¿Cómo se aplican y persisten los filtros por plaza en las consultas de productos?](design_images/AH-11.png)
+## Diagrama ad hoc
