@@ -45,3 +45,5 @@
 
 
 ## Diagrama ad hoc
+
+![Diagrama ad hoc](design_images/Diagrama_AdHoc.png)
