@@ -1,11 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database import SessionLocal
-from models import Price
 
 router = APIRouter(prefix="/prices", tags=["Prices"])
 
-# --- Database dependency ---
 def get_db():
     db = SessionLocal()
     try:
@@ -13,7 +11,6 @@ def get_db():
     finally:
         db.close()
 
-# --- Get latest price for selected product and market in Medellín ---
 @router.get("/latest/")
 def get_latest_price(product_name: str, market_name: str, db: Session = Depends(get_db)):
     query = """
@@ -36,3 +33,4 @@ def get_latest_price(product_name: str, market_name: str, db: Session = Depends(
         "price_per_kg": float(result.precio_por_kg),
         "last_update": result.fecha
     }
+
