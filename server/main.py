@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers.prices import router as prices_router  # Importamos el router correctamente
+from routers.precios import router as prices_router  
 
 app = FastAPI(title="Market Prices API")
 
