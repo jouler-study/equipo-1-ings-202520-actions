@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import auth, password_recovery
+from routers_ import auth, password_recovery
 from database import Base, engine
 
 # Crear tablas si no existen
