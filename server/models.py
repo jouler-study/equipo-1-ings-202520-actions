@@ -5,7 +5,7 @@ from datetime import datetime
 
 # Users table
 class Usuario(Base):
-    __tablename__ = "usuarios"  # table name remains in Spanish
+    __tablename__ = "usuarios" 
 
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, nullable=False)  # user's full name
