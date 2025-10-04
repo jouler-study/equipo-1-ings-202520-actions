@@ -1,12 +1,16 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, EmailStr, constr
 from supabase import create_client, Client
-from passlib.hash import bcrypt
+from passlib.hash import argon2
+from dotenv import load_dotenv
+import os
 import re
 
-# Configure Supabase
-url = "URL"
-key = "KEY"
+# Load environment variables
+load_dotenv()
+
+url = os.getenv("SUPABASE_URL")
+key = os.getenv("SUPABASE_KEY")
 supabase: Client = create_client(url, key)
 
 app = FastAPI()
@@ -26,31 +30,26 @@ def register_user(user: UserRegister):
     # 1. Check if email already exists
     existing = supabase.table("usuarios").select("*").eq("correo", user.email).execute()
     if existing.data:
-        raise HTTPException(status_code=400, detail="Email already registered")
+        raise HTTPException(status_code=400, detail="Este correo ya ha sido registrado")
 
     # 2. Validate password 
     if not validate_password(user.password):
         raise HTTPException(
             status_code=400, 
-            detail="Password must have at least 8 chars, one uppercase, one number and one special char"
+            detail="Las contraseñas deben tener mínimo 8 carácteres, una mayúscula, un número y un carácter especial (!@#$%^&*)."
         )
-    
-    # 3. Hash password
-    hashed_password = bcrypt.hash(user.password[:72])
 
-    # 4. Insert user
-    new_user = {
+    # Hash password
+    hashed_password = argon2.hash(user.password)
+
+    # Insert user
+    response = supabase.table("usuarios").insert({
         "nombre": user.name,
         "correo": user.email,
         "contrasena_hash": hashed_password,
-    }
+    }).execute()
 
-    response = supabase.table("usuarios").insert(new_user).execute()
+    if not response.data:
+        return {"error": "El usuario no se pudo crear"}
 
-    # Debugging: show response in console
-    print("DEBUG:", response)
-
-    if response.error:
-        raise HTTPException(status_code=500, detail=str(response.error))
-
-    return {"message": f"Welcome {user.name} 🎉"}
+    return {"message": "Usuario creado correctamente", "user": response.data}

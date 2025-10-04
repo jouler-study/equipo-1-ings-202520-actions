@@ -1,0 +1,38 @@
+# === Python ===
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+*.so
+
+# Entornos virtuales
+.env
+.venv
+venv/
+ENV/
+env/
+
+# Archivos de configuración sensibles
+*.env
+*.env.*
+
+# Archivos de logs
+*.log
+
+# Archivos temporales
+*.tmp
+*.swp
+*.swo
+*.bak
+*.old
+
+# === IDEs ===
+.vscode/
+.idea/
+*.iml
+
+# Windows basura
+.DS_Store
+Thumbs.db
+server/__pycache__/user_registration.cpython-311.pyc
