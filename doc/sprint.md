@@ -1,7 +1,8 @@
-# Avances sprints
+# ⏩ Avances sprints
 
-## Día
+## 🎃 Viernes 3 octubre
 
-### Diagrama burndown
+> ### Diagrama burndown
+![Diagrama burndown viernes 3 octubre](images_sprint/Burndown-3oct.png)
 
-### Estado del tablero
+> ### Estado del tablero
