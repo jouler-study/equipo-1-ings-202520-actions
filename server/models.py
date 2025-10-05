@@ -7,7 +7,7 @@ from datetime import datetime
 class Usuario(Base):
     __tablename__ = "usuarios" 
 
-    id = Column(Integer, primary_key=True, index=True)
+    usuario_id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, nullable=False)  # user's full name
     correo = Column(String, unique=True, index=True, nullable=False)  # email address
     contrasena_hash = Column(String, nullable=False)  # hashed password
