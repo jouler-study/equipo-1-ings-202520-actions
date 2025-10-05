@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey
+ffrom sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from database import Base
 from datetime import datetime
@@ -19,10 +19,10 @@ class Usuario(Base):
 
 # Email links table (for password recovery or verification)
 class EnlaceCorreo(Base):
-    __tablename__ = "enlaces_correo"  # table name remains in Spanish
+    __tablename__ = "enlaces_correo"  
 
     enlace_id = Column(Integer, primary_key=True, index=True)
-    usuario_id = Column(Integer, ForeignKey("usuarios.id"), nullable=False)  # foreign key to user
+    usuario_id = Column(Integer, ForeignKey("usuarios.usuario_id"), nullable=False)  
     enlace_url = Column(String(500), unique=True, nullable=False)  # unique link/token
     tipo = Column(String(30), nullable=False)  # type of link: "recuperacion_password" or "verificacion_correo"
     expira_en = Column(DateTime, nullable=False)  # expiration date/time
