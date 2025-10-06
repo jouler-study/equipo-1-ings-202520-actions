@@ -12,6 +12,7 @@ import os
 
 router = APIRouter(prefix="/password")
 
+# Dependencia para obtener la sesión de BD
 def get_db():
     db = SessionLocal()
     try:
@@ -19,9 +20,11 @@ def get_db():
     finally:
         db.close()
 
+# Modelo Pydantic para el cambio de contraseña
 class ResetPassword(BaseModel):
     nueva_contrasena: str
 
+# Endpoint para solicitar recuperación de contraseña
 @router.post("/recover/{correo}")
 def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
     usuario = db.query(Usuario).filter(Usuario.correo == correo).first()
@@ -31,8 +34,9 @@ def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
     token = str(uuid.uuid4())
     expira = datetime.utcnow() + timedelta(hours=1)
 
+    # Se crea el enlace de recuperación asociado al usuario
     enlace = EnlaceCorreo(
-        usuario_id=usuario.id,
+        usuario_id=usuario.usuario_id,  # ✅ corregido
         enlace_url=token,
         tipo="recuperacion_password",
         expira_en=expira,
@@ -43,17 +47,23 @@ def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
 
     reset_link = f"http://localhost:8000/password/reset/{token}"
 
-    msg = MIMEText(f"Hola {usuario.nombre},\n\nHaz clic aquí para restablecer tu contraseña:\n{reset_link}\n\nEste enlace expira en 1 hora.")
+    msg = MIMEText(
+        f"Hola {usuario.nombre},\n\n"
+        f"Haz clic aquí para restablecer tu contraseña:\n{reset_link}\n\n"
+        f"Este enlace expira en 1 hora."
+    )
     msg["Subject"] = "Recuperación de contraseña"
     msg["From"] = os.getenv("EMAIL_USER")
     msg["To"] = correo
 
+    # Enviar correo con enlace de recuperación
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(os.getenv("EMAIL_USER"), os.getenv("EMAIL_PASS"))
         server.sendmail(os.getenv("EMAIL_USER"), correo, msg.as_string())
 
     return {"message": "Correo de recuperación enviado"}
 
+# Endpoint para restablecer la contraseña usando el token
 @router.post("/reset/{token}")
 def reset_password(token: str, body: ResetPassword, db: Session = Depends(get_db)):
     enlace = db.query(EnlaceCorreo).filter(EnlaceCorreo.enlace_url == token).first()
@@ -65,7 +75,7 @@ def reset_password(token: str, body: ResetPassword, db: Session = Depends(get_db
     if enlace.expira_en < datetime.utcnow():
         raise HTTPException(status_code=400, detail="El enlace ha expirado")
 
-    usuario = db.query(Usuario).filter(Usuario.id == enlace.usuario_id).first()
+    usuario = db.query(Usuario).filter(Usuario.usuario_id == enlace.usuario_id).first() 
     if not usuario:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
@@ -74,3 +84,4 @@ def reset_password(token: str, body: ResetPassword, db: Session = Depends(get_db
     db.commit()
 
     return {"message": "Contraseña actualizada correctamente"}
+
