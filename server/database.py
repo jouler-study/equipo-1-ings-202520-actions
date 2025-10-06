@@ -1,4 +1,15 @@
 from sqlalchemy import create_engine
+"""
+This module sets up the SQLAlchemy database connection and session for the application.
+- Loads environment variables using python-dotenv.
+- Retrieves the database URL from environment variables.
+- Creates a SQLAlchemy engine using the database URL.
+- Configures a session factory (`SessionLocal`) for database interactions.
+- Defines a base class (`Base`) for declarative ORM models.
+Usage:
+    Import `SessionLocal` to create database sessions.
+    Inherit from `Base` to define ORM models.
+"""
 from sqlalchemy.orm import sessionmaker, declarative_base
 import os
 from dotenv import load_dotenv

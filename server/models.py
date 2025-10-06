@@ -5,6 +5,17 @@ from datetime import datetime
 
 # Users table
 class Usuario(Base):
+    """
+    Represents a user account in the system.
+    Attributes:
+        usuario_id (int): Primary key identifier for the user.
+        nombre (str): Full name of the user.
+        correo (str): Unique email address of the user.
+        contrasena_hash (str): Hashed password for authentication.
+        intentos_fallidos (int): Number of consecutive failed login attempts.
+        cuenta_bloqueada_hasta (datetime): Timestamp until which the account is locked due to failed attempts.
+        enlaces (List[EnlaceCorreo]): Relationship to password recovery links associated with the user.
+    """
     __tablename__ = "usuarios" 
 
     usuario_id = Column(Integer, primary_key=True, index=True)
@@ -19,6 +30,18 @@ class Usuario(Base):
 
 # Email links table (for password recovery or verification)
 class EnlaceCorreo(Base):
+    """
+    Represents an email link entity used for actions such as password recovery or email verification.
+    Attributes:
+        enlace_id (int): Primary key identifier for the email link.
+        usuario_id (int): Foreign key referencing the associated user.
+        enlace_url (str): Unique URL or token for the link.
+        tipo (str): Type of link, e.g., "recuperacion_password" or "verificacion_correo".
+        expira_en (datetime): Expiration date and time of the link.
+        usado (bool): Indicates whether the link has been used.
+        fecha_creacion (datetime): Timestamp of when the link was created.
+        usuario (Usuario): Relationship to the associated user.
+    """
     __tablename__ = "enlaces_correo"  
 
     enlace_id = Column(Integer, primary_key=True, index=True)

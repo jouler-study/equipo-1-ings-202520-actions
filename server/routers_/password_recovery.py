@@ -12,7 +12,7 @@ import os
 
 router = APIRouter(prefix="/password")
 
-# Dependencia para obtener la sesión de BD
+# Dependency to get DB session
 def get_db():
     db = SessionLocal()
     try:
@@ -20,12 +20,27 @@ def get_db():
     finally:
         db.close()
 
-# Modelo Pydantic para el cambio de contraseña
+# Pydantic model for password reset
 class ResetPassword(BaseModel):
     nueva_contrasena: str
 
-# Endpoint para solicitar recuperación de contraseña
+# Endpoint to request password recovery
 @router.post("/recover/{correo}")
+"""
+Endpoint to initiate password recovery for a user by email.
+Args:
+    correo (EmailStr): The email address of the user requesting password recovery.
+    db (Session, optional): Database session dependency.
+Raises:
+    HTTPException: If the user with the provided email is not found (404).
+Returns:
+    dict: A message indicating that the password recovery email has been sent.
+Process:
+    - Searches for the user by email in the database.
+    - If found, generates a unique recovery token and expiration time (1 hour).
+    - Creates a recovery link record associated with the user.
+    - Sends an email to the user with a password reset link.
+"""
 def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
     usuario = db.query(Usuario).filter(Usuario.correo == correo).first()
     if not usuario:
@@ -34,9 +49,9 @@ def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
     token = str(uuid.uuid4())
     expira = datetime.utcnow() + timedelta(hours=1)
 
-    # Se crea el enlace de recuperación asociado al usuario
+    # Create recovery link associated with the user
     enlace = EnlaceCorreo(
-        usuario_id=usuario.usuario_id,  # ✅ corregido
+        usuario_id=usuario.usuario_id,  # ✅ corrected
         enlace_url=token,
         tipo="recuperacion_password",
         expira_en=expira,
@@ -56,15 +71,28 @@ def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
     msg["From"] = os.getenv("EMAIL_USER")
     msg["To"] = correo
 
-    # Enviar correo con enlace de recuperación
+    # Send email with recovery link
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
         server.login(os.getenv("EMAIL_USER"), os.getenv("EMAIL_PASS"))
         server.sendmail(os.getenv("EMAIL_USER"), correo, msg.as_string())
 
     return {"message": "Correo de recuperación enviado"}
 
-# Endpoint para restablecer la contraseña usando el token
+# Endpoint to reset password using the token
 @router.post("/reset/{token}")
+"""
+Resets the user's password using a provided token.
+This endpoint verifies the validity of the password reset token, checks if it has been used or expired,
+and updates the user's password if all checks pass. The token is marked as used after a successful reset.
+Args:
+    token (str): The password reset token provided in the URL.
+    body (ResetPassword): The request body containing the new password.
+    db (Session): The database session dependency.
+Raises:
+    HTTPException: If the token is invalid, already used, expired, or if the user is not found.
+Returns:
+    dict: A message indicating the password was successfully updated.
+"""
 def reset_password(token: str, body: ResetPassword, db: Session = Depends(get_db)):
     enlace = db.query(EnlaceCorreo).filter(EnlaceCorreo.enlace_url == token).first()
 
@@ -84,4 +112,3 @@ def reset_password(token: str, body: ResetPassword, db: Session = Depends(get_db
     db.commit()
 
     return {"message": "Contraseña actualizada correctamente"}
-
