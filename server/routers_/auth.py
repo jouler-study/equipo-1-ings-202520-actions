@@ -37,22 +37,25 @@ class UserLogin(BaseModel):
     contrasena: str
 
 @router.post("/login")
-"""
-Handles user login authentication.
-This endpoint verifies the user's credentials and manages account lockout after multiple failed attempts.
-If the user does not exist or the password is incorrect, an appropriate HTTPException is raised.
-After 3 consecutive failed login attempts, the account is temporarily locked for 15 minutes.
-If the account is currently locked, the user is notified.
-On successful login, failed attempts are reset and the lockout is cleared.
-Args:
-    user (UserLogin): The login credentials provided by the user.
-    db (Session): The database session dependency.
-Returns:
-    dict: A message indicating successful login and the user's email.
-Raises:
-    HTTPException: If credentials are incorrect, account is locked, or multiple failed attempts occur.
-"""
 def login(user: UserLogin, db: Session = Depends(get_db)):
+    """
+    Handles user login authentication.
+    This endpoint verifies the user's credentials and manages account lockout after multiple failed attempts.
+    If the user does not exist or the password is incorrect, an appropriate HTTPException is raised.
+    After 3 consecutive failed login attempts, the account is temporarily locked for 15 minutes.
+    If the account is currently locked, the user is notified.
+    On successful login, failed attempts are reset and the lockout is cleared.
+
+    Args:
+        user (UserLogin): The login credentials provided by the user.
+        db (Session): The database session dependency.
+
+    Returns:
+        dict: A message indicating successful login and the user's email.
+
+    Raises:
+        HTTPException: If credentials are incorrect, account is locked, or multiple failed attempts occur.
+    """
     usuario = db.query(Usuario).filter(Usuario.correo == user.correo).first()
     if not usuario:
         raise HTTPException(status_code=400, detail="Correo o contraseña incorrectos")

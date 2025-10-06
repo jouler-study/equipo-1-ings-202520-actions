@@ -11,11 +11,12 @@ app.include_router(auth.router, tags=["Auth"])
 app.include_router(password_recovery.router, tags=["Password Recovery"])
 
 @app.get("/")
-"""
-Root endpoint of the API.
-
-Returns:
-    dict: A JSON response containing a message indicating that the API is running.
-"""
 def root():
+    """
+    Root endpoint of the API.
+
+    Returns:
+        dict: A JSON response containing a message indicating that the API is running.
+    """
     return {"message": "API funcionando 🚀"}
+
