@@ -36,3 +36,7 @@ env/
 .DS_Store
 Thumbs.db
 server/__pycache__/user_registration.cpython-311.pyc
+
+node_modules/
+dist/
+build/
