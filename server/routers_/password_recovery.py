@@ -1,135 +1,121 @@
-import uuid
+# password_recovery.py
 import os
 import smtplib
 from email.mime.text import MIMEText
-from datetime import datetime, timedelta
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import SessionLocal
-from models import Usuario, EnlaceCorreo
 from pydantic import BaseModel, EmailStr
+from database import SessionLocal
+from models import Usuario
+from utils.password_utils import crear_enlace_recuperacion
 from passlib.hash import argon2
 
 router = APIRouter(prefix="/password")
 
-
 # ------------------ #
-#   Dependencia DB   #
+#   Database Dependency   #
 # ------------------ #
 def get_db():
-    """Crea y cierra la sesión con la base de datos."""
+    """Creates and closes the database session."""
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
 
-
 # --------------------------- #
-#   Modelo Pydantic de input  #
+#   Pydantic Input Model      #
 # --------------------------- #
 class ResetPassword(BaseModel):
     nueva_contrasena: str
 
-
 # ----------------------------- #
-#   Recuperar contraseña (POST) #
+#   Password Recovery (POST)    #
 # ----------------------------- #
 @router.post("/recover/{correo}")
 def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
     """
-    Inicia el proceso de recuperación de contraseña.
+    Starts the password recovery process.
 
     Args:
-        correo (EmailStr): Correo del usuario que solicita recuperar la contraseña.
-        db (Session): Sesión de la base de datos.
+        correo (EmailStr): The email address of the user requesting password recovery.
+        db (Session): Database session.
 
     Raises:
-        HTTPException: Si el usuario no existe.
+        HTTPException: If the user does not exist.
 
     Returns:
-        dict: Mensaje indicando que el correo fue enviado.
+        dict: Message indicating that the recovery email has been sent.
     """
     usuario = db.query(Usuario).filter(Usuario.correo == correo).first()
     if not usuario:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
-    # Generar token único con expiración
-    token = str(uuid.uuid4())
-    expira = datetime.utcnow() + timedelta(hours=1)
+    # Generate token and link using the utility function
+    token, reset_link = crear_enlace_recuperacion(usuario, db)
 
-    # Crear enlace de recuperación
-    enlace = EnlaceCorreo(
-        usuario_id=usuario.usuario_id,
-        enlace_url=token,
-        tipo="recuperacion_password",
-        expira_en=expira,
-        usado=False
-    )
-    db.add(enlace)
-    db.commit()
-
-    # 🔗 Enlace temporal (actualízalo cuando tengas el front)
-    reset_link = f"http://localhost:8000/password/reset/{token}"
-
-    # Crear correo
+    # Create email message
     msg = MIMEText(
         f"Hola {usuario.nombre},\n\n"
-        f"Haz clic en el siguiente enlace para restablecer tu contraseña:\n"
+        f"✨ Hemos recibido una solicitud para restablecer tu contraseña.\n"
+        f"Por favor, haz clic en el siguiente enlace para continuar:\n"
         f"{reset_link}\n\n"
-        f"Este enlace expirará en 1 hora.\n\n"
-        f"Si no solicitaste este cambio, ignora este mensaje."
+        f"⏰ Este enlace expirará en 1 hora.\n\n"
+        f"Si no solicitaste este cambio, puedes ignorar este mensaje.\n\n"
+        f"Saludos,\nEl equipo de Soporte de Plaze"
     )
-    msg["Subject"] = "Recuperación de contraseña"
+    msg["Subject"] = "🔐 Recuperación de contraseña"
     msg["From"] = os.getenv("EMAIL_USER")
     msg["To"] = correo
 
-    # Enviar correo
+    # Send email via Gmail SMTP
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(os.getenv("EMAIL_USER"), os.getenv("EMAIL_PASS"))
             server.sendmail(os.getenv("EMAIL_USER"), correo, msg.as_string())
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error al enviar el correo: {e}")
+        raise HTTPException(status_code=500, detail=f"Error en el envío del email: {e}")
 
-    return {"message": "Correo de recuperación enviado"}
-
+    return {"message": "Correo de recuperación de contraseña enviado exitosamente"}
 
 # ------------------------ #
-#   Restablecer contraseña #
+#   Reset Password Endpoint #
 # ------------------------ #
 @router.post("/reset/{token}")
 def reset_password(token: str, body: ResetPassword, db: Session = Depends(get_db)):
     """
-    Restablece la contraseña de un usuario usando un token válido.
+    Resets a user's password using a valid token.
 
     Args:
-        token (str): Token de recuperación.
-        body (ResetPassword): Nueva contraseña.
-        db (Session): Sesión de la base de datos.
+        token (str): Password recovery token.
+        body (ResetPassword): Object containing the new password.
+        db (Session): Database session.
 
     Raises:
-        HTTPException: Si el enlace es inválido, usado o expirado.
+        HTTPException: If the link is invalid, expired, or already used.
 
     Returns:
-        dict: Mensaje de éxito.
+        dict: Success message.
     """
+    from models import EnlaceCorreo
+
     enlace = db.query(EnlaceCorreo).filter(EnlaceCorreo.enlace_url == token).first()
 
     if not enlace:
-        raise HTTPException(status_code=404, detail="Enlace inválido")
+        raise HTTPException(status_code=404, detail="Link inválido")
     if enlace.usado:
-        raise HTTPException(status_code=400, detail="El enlace ya fue usado")
+        raise HTTPException(status_code=400, detail="Link ya fue usado")
+    from datetime import datetime
     if enlace.expira_en < datetime.utcnow():
-        raise HTTPException(status_code=400, detail="El enlace ha expirado")
+        raise HTTPException(status_code=400, detail="El link ha expirado")
 
     usuario = db.query(Usuario).filter(Usuario.usuario_id == enlace.usuario_id).first()
     if not usuario:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
-    # Actualizar contraseña
-    usuario.contrasena_hash = argon2.hash(body.nueva_contrasena)
+    # Update the password
+    usuario.contrasena = argon2.hash(body.nueva_contrasena)
     enlace.usado = True
     db.commit()
 
-    return {"message": "Contraseña actualizada correctamente"}
+    return {"message": "Contraseña restablecida exitosamente"}

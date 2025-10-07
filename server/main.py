@@ -5,7 +5,7 @@ from database import Base, engine
 # Create tables if they do not exist
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Market Prices API")
+app = FastAPI(title="Market Prices Plaze API 🛒")
 
 app.include_router(auth.router, tags=["Auth"])
 app.include_router(password_recovery.router, tags=["Password Recovery"])

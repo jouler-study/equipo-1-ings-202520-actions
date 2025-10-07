@@ -10,6 +10,7 @@ Usage:
     Import `SessionLocal` to create database sessions.
     Inherit from `Base` to define ORM models.
 """
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 import os
 from dotenv import load_dotenv

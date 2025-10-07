@@ -22,6 +22,7 @@ class Usuario(Base):
     nombre = Column(String, nullable=False)  # user's full name
     correo = Column(String, unique=True, index=True, nullable=False)  # email address
     contrasena_hash = Column(String, nullable=False)  # hashed password
+    rol = Column(String, default="usuario")  # user role: "usuario" or "admin"
     intentos_fallidos = Column(Integer, default=0)  # failed login attempts
     cuenta_bloqueada_hasta = Column(DateTime, nullable=True)  # account lock expiration time
 
