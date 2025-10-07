@@ -25,16 +25,47 @@ def enviar_correo_bloqueo(correo: str, nombre_usuario: str):
     _, reset_link = crear_enlace_recuperacion(usuario, db)
     print("Link generado:", reset_link)
 
-    # Compose email
-    msg = MIMEText(
-        f"🔒 Hola {nombre_usuario},\n\n"
-        f"Tu cuenta ha sido bloqueada temporalmente debido a múltiples intentos fallidos de inicio de sesión.\n"
-        f"⏳ Por seguridad, restablece tu contraseña usando este enlace:\n{reset_link}\n\n"
-        f"⚠️ Si no intentaste iniciar sesión, cambia tu contraseña inmediatamente.\n\n"
-        f"Saludos,\nEquipo de Soporte"
-    )
+    # Compose HTML email
+    msg = MIMEText(f"""
+    <html>
+      <body style="font-family: 'Segoe UI', Arial, sans-serif; background-color: #f7f9fc; margin: 0; padding: 40px;">
+        <div style="max-width: 480px; background: #ffffff; margin: auto; border-radius: 12px; padding: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">
+          <h2 style="color: #d93025; text-align: center;">❌ Cuenta bloqueada temporalmente</h2>
+          
+          <p style="color: #333;">Hola <b>{nombre_usuario}</b>,</p>
+          <p style="color: #333; line-height: 1.5;">
+            Tu cuenta ha sido <b>bloqueada temporalmente</b> debido a múltiples intentos fallidos de inicio de sesión.
+          </p>
+          
+          <p style="color: #333; line-height: 1.5;">
+            ⏳ Por seguridad, restablece tu contraseña haciendo clic en el siguiente botón:
+          </p>
+
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="{reset_link}" 
+              style="background-color: #1a73e8; color: white; padding: 12px 24px; 
+                     border-radius: 8px; text-decoration: none; font-weight: bold; 
+                     font-size: 15px; display: inline-block;">
+              Restablecer contraseña
+            </a>
+          </div>
+
+          <p style="color: #555; font-size: 14px;">
+            ⚠️ Si no intentaste iniciar sesión, cambia tu contraseña inmediatamente para proteger tu cuenta.
+          </p>
+
+          <hr style="border: none; border-top: 1px solid #eee; margin: 25px 0;">
+          <p style="color: #777; font-size: 13px; text-align: center;">
+            Saludos,<br>
+            <b>El equipo de Soporte de Plaze</b>
+          </p>
+        </div>
+      </body>
+    </html>
+    """, "html")
+
     msg["Subject"] = "❌ Cuenta bloqueada temporalmente"
-    msg["From"] = os.getenv("EMAIL_USER")
+    msg["From"] = f"Plaze Soporte <{os.getenv('EMAIL_USER')}>"
     msg["To"] = correo
 
     try:
@@ -46,4 +77,5 @@ def enviar_correo_bloqueo(correo: str, nombre_usuario: str):
         print(f"Error sending lock email: {e}")
     finally:
         db.close()
+
 

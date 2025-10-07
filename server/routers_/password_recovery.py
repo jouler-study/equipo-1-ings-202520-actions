@@ -33,6 +33,7 @@ class ResetPassword(BaseModel):
 #   Password Recovery (POST)    #
 # ----------------------------- #
 @router.post("/recover/{correo}")
+@router.post("/recover/{correo}")
 def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
     """
     Starts the password recovery process.
@@ -54,18 +55,65 @@ def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
     # Generate token and link using the utility function
     token, reset_link = crear_enlace_recuperacion(usuario, db)
 
-    # Create email message
-    msg = MIMEText(
-        f"Hola {usuario.nombre},\n\n"
-        f"✨ Hemos recibido una solicitud para restablecer tu contraseña.\n"
-        f"Por favor, haz clic en el siguiente enlace para continuar:\n"
-        f"{reset_link}\n\n"
-        f"⏰ Este enlace expirará en 1 hora.\n\n"
-        f"Si no solicitaste este cambio, puedes ignorar este mensaje.\n\n"
-        f"Saludos,\nEl equipo de Soporte de Plaze"
-    )
+    # Create HTML email message (table-based for consistent layout)
+    msg = MIMEText(f"""
+<html>
+  <body style="margin: 0; padding: 0; background-color: #f4f6f8;">
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+      <tr>
+        <td align="center" style="padding: 40px 0;">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="480" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            <tr>
+              <td style="padding: 30px 40px; font-family: Arial, sans-serif; color: #333;">
+                
+                <h2 style="color: #1a73e8; text-align: center; margin-top: 0;">
+                  🔐 Recuperación de contraseña
+                </h2>
+                
+                <p>Hola <b>{usuario.nombre}</b>,</p>
+
+                <p style="line-height: 1.6;">
+                  Hemos recibido una solicitud para restablecer tu contraseña.<br>
+                  Por favor, haz clic en el botón de abajo para continuar:
+                </p>
+
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: 30px auto;">
+                  <tr>
+                    <td align="center" bgcolor="#1a73e8" style="border-radius: 8px;">
+                      <a href="{reset_link}" target="_blank" 
+                        style="display: inline-block; padding: 12px 24px; font-size: 16px; 
+                               font-weight: bold; color: #ffffff; text-decoration: none; 
+                               border-radius: 8px;">
+                        Restablecer contraseña
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="color: #555; font-size: 14px;">
+                  ⏰ Este enlace expirará en <b>1 hora</b>.<br>
+                  Si no solicitaste este cambio, puedes ignorar este mensaje.
+                </p>
+
+                <hr style="border: none; border-top: 1px solid #eee; margin: 25px 0;">
+
+                <p style="color: #777; font-size: 13px; text-align: center;">
+                  Saludos,<br>
+                  <b>El equipo de Soporte de Plaze</b>
+                </p>
+
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+""", "html")
+
     msg["Subject"] = "🔐 Recuperación de contraseña"
-    msg["From"] = os.getenv("EMAIL_USER")
+    msg["From"] = f"Plaze Soporte <{os.getenv('EMAIL_USER')}>"
     msg["To"] = correo
 
     # Send email via Gmail SMTP
@@ -77,6 +125,7 @@ def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=f"Error en el envío del email: {e}")
 
     return {"message": "Correo de recuperación de contraseña enviado exitosamente"}
+
 
 # ------------------------ #
 #   Reset Password Endpoint #
