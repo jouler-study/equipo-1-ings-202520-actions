@@ -16,6 +16,16 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
+def get_db():
+    """
+    Dependency function to get a database session.
+    """
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 

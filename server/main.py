@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from routers_ import auth, password_recovery
 from database import Base, engine
+from dotenv import load_dotenv
+load_dotenv()
 
 # Create tables if they do not exist
 Base.metadata.create_all(bind=engine)

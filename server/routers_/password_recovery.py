@@ -114,8 +114,9 @@ def reset_password(token: str, body: ResetPassword, db: Session = Depends(get_db
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
     # Update the password
-    usuario.contrasena = argon2.hash(body.nueva_contrasena)
+    usuario.contrasena_hash = argon2.hash(body.nueva_contrasena)
     enlace.usado = True
     db.commit()
+    db.refresh(usuario)
 
     return {"message": "Contraseña restablecida exitosamente"}

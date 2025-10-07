@@ -3,7 +3,7 @@
 Authentication routes: login, logout and token-protected utilities.
 """
 
-from fastapi import APIRouter, Depends, HTTPException, Header
+from fastapi import APIRouter, Depends, HTTPException,Header,BackgroundTasks,Security
 from sqlalchemy.orm import Session
 from database import SessionLocal
 from models import Usuario
@@ -13,9 +13,7 @@ from datetime import datetime, timedelta
 from typing import Optional
 from jose import JWTError
 from jwt_manager import create_access_token, verify_token
-from fastapi import Header
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from fastapi import Security
 from utils.email_utils import enviar_correo_bloqueo
 
 
@@ -103,15 +101,20 @@ def get_current_user_from_token(authorization: Optional[str] = Header(None)) -> 
 # Authenticates a user and returns a valid JWT token.
 # Locks the account for 15 minutes after 3 failed attempts.
 # Resets failed attempts after successful login.
-# Sends an email notification when the account is locked.
+# Sends an email notification when the account is locked
 @router.post("/login")
-def login(user: UserLogin, db: Session = Depends(get_db)):
+def login(
+    user: UserLogin,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db)
+):
     """
     Authenticate user and return a valid JWT token.
     - Temporary lock after 3 failed login attempts (15 minutes).
     - Reset failed attempts after successful login.
     - Send email notification on account lock.
     """
+
     # Search user by email
     usuario = db.query(Usuario).filter(Usuario.correo == user.correo).first()
     if not usuario:
@@ -121,7 +124,7 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
     if usuario.cuenta_bloqueada_hasta and usuario.cuenta_bloqueada_hasta > datetime.utcnow():
         raise HTTPException(
             status_code=403,
-            detail="Cuenta bloqueada temporalmente. Revisa tu correo."
+            detail="Cuenta bloqueada temporalmente. Revisa tu correo electrónico."
         )
 
     # Verify password
@@ -133,12 +136,12 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
             usuario.cuenta_bloqueada_hasta = datetime.utcnow() + timedelta(minutes=15)
             db.commit()
 
-            # 🔔 Send account lock notification email
-            enviar_correo_bloqueo(usuario.correo, usuario.nombre)
+            # 🔔 Send account lock notification email in background
+            enviar_correo_bloqueo( usuario.correo, usuario.nombre)
 
             raise HTTPException(
                 status_code=403,
-                detail="Cuenta bloqueada por múltiples intentos. Revisa tu correo."
+                detail="Cuenta bloqueada por múltiples intentos fallidos. Revisa tu correo electrónico."
             )
 
         db.commit()
@@ -150,17 +153,18 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
     db.commit()
 
     # Create JWT token with user data
-    role = usuario.rol if hasattr(usuario, "rol") else "usuario"
+    role = usuario.rol if hasattr(usuario, "rol") else "user"
     token_data = {"sub": usuario.correo, "rol": role}
     token = create_access_token(data=token_data)
 
     return {
-        "message": "Inicio de sesión exitoso",
+        "mensaje": "Inicio de sesión exitoso",
         "usuario": usuario.correo,
         "rol": role,
         "access_token": token,
-        "token_type": "bearer"
+        "tipo_token": "bearer"
     }
+
 
 
 # ===============================
