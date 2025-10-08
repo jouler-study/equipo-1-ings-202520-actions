@@ -1,5 +1,4 @@
 
-
 # 🔐 Plaze Login API
 
 ## 🚀 Setup
@@ -62,6 +61,12 @@ The API documentation is available at:
 ```
 
 📌 The `access_token` is returned in the response after login — this is the token you will use to log out.
+
+**Account Lock Test:**
+
+* To test the account block feature, enter the **wrong password 3 times**.
+* A recovery email will be sent to the user.
+* You can register using your own email or with already existing emails for testing.
 
 ---
 
@@ -128,5 +133,3 @@ Add it in the **lock icon (Authorize)** in Swagger, then click **Close**.
 ```json
 { "message": "Password reset successfully" }
 ```
-
----
