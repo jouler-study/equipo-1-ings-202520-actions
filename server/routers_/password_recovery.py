@@ -9,6 +9,7 @@ from database import SessionLocal
 from models import Usuario
 from utils.password_utils import crear_enlace_recuperacion
 from passlib.hash import argon2
+import re
 
 router = APIRouter(prefix="/password")
 
@@ -127,6 +128,20 @@ def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
     return {"message": "Correo de recuperación de contraseña enviado exitosamente"}
 
 
+import re
+from fastapi import HTTPException, Depends
+from sqlalchemy.orm import Session
+from passlib.hash import argon2
+from models import Usuario, EnlaceCorreo
+from datetime import datetime
+
+# ------------------------ #
+#   Validación de contraseña
+# ------------------------ #
+def validate_password(password: str) -> bool:
+    regex = r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$'
+    return re.match(regex, password) is not None
+
 # ------------------------ #
 #   Reset Password Endpoint #
 # ------------------------ #
@@ -141,20 +156,17 @@ def reset_password(token: str, body: ResetPassword, db: Session = Depends(get_db
         db (Session): Database session.
 
     Raises:
-        HTTPException: If the link is invalid, expired, or already used.
+        HTTPException: If the link is invalid, expired, already used, or password invalid.
 
     Returns:
         dict: Success message.
     """
-    from models import EnlaceCorreo
-
     enlace = db.query(EnlaceCorreo).filter(EnlaceCorreo.enlace_url == token).first()
 
     if not enlace:
         raise HTTPException(status_code=404, detail="Link inválido")
     if enlace.usado:
         raise HTTPException(status_code=400, detail="Link ya fue usado")
-    from datetime import datetime
     if enlace.expira_en < datetime.utcnow():
         raise HTTPException(status_code=400, detail="El link ha expirado")
 
@@ -162,10 +174,18 @@ def reset_password(token: str, body: ResetPassword, db: Session = Depends(get_db
     if not usuario:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
-    # Update the password
+    # Validar la nueva contraseña
+    if not validate_password(body.nueva_contrasena):
+        raise HTTPException(
+            status_code=400,
+            detail="La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial (!@#$%^&*)"
+        )
+
+    # Actualizar la contraseña
     usuario.contrasena_hash = argon2.hash(body.nueva_contrasena)
     enlace.usado = True
     db.commit()
     db.refresh(usuario)
 
     return {"message": "Contraseña restablecida exitosamente"}
+
