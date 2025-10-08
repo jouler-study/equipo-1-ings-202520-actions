@@ -17,18 +17,28 @@ This module implements a **user registration system** using **FastAPI**, **Supab
 ## 🧰 Requirements
 
 ### Python version
-- Python **3.10+**
+- Python **3.11+**
+-Access to an account and project in Supabase
+-Environment variables configured correctly
 
 ### Dependencies
 Make sure you have **pip** installed, then run:
 
-```bash
-pip install fastapi uvicorn supabase passlib[bcrypt] python-dotenv
+```PowerShell
+pip install fastapi "uvicorn[standard]" supabase passlib[bcrypt] python-dotenv "pydantic[email]"
 ```
 
 > 💡 If you encounter errors with `bcrypt`, try:
-```bash
+```PowerShell
 pip install --upgrade passlib bcrypt
+```
+
+> 💡 If you encounter errors with `uvicorn`:
+WARNING: The script uvicorn.exe is installed in 'C:\Users\<tu_usuario>\AppData\Roaming\Python\Python313\Scripts' which is not on PATH.
+
+Add that path to your PATH or use the following alternative command to run the server:
+```
+python -m uvicorn server.user_registration:app --reload
 ```
 
 ---
@@ -49,6 +59,11 @@ Example `.gitignore`:
 __pycache__/
 *.pyc
 .env
+```
+
+> ⚠️ Ensure that the URL begins with https://, or the following error will appear:
+```
+supabase._sync.client.SupabaseException: Invalid URL
 ```
 
 ---
@@ -72,8 +87,12 @@ EQUIPO-1-INGS-202520/
 
 From the **root directory** of your project, run:
 
-```bash
+```Powershell
+# Opción 1 (si uvicorn está en PATH)
 uvicorn server.user_registration:app --reload
+
+# Opción 2 (alternativa recomendada en Windows)
+python -m uvicorn server.user_registration:app --reload
 ```
 
 Then open your browser or API tool (like Postman) and go to:
