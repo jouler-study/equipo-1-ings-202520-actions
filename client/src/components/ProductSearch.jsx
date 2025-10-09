@@ -9,8 +9,8 @@ const ProductSearch = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (searchData.product.trim()) {
-      console.log('Búsqueda realizada:', searchData.product)
-      // Aquí se conectará con la base de datos en el futuro
+      console.log('Search performed:', searchData.product)
+      // Will connect to database in the future
     }
   }
 

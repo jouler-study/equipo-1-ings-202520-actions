@@ -49,7 +49,7 @@ const PriceResults = ({ results }) => {
     return `${sign}${change}%`
   }
 
-  // Ordenar precios de menor a mayor
+  // Sort prices from lowest to highest
   const sortedPrices = [...results.prices].sort((a, b) => a.price - b.price)
 
   return (

@@ -1,9 +1,9 @@
 import axios from 'axios'
 
-// Configuración base de la API
+// Base API configuration
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
 
-// Crear instancia de axios con configuración base
+// Create axios instance with base configuration
 const api = axios.create({
   baseURL: API_BASE_URL,
   timeout: 10000,
@@ -12,7 +12,7 @@ const api = axios.create({
   },
 })
 
-// Interceptor para manejar errores globalmente
+// Interceptor to handle errors globally
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -21,9 +21,9 @@ api.interceptors.response.use(
   }
 )
 
-// Servicios de la API
+// API Services
 export const productService = {
-  // Consultar precios actuales (F-01)
+  // Query current prices (F-01)
   getCurrentPrices: async (product, city, plaza = '') => {
     try {
       const params = {
@@ -35,11 +35,11 @@ export const productService = {
       const response = await api.get('/prices/current', { params })
       return response.data
     } catch (error) {
-      throw new Error(`Error al consultar precios: ${error.message}`)
+      throw new Error(`Error querying prices: ${error.message}`)
     }
   },
 
-  // Obtener historial de precios (F-02)
+  // Get price history (F-02)
   getPriceHistory: async (product, city, plaza = '', months = 12) => {
     try {
       const params = {
@@ -52,11 +52,11 @@ export const productService = {
       const response = await api.get('/prices/history', { params })
       return response.data
     } catch (error) {
-      throw new Error(`Error al obtener historial: ${error.message}`)
+      throw new Error(`Error getting history: ${error.message}`)
     }
   },
 
-  // Obtener predicciones de precios (F-03)
+  // Get price predictions (F-03)
   getPricePredictions: async (product, city, plaza = '', months = 3) => {
     try {
       const params = {
@@ -69,11 +69,11 @@ export const productService = {
       const response = await api.get('/prices/predictions', { params })
       return response.data
     } catch (error) {
-      throw new Error(`Error al obtener predicciones: ${error.message}`)
+      throw new Error(`Error getting predictions: ${error.message}`)
     }
   },
 
-  // Buscar productos (F-11)
+  // Search products (F-11)
   searchProducts: async (query) => {
     try {
       const response = await api.get('/products/search', {
@@ -81,11 +81,11 @@ export const productService = {
       })
       return response.data
     } catch (error) {
-      throw new Error(`Error al buscar productos: ${error.message}`)
+      throw new Error(`Error searching products: ${error.message}`)
     }
   },
 
-  // Obtener sugerencias de búsqueda (F-12)
+  // Get search suggestions (F-12)
   getSearchSuggestions: async (query) => {
     try {
       const response = await api.get('/products/suggestions', {
@@ -93,13 +93,13 @@ export const productService = {
       })
       return response.data
     } catch (error) {
-      throw new Error(`Error al obtener sugerencias: ${error.message}`)
+      throw new Error(`Error getting suggestions: ${error.message}`)
     }
   }
 }
 
 export const plazaService = {
-  // Obtener plazas de mercado (F-23)
+  // Get market plazas (F-23)
   getPlazas: async (city = 'Medellín') => {
     try {
       const response = await api.get('/plazas', {
@@ -107,33 +107,33 @@ export const plazaService = {
       })
       return response.data
     } catch (error) {
-      throw new Error(`Error al obtener plazas: ${error.message}`)
+      throw new Error(`Error getting plazas: ${error.message}`)
     }
   },
 
-  // Obtener información detallada de una plaza (F-23)
+  // Get detailed plaza information (F-23)
   getPlazaDetails: async (plazaId) => {
     try {
       const response = await api.get(`/plazas/${plazaId}`)
       return response.data
     } catch (error) {
-      throw new Error(`Error al obtener detalles de la plaza: ${error.message}`)
+      throw new Error(`Error getting plaza details: ${error.message}`)
     }
   }
 }
 
 export const statsService = {
-  // Obtener estadísticas rápidas (F-14)
+  // Get quick statistics (F-14)
   getQuickStats: async () => {
     try {
       const response = await api.get('/stats/quick')
       return response.data
     } catch (error) {
-      throw new Error(`Error al obtener estadísticas: ${error.message}`)
+      throw new Error(`Error getting statistics: ${error.message}`)
     }
   },
 
-  // Obtener variaciones de precios (F-14)
+  // Get price variations (F-14)
   getPriceVariations: async (period = 'week') => {
     try {
       const response = await api.get('/stats/variations', {
@@ -141,7 +141,7 @@ export const statsService = {
       })
       return response.data
     } catch (error) {
-      throw new Error(`Error al obtener variaciones: ${error.message}`)
+      throw new Error(`Error getting variations: ${error.message}`)
     }
   }
 }

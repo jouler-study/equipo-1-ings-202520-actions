@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="py-12" style={{ backgroundColor: 'rgba(76, 167, 114, 0.7)' }}>
       <div className="container">
         <div className="flex justify-center flex-wrap gap-12">
-          {/* Enlaces del footer */}
+          {/* Footer links */}
           <a 
             href="#" 
             className="text-white text-lg font-medium hover:text-gray-200 transition-colors px-6 py-3 border-2 border-white border-opacity-50 rounded-xl hover:bg-white hover:bg-opacity-20 shadow-lg"

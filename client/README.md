@@ -1,142 +1,218 @@
-# PLAZE - Cliente Frontend
+# PLAZE - Frontend Client
 
-Aplicación web para consulta de precios de productos en plazas de mercado de Medellín.
+Web application for querying product prices in Medellín's market plazas.
 
-## 🚀 Características
+## 🚀 Features
 
-- **Consulta de precios actuales** (F-01): Busca precios por producto, ciudad y plaza
-- **Comparación de precios**: Compara precios entre diferentes plazas
-- **Interfaz intuitiva**: Diseño centrado en la usabilidad (NF-01)
-- **Responsive**: Adaptable a diferentes dispositivos
-- **Búsqueda rápida**: Con sugerencias automáticas
+- **Current price queries** (F-01): Search prices by product, city, and plaza
+- **Price comparison**: Compare prices between different plazas
+- **Intuitive interface**: Usability-focused design (NF-01)
+- **Responsive**: Adaptable to different devices
+- **Quick search**: With automatic suggestions
 
-## 🛠️ Tecnologías
+## 🛠️ Technologies
 
-- **React 18** - Framework principal
-- **Vite** - Herramienta de construcción
-- **React Router** - Navegación
-- **Axios** - Cliente HTTP
-- **Lucide React** - Iconos
-- **CSS3** - Estilos personalizados
+- **React 18** - Main framework
+- **Vite** - Build tool
+- **React Router** - Navigation
+- **Axios** - HTTP client
+- **Lucide React** - Icons
+- **CSS3** - Custom styles
 
-## 📦 Instalación
+---
 
-1. **Instalar dependencias:**
-   ```bash
-   npm install
-   ```
+## 📋 Prerequisites
 
-2. **Configurar variables de entorno:**
-   Crear archivo `.env` en la raíz del proyecto:
-   ```env
-   VITE_API_URL=http://localhost:8000/api
-   ```
+- **Node.js** (version 16 or higher)
+- **npm** (comes with Node.js)
+- **Backend server** running on `http://localhost:8000`
 
-3. **Ejecutar en modo desarrollo:**
-   ```bash
-   npm run dev
-   ```
+---
 
-4. **Abrir en el navegador:**
-   http://localhost:3000
+## 🚀 Installation and Execution
 
-## 🏗️ Estructura del Proyecto
+### 1. Install Dependencies
+```bash
+cd client
+npm install
+```
+
+### 2. Configure Environment Variables
+Create a `.env` file in the `client` folder:
+```env
+VITE_API_URL=http://localhost:8000/api
+```
+
+### 3. Run in Development Mode
+```bash
+npm run dev
+```
+
+### 4. Open in Browser
+- URL: http://localhost:3000
+- The development server runs on port 3000
+
+---
+
+## 🔧 Available Scripts
+
+- `npm run dev` - Development server with hot reload
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run code linter
+
+---
+
+## 📱 Implemented Features
+
+### ✅ Completed
+- [x] Project base structure
+- [x] Product search component
+- [x] Price results visualization
+- [x] Responsive design
+- [x] API integration (ready to connect)
+- [x] Quick statistics
+- [x] Error handling with fallback to sample data
+
+### 🔄 In Progress
+- [ ] Real server connection
+- [ ] Improved error handling
+- [ ] Loading states
+- [ ] Form validation
+
+### 📝 Pending
+- [ ] Price history (F-02)
+- [ ] Predictions (F-03)
+- [ ] Comparison between plazas (F-04)
+- [ ] User authentication (F-05, F-06)
+- [ ] Custom baskets (F-07)
+
+---
+
+## 🏗️ Project Structure
 
 ```
-src/
-├── components/          # Componentes reutilizables
-│   ├── Header.jsx      # Cabecera de la aplicación
-│   ├── Footer.jsx      # Pie de página
-│   ├── ProductSearch.jsx  # Formulario de búsqueda
-│   ├── PriceResults.jsx   # Resultados de precios
-│   └── QuickStats.jsx     # Estadísticas rápidas
-├── pages/              # Páginas principales
-│   └── HomePage.jsx    # Página principal
-├── config/             # Configuración
-│   └── api.js          # Servicios de API
-├── App.jsx             # Componente raíz
-├── main.jsx            # Punto de entrada
-└── index.css           # Estilos globales
+client/
+├── src/
+│   ├── components/          # Reusable components
+│   │   ├── Header.jsx       # Application header
+│   │   ├── Footer.jsx       # Footer
+│   │   ├── ProductSearch.jsx  # Search form
+│   │   ├── PriceResults.jsx   # Price results
+│   │   └── QuickStats.jsx     # Quick statistics
+│   ├── pages/               # Main pages
+│   │   └── HomePage.jsx     # Home page
+│   ├── config/              # Configuration
+│   │   └── api.js           # API services
+│   ├── App.jsx              # Root component
+│   ├── main.jsx             # Entry point
+│   └── index.css            # Global styles
+├── public/                  # Static files
+│   └── client_images/       # Images
+├── package.json             # Dependencies
+├── vite.config.js           # Vite configuration
+└── index.html               # Main HTML
 ```
+
+---
 
 ## 🔌 API Endpoints
 
-El cliente se conecta con los siguientes endpoints del servidor:
+The client connects to the following server endpoints:
 
-### Consulta de Precios (F-01)
-- `GET /api/prices/current` - Precios actuales
-- `GET /api/prices/history` - Historial de precios
-- `GET /api/prices/predictions` - Predicciones
+### Price Queries (F-01)
+- `GET /api/prices/current` - Current prices
+- `GET /api/prices/history` - Price history
+- `GET /api/prices/predictions` - Predictions
 
-### Productos
-- `GET /api/products/search` - Búsqueda de productos
-- `GET /api/products/suggestions` - Sugerencias de búsqueda
+### Products
+- `GET /api/products/search` - Product search
+- `GET /api/products/suggestions` - Search suggestions
 
-### Plazas de Mercado
-- `GET /api/plazas` - Lista de plazas
-- `GET /api/plazas/{id}` - Detalles de plaza
+### Market Plazas
+- `GET /api/plazas` - List of plazas
+- `GET /api/plazas/{id}` - Plaza details
 
-### Estadísticas
-- `GET /api/stats/quick` - Estadísticas rápidas
-- `GET /api/stats/variations` - Variaciones de precios
+### Statistics
+- `GET /api/stats/quick` - Quick statistics
+- `GET /api/stats/variations` - Price variations
 
-## 🎨 Diseño
+---
 
-El diseño sigue las especificaciones de Figma y cumple con los requisitos de usabilidad (NF-01):
+## 🎨 Design
 
-- **Colores principales**: Azul (#3b82f6), Verde (#10b981)
-- **Tipografía**: Inter (sistema de fuentes)
-- **Espaciado**: Sistema de 8px
-- **Componentes**: Cards, botones, formularios consistentes
+The design follows Figma specifications and complies with usability requirements (NF-01):
 
-## 📱 Responsive Design
+- **Main colors**: Blue (#3b82f6), Green (#10b981)
+- **Typography**: Inter (system fonts)
+- **Spacing**: 8px system
+- **Components**: Consistent cards, buttons, and forms
 
-- **Mobile First**: Diseño optimizado para móviles
+### Responsive Design
+- **Mobile First**: Mobile-optimized design
 - **Breakpoints**: 640px, 768px, 1024px
-- **Grid System**: CSS Grid y Flexbox
+- **Grid System**: CSS Grid and Flexbox
 
-## 🚀 Scripts Disponibles
+---
 
-- `npm run dev` - Servidor de desarrollo
-- `npm run build` - Construcción para producción
-- `npm run preview` - Vista previa de producción
-- `npm run lint` - Linter de código
+## 🔧 Server Configuration
 
-## 🔧 Configuración del Servidor
-
-Para que el cliente funcione correctamente, el servidor debe estar ejecutándose en:
+For the client to work correctly, the server must be running on:
 - **URL**: http://localhost:8000
-- **CORS**: Configurado para permitir requests desde http://localhost:3000
+- **CORS**: Configured to allow requests from http://localhost:3000
 
-## 📋 Funcionalidades Implementadas
+---
 
-### ✅ Completadas
-- [x] Estructura base del proyecto
-- [x] Componente de búsqueda de productos
-- [x] Visualización de resultados de precios
-- [x] Diseño responsive
-- [x] Integración con API (preparada)
+## 🐛 Troubleshooting
 
-### 🔄 En Progreso
-- [ ] Conexión real con el servidor
-- [ ] Manejo de errores mejorado
-- [ ] Loading states
-- [ ] Validación de formularios
+### Server Connection Error
+If the server is unavailable, the frontend will display:
+- A warning message
+- Sample data for demonstration
+- Full functionality in offline mode
 
-### 📝 Pendientes
-- [ ] Historial de precios (F-02)
-- [ ] Predicciones (F-03)
-- [ ] Comparación entre plazas (F-04)
-- [ ] Autenticación de usuarios (F-05, F-06)
-- [ ] Canastas personalizadas (F-07)
+### Port in Use
+If port 3000 is occupied:
+```bash
+# Vite will automatically use the next available port
+# Or you can specify a different port:
+npm run dev -- --port 3001
+```
 
-## 🤝 Contribución
+### CORS Issues
+Make sure the backend server has CORS configured to allow requests from `http://localhost:3000`.
 
-1. Crear una rama para la nueva funcionalidad
-2. Implementar los cambios
-3. Probar la funcionalidad
-4. Crear un Pull Request
+---
 
-## 📄 Licencia
+## 🎯 Next Steps
 
-Proyecto académico - Universidad Pontificia Bolivariana
+1. **Connect with real server** when available
+2. **Implement authentication** (F-05, F-06)
+3. **Add price history** (F-02)
+4. **Implement predictions** (F-03)
+5. **Add custom baskets** (F-07)
+
+---
+
+## 🤝 Contributing
+
+1. Create a branch for the new feature
+2. Implement changes
+3. Test functionality
+4. Create a Pull Request
+
+---
+
+## 📞 Support
+
+For issues or questions:
+- Check the browser console for errors
+- Verify that the backend server is running
+- Consult the API documentation on the server
+
+---
+
+## 📄 License
+
+Academic project - Universidad Pontificia Bolivariana
+
