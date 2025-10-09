@@ -6,7 +6,7 @@ Authentication routes: login, logout and token-protected utilities.
 from fastapi import APIRouter, Depends, HTTPException,Header,BackgroundTasks,Security
 from sqlalchemy.orm import Session
 from database import SessionLocal
-from models import Usuario
+from models import User
 from pydantic import BaseModel, EmailStr
 from passlib.hash import argon2
 from datetime import datetime, timedelta
@@ -14,7 +14,7 @@ from typing import Optional
 from jose import JWTError
 from jwt_manager import create_access_token, verify_token
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from utils.email_utils import enviar_correo_bloqueo
+from utils.email_utils import send_lock_email
 
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
@@ -116,7 +116,8 @@ def login(
     """
 
     # Search user by email
-    usuario = db.query(Usuario).filter(Usuario.correo == user.correo).first()
+    print("ATRIBUTOS DEL OBJETO user:", User.__dict__)
+    usuario = db.query(User).filter(User.correo == user.correo).first()
     if not usuario:
         raise HTTPException(status_code=400, detail="Correo o contraseña incorrectos")
 
@@ -137,7 +138,7 @@ def login(
             db.commit()
 
             # 🔔 Send account lock notification email in background
-            enviar_correo_bloqueo( usuario.correo, usuario.nombre)
+            send_lock_email( usuario.correo, usuario.nombre)
 
             raise HTTPException(
                 status_code=403,

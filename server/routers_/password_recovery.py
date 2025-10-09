@@ -1,4 +1,3 @@
-# password_recovery.py
 import os
 import smtplib
 from email.mime.text import MIMEText
@@ -6,10 +5,11 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, EmailStr
 from database import SessionLocal
-from models import Usuario
-from utils.password_utils import crear_enlace_recuperacion
+from models import User, EmailLink
+from utils.password_utils import create_password_recovery_link
 from passlib.hash import argon2
 import re
+from datetime import datetime
 
 router = APIRouter(prefix="/password")
 
@@ -24,16 +24,17 @@ def get_db():
     finally:
         db.close()
 
+
 # --------------------------- #
 #   Pydantic Input Model      #
 # --------------------------- #
 class ResetPassword(BaseModel):
     nueva_contrasena: str
 
+
 # ----------------------------- #
 #   Password Recovery (POST)    #
 # ----------------------------- #
-@router.post("/recover/{correo}")
 @router.post("/recover/{correo}")
 def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
     """
@@ -49,12 +50,12 @@ def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
     Returns:
         dict: Message indicating that the recovery email has been sent.
     """
-    usuario = db.query(Usuario).filter(Usuario.correo == correo).first()
-    if not usuario:
+    user = db.query(User).filter(User.correo == correo).first()
+    if not user:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
     # Generate token and link using the utility function
-    token, reset_link = crear_enlace_recuperacion(usuario, db)
+    token, reset_link = create_password_recovery_link(user, db)
 
     # Create HTML email message (table-based for consistent layout)
     msg = MIMEText(f"""
@@ -71,7 +72,7 @@ def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
                   🔐 Recuperación de contraseña
                 </h2>
                 
-                <p>Hola <b>{usuario.nombre}</b>,</p>
+                <p>Hola <b>{user.nombre}</b>,</p>
 
                 <p style="line-height: 1.6;">
                   Hemos recibido una solicitud para restablecer tu contraseña.<br>
@@ -128,19 +129,13 @@ def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
     return {"message": "Correo de recuperación de contraseña enviado exitosamente"}
 
 
-import re
-from fastapi import HTTPException, Depends
-from sqlalchemy.orm import Session
-from passlib.hash import argon2
-from models import Usuario, EnlaceCorreo
-from datetime import datetime
-
 # ------------------------ #
-#   Validación de contraseña
+#   Password Validation    #
 # ------------------------ #
 def validate_password(password: str) -> bool:
     regex = r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$'
     return re.match(regex, password) is not None
+
 
 # ------------------------ #
 #   Reset Password Endpoint #
@@ -161,17 +156,17 @@ def reset_password(token: str, body: ResetPassword, db: Session = Depends(get_db
     Returns:
         dict: Success message.
     """
-    enlace = db.query(EnlaceCorreo).filter(EnlaceCorreo.enlace_url == token).first()
+    link = db.query(EmailLink).filter(EmailLink.enlace_url == token).first()
 
-    if not enlace:
+    if not link:
         raise HTTPException(status_code=404, detail="Link inválido")
-    if enlace.usado:
+    if link.usado:
         raise HTTPException(status_code=400, detail="Link ya fue usado")
-    if enlace.expira_en < datetime.utcnow():
+    if link.expira_en < datetime.utcnow():
         raise HTTPException(status_code=400, detail="El link ha expirado")
 
-    usuario = db.query(Usuario).filter(Usuario.usuario_id == enlace.usuario_id).first()
-    if not usuario:
+    user = db.query(User).filter(User.usuario_id == link.usuario_id).first()
+    if not user:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
     # Validar la nueva contraseña
@@ -181,11 +176,11 @@ def reset_password(token: str, body: ResetPassword, db: Session = Depends(get_db
             detail="La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial (!@#$%^&*)"
         )
 
-    # Actualizar la contraseña
-    usuario.contrasena_hash = argon2.hash(body.nueva_contrasena)
-    enlace.usado = True
+    # Actualizar la contraseña y marcar el enlace como usado
+    user.contrasena_hash = argon2.hash(body.nueva_contrasena)
+    link.usado = True
     db.commit()
-    db.refresh(usuario)
+    db.refresh(user)
 
     return {"message": "Contraseña restablecida exitosamente"}
 

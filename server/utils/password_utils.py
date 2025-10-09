@@ -1,26 +1,36 @@
-# password_utils.py
 import uuid
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
-from models import Usuario, EnlaceCorreo
+from models import User, EmailLink
 
-def crear_enlace_recuperacion(usuario: Usuario, db: Session, tipo="recuperacion_password", expiracion_horas=1):
+def create_password_recovery_link(user: User, db: Session, link_type: str = "recuperacion_password", expiration_hours: int = 1):
     """
-    Creates a password recovery token and saves it in the database.
-    Returns the generated token and the reset URL.
+    Create a password recovery token and persist it in the DB.
+
+    Args:
+        user (User): SQLAlchemy User instance (columns are in Spanish).
+        db (Session): SQLAlchemy session.
+        link_type (str): type of the link (keeps Spanish default to match DB).
+        expiration_hours (int): hours until token expiration.
+
+    Returns:
+        (token: str, reset_link: str)
     """
     token = str(uuid.uuid4())
-    expira = datetime.utcnow() + timedelta(hours=expiracion_horas)
+    expires_at = datetime.utcnow() + timedelta(hours=expiration_hours)
 
-    enlace = EnlaceCorreo(
-        usuario_id=usuario.usuario_id,
+    email_link = EmailLink(
+        usuario_id=user.usuario_id,
         enlace_url=token,
-        tipo=tipo,
-        expira_en=expira,
+        tipo=link_type,
+        expira_en=expires_at,
         usado=False
     )
-    db.add(enlace)
+
+    db.add(email_link)
     db.commit()
+    db.refresh(email_link)
 
     reset_link = f"http://localhost:8000/password/reset/{token}"
     return token, reset_link
+

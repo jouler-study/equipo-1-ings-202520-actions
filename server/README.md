@@ -18,6 +18,8 @@ DATABASE_URL=
 EMAIL_USER=
 EMAIL_PASS=
 SECRET_KEY=
+ALGORITHM =
+ACCESS_TOKEN_EXPIRE_MINUTES =
 ```
 
 Replace the values with the credentials shared by the team.
@@ -52,10 +54,10 @@ The API documentation is available at:
 
 ```json
 {
-  "message": "Login successful",
+  "message": "Inicio de sesión exitoso",
   "user": "user@example.com",
-  "role": "user",
-  "access_token": "eyJhbGciOi...",
+  "role": "usuario",
+  "access_token": "<JWT_TOKEN>",
   "token_type": "bearer"
 }
 ```
@@ -82,12 +84,12 @@ The API documentation is available at:
 Bearer <access_token>
 ```
 
-Add it in the **lock icon (Authorize)** in Swagger, then click **Close**.
+Add it in the **lock icon (Authorize)** in Swagger, then click **Close**. After that, click in Try it out and execute. The response should look like the example below:
 
 **Response:**
 
 ```json
-{ "message": "Logged out successfully" }
+{ "message": "Sesión cerrada correctamente" }
 ```
 
 ---
@@ -111,7 +113,7 @@ Add it in the **lock icon (Authorize)** in Swagger, then click **Close**.
 **Response:**
 
 ```json
-{ "message": "Password recovery email sent successfully" }
+{ "message": "Correo de recuperación de contraseña enviado exitosamente" }
 ```
 
 ---
@@ -131,5 +133,5 @@ Add it in the **lock icon (Authorize)** in Swagger, then click **Close**.
 **Response:**
 
 ```json
-{ "message": "Password reset successfully" }
+{ "message": "Contraseña restablecida exitosamente" }
 ```

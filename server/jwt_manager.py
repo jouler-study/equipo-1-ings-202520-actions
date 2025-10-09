@@ -8,14 +8,15 @@ from datetime import datetime, timedelta
 from jose import JWTError, jwt
 import os
 from dotenv import load_dotenv
+from uuid import uuid4
 
 load_dotenv()
 
 # Get secret and algorithm from environment (fallback values for local dev)
 SECRET_KEY = os.getenv("SECRET_KEY")
-ALGORITHM = os.getenv("ALGORITHM", "HS256")
-# Default token lifetime: 2 hours 
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "120"))
+ALGORITHM = os.getenv("ALGORITHM")
+# Default token lifetime in minutes
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None) -> str:
@@ -29,7 +30,11 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None) -> s
     """
     to_encode = data.copy()
     expire = datetime.utcnow() + (expires_delta or timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES))
-    to_encode.update({"exp": expire})
+    to_encode.update({
+        "exp": expire,              # Expiration time of the token
+        "iat": datetime.utcnow(),   # Issued at: when the token was created
+        "jti": str(uuid4())         # Unique token identifier to ensure each token is distinct
+    })
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 

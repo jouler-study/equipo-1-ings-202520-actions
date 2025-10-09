@@ -1,28 +1,28 @@
-# emails_utils.py
+# email_utils.py
 from sqlalchemy.orm import Session
 from database import get_db
-from models import Usuario
+from models import User
 import smtplib
 from email.mime.text import MIMEText
-from utils.password_utils import crear_enlace_recuperacion
+from utils.password_utils import create_password_recovery_link
 import os
 
-def enviar_correo_bloqueo(correo: str, nombre_usuario: str):
+def send_lock_email(email: str, user_name: str):
     """
-    Sends an email notifying that the account has been temporarily blocked
+    Sends an email notifying that the account has been temporarily locked
     due to multiple failed login attempts, including a recovery link.
     """
 
-    # Create a new DB session inside the function
+    # Create a new database session inside the function
     db: Session = next(get_db())
-    usuario = db.query(Usuario).filter(Usuario.correo == correo).first()
-    if not usuario:
-        print(f"Usuario {correo} no encontrado para correo de bloqueo")
+    user = db.query(User).filter(User.correo == email).first()
+    if not user:
+        print(f"Usuario {email} no encontrado para correo de bloqueo")
         return
 
     # Create recovery link
     print("Generando enlace de recuperación...")
-    _, reset_link = crear_enlace_recuperacion(usuario, db)
+    _, reset_link = create_password_recovery_link(user, db)
     print("Link generado:", reset_link)
 
     # Compose HTML email
@@ -32,7 +32,7 @@ def enviar_correo_bloqueo(correo: str, nombre_usuario: str):
         <div style="max-width: 480px; background: #ffffff; margin: auto; border-radius: 12px; padding: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.08);">
           <h2 style="color: #d93025; text-align: center;">❌ Cuenta bloqueada temporalmente</h2>
           
-          <p style="color: #333;">Hola <b>{nombre_usuario}</b>,</p>
+          <p style="color: #333;">Hola <b>{user_name}</b>,</p>
           <p style="color: #333; line-height: 1.5;">
             Tu cuenta ha sido <b>bloqueada temporalmente</b> debido a múltiples intentos fallidos de inicio de sesión.
           </p>
@@ -66,16 +66,17 @@ def enviar_correo_bloqueo(correo: str, nombre_usuario: str):
 
     msg["Subject"] = "❌ Cuenta bloqueada temporalmente"
     msg["From"] = f"Plaze Soporte <{os.getenv('EMAIL_USER')}>"
-    msg["To"] = correo
+    msg["To"] = email
 
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(os.getenv("EMAIL_USER"), os.getenv("EMAIL_PASS"))
-            server.sendmail(os.getenv("EMAIL_USER"), correo, msg.as_string())
-        print(f"Lock email sent to {correo}")
+            server.sendmail(os.getenv("EMAIL_USER"), email, msg.as_string())
+        print(f"Correo de bloqueo enviado a {email}")
     except Exception as e:
-        print(f"Error sending lock email: {e}")
+        print(f"Error al enviar el correo de bloqueo: {e}")
     finally:
         db.close()
+
 
 
