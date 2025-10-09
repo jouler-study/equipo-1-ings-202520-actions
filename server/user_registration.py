@@ -35,7 +35,7 @@ async def validation_exception_handler(request, exc):
     for error in exc.errors():
         msg = error["msg"]
 
-        # Traducción de mensajes comunes de Pydantic
+        # Translate common pydantic error messages to Spanish
         if "field required" in msg:
             msg = "Este campo es obligatorio."
         elif "at least" in msg:
