@@ -3,7 +3,7 @@ from routers.prices import router as prices_router
 
 app = FastAPI(title="Market Prices API")
 
-# Incluimos el router
+# Router included
 app.include_router(prices_router)
 
 @app.get("/")
