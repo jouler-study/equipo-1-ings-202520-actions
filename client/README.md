@@ -73,9 +73,12 @@ npm run dev
 - [x] API integration (ready to connect)
 - [x] Quick statistics
 - [x] Error handling with fallback to sample data
+- [x] Login page (NF-01 Usability - User Authentication Frontend)
 
 ### 🔄 In Progress
 - [ ] Real server connection
+- [ ] Register page
+- [ ] Password recovery page
 - [ ] Improved error handling
 - [ ] Loading states
 - [ ] Form validation
@@ -84,7 +87,7 @@ npm run dev
 - [ ] Price history (F-02)
 - [ ] Predictions (F-03)
 - [ ] Comparison between plazas (F-04)
-- [ ] User authentication (F-05, F-06)
+- [ ] Backend authentication integration (F-05, F-06)
 - [ ] Custom baskets (F-07)
 
 ---
@@ -99,16 +102,18 @@ client/
 │   │   ├── Footer.jsx       # Footer
 │   │   ├── ProductSearch.jsx  # Search form
 │   │   ├── PriceResults.jsx   # Price results
-│   │   └── QuickStats.jsx     # Quick statistics
+│   │   ├── QuickStats.jsx     # Quick statistics
+│   │   └── UserMenu.jsx       # User menu
 │   ├── pages/               # Main pages
-│   │   └── HomePage.jsx     # Home page
+│   │   ├── HomePage.jsx     # Home page
+│   │   └── LoginPage.jsx    # Login page
 │   ├── config/              # Configuration
 │   │   └── api.js           # API services
-│   ├── App.jsx              # Root component
+│   ├── App.jsx              # Root component with routing
 │   ├── main.jsx             # Entry point
 │   └── index.css            # Global styles
 ├── public/                  # Static files
-│   └── client_images/       # Images
+│   └── client_images/       # Images and SVG icons
 ├── package.json             # Dependencies
 ├── vite.config.js           # Vite configuration
 └── index.html               # Main HTML
@@ -186,11 +191,12 @@ Make sure the backend server has CORS configured to allow requests from `http://
 
 ## 🎯 Next Steps
 
-1. **Connect with real server** when available
-2. **Implement authentication** (F-05, F-06)
-3. **Add price history** (F-02)
-4. **Implement predictions** (F-03)
-5. **Add custom baskets** (F-07)
+1. **Complete authentication pages** (Register, Password Recovery)
+2. **Connect with real server** when available
+3. **Implement backend authentication** (F-05, F-06)
+4. **Add price history** (F-02)
+5. **Implement predictions** (F-03)
+6. **Add custom baskets** (F-07)
 
 ---
 
