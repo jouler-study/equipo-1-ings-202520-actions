@@ -40,7 +40,9 @@ if not argon2.verify(user.contrasena, usuario.contrasena_hash):
 
 ### ✅ 2. Robust Password Validation
 - **Implemented**: Regex that requires minimum complexity.
-- **Location**: `password_recovery.py` line 142
+- **Location**: 
+- `user_registration.py` line 27
+- `password_recovery.py` line 142
 - **Requirements**:
   - Minimum 8 characters
   - At least 1 uppercase letter
@@ -96,6 +98,8 @@ if usuario.intentos_fallidos >= 3:
 - **Implemented**: 
   - **Token blacklist** (in-memory) to invalidate tokens after logout
   - Token verification on each protected request
+- **Note**: The in-memory token blacklist is cleared whenever the server restarts. 
+  - In future improvements, a distributed cache such as **Redis** could be used to persist token invalidation across multiple instances.
 - **Location**: `auth.py` lines 23-189
 
 ```python
@@ -145,22 +149,14 @@ def crear_enlace_recuperacion(usuario: Usuario, db: Session, tipo="recuperacion_
 ```
 
 ### ✅ 7. Sensitive Data Protection in Environment Variables
-- **Implemented**: Critical credentials outside source code.
+- **Implemented**: Critical credentials and security configurations are stored outside the source code.  
+  For example, tokens are signed using a secure HMAC-based algorithm (configurable via environment variables).
 - **Protected variables**:
   - `DATABASE_URL` (DB connection)
-  - `SECRET_KEY` (JWT signature)
+  - `SECRET_KEY` (JWT signing key)
+  - `ALGORITHM` and `ACCESS_TOKEN_EXPIRE_MINUTES` (token configuration)
   - `EMAIL_USER` and `EMAIL_PASS` (SMTP)
 - **Location**: `.env` (not versioned), loaded via `python-dotenv`
-
-```python
-# jwt_manager.py
-from dotenv import load_dotenv
-load_dotenv()
-
-SECRET_KEY = os.getenv("SECRET_KEY")
-ALGORITHM = os.getenv("ALGORITHM", "HS256")
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "120"))
-```
 
 ### ✅ 8. HTTPS Communication
 - **Implemented**: The FastAPI API communicates with **Supabase** through HTTPS connections.
