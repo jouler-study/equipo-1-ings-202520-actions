@@ -32,21 +32,27 @@ const ProductSearch = () => {
               value={searchData.product}
               onChange={(e) => handleInputChange('product', e.target.value)}
               placeholder="Buscar producto (ej: Tomate, Papa criolla...)"
-              className="px-8 py-5 border border-gray-300 text-xl focus:outline-none focus:ring-2 focus:ring-primary-color focus:border-transparent"
+              className="border border-gray-300 text-xl focus:outline-none focus:ring-2 focus:ring-primary-color focus:border-transparent"
               style={{ 
                 borderRadius: '12px 0 0 12px',
                 width: '540px',
-                flex: 'none'
+                flex: 'none',
+                paddingLeft: '24px',
+                paddingRight: '24px',
+                paddingTop: '10px',
+                paddingBottom: '10px'
               }}
               required
             />
             <button 
               type="button"
-              className="px-6 py-5 border border-l-0 border-gray-300 hover:bg-gray-100 flex items-center justify-center"
+              className="px-6 border border-l-0 border-gray-300 hover:bg-gray-100 flex items-center justify-center"
               style={{ 
                 borderRadius: '0 12px 12px 0',
                 width: '60px',
-                flex: 'none'
+                flex: 'none',
+                paddingTop: '10px',
+                paddingBottom: '10px'
               }}
             >
               <Filter className="w-7 h-7 text-gray-600" />
@@ -59,12 +65,14 @@ const ProductSearch = () => {
           <button
             type="submit"
             disabled={!searchData.product.trim()}
-            className="py-5 text-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="text-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ 
               backgroundColor: '#D2EDCC',
               color: '#333',
-              borderRadius: '12px',
-              width: '300px'
+              borderRadius: '25px',
+              width: '300px',
+              paddingTop: '10px',
+              paddingBottom: '10px'
             }}
           >
             Buscar precios

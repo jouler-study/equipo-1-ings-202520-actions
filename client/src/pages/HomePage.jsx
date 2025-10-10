@@ -10,8 +10,8 @@ const HomePage = () => {
         <div className="container flex justify-center">
           {/* Main Hero Card */}
           <div className="mb-8" style={{ 
-            width: '1200px', 
-            height: '1000px', 
+            width: '1400px', 
+            height: '800px', 
             backgroundColor: 'rgba(248, 231, 176, 0.54)',
             borderRadius: '20px',
             padding: '50px',
@@ -28,20 +28,21 @@ const HomePage = () => {
             </h1>
 
             {/* Subtitle */}
-            <h2 className="text-xl font-semibold mb-12 text-black">
+            <h2 className="text-xl font-semibold mb-12 text-black" style={{ marginTop: '-20px' }}>
               Compra mejor con información real
             </h2>
 
             {/* Content Card */}
             <div className="mb-8" style={{
-              width: '1100px',
+              width: '1300px',
               height: '350px',
               backgroundColor: 'rgba(247, 224, 147, 0.7)',
               borderRadius: '20px',
               display: 'flex',
               alignItems: 'center',
               padding: '40px',
-              position: 'relative'
+              position: 'relative',
+              marginTop: '30px'
             }}>
               {/* Left Half - Image */}
               <div className="w-1/2 pr-8" style={{ position: 'relative', zIndex: 1 }}>
@@ -62,18 +63,18 @@ const HomePage = () => {
 
               {/* Right Half - Text */}
               <div className="w-1/2 pl-8" style={{ paddingLeft: '60px', position: 'relative', zIndex: 1 }}>
-                <p className="text-white text-lg leading-relaxed" style={{ maxWidth: '400px' }}>
+                <p className="text-white text-xl leading-relaxed" style={{ maxWidth: '500px', fontSize: '22px' }}>
                   Consulta precios actualizados de productos agrícolas en las principales plazas de mercado de Medellín.
                 </p>
                 <br />
-                <p className="text-white text-lg leading-relaxed" style={{ maxWidth: '400px' }}>
+                <p className="text-white text-xl leading-relaxed" style={{ maxWidth: '500px', fontSize: '22px' }}>
                   Busca tu producto y obtén información para tomar las mejores decisiones de compra.
                 </p>
               </div>
             </div>
 
             {/* Search Component */}
-            <div className="w-full">
+            <div className="w-full flex justify-center">
               <ProductSearch />
             </div>
           </div>
