@@ -30,7 +30,12 @@ All sensitive information provided by users (such as names, emails, and password
 - **Location**: 
   - `auth.py` line 131: `argon2.verify(user.contrasena, usuario.contrasena_hash)`
   - `password_recovery.py` line 185: `usuario.contrasena_hash = argon2.hash(body.nueva_contrasena)`
+  - `user_registration.py`: New user passwords are hashed using Argon2 before being stored in the database
 - **Evidence**: No passwords are stored in plain text; only irreversible hashes with automatic salt.
+
+**User Registration Implementation:**
+
+In `user_registration.py`, new user passwords are hashed using Argon2 before being stored in the database. This guarantees that even if database data is compromised, the actual passwords remain protected due to Argon2's strong resistance to brute-force and GPU-based attacks.
 
 ```python
 # Example usage in auth.py
@@ -38,11 +43,21 @@ if not argon2.verify(user.contrasena, usuario.contrasena_hash):
     usuario.intentos_fallidos = (usuario.intentos_fallidos or 0) + 1
 ```
 
+```python
+# user_registration.py
+hashed_password = argon2.hash(user.password)
+supabase.table("usuarios").insert({
+    "nombre": user.name,
+    "correo": user.email,
+    "contrasena_hash": hashed_password,
+}).execute()
+```
+
 ### ✅ 2. Robust Password Validation
 - **Implemented**: Regex that requires minimum complexity.
 - **Location**: 
-- `user_registration.py` line 27
-- `password_recovery.py` line 142
+  - `user_registration.py` line 27
+  - `password_recovery.py` line 142
 - **Requirements**:
   - Minimum 8 characters
   - At least 1 uppercase letter
@@ -53,6 +68,25 @@ if not argon2.verify(user.contrasena, usuario.contrasena_hash):
 def validate_password(password: str) -> bool:
     regex = r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$'
     return re.match(regex, password) is not None
+```
+
+**User Registration Implementation:**
+
+The same password validation rules are enforced during user registration in `user_registration.py`. This prevents weak passwords at account creation by using the same regular expression to verify complexity:
+
+```python
+# user_registration.py
+def validate_password(password: str) -> bool:
+    regex = r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$'
+    return re.match(regex, password) is not None
+```
+
+If the password does not meet these requirements, the API returns a descriptive error message in Spanish:
+
+```json
+{
+  "detail": "La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un carácter especial (!@#$%^&*)."
+}
 ```
 
 ### ✅ 3. JWT-Based Authentication
@@ -156,7 +190,20 @@ def crear_enlace_recuperacion(usuario: Usuario, db: Session, tipo="recuperacion_
   - `SECRET_KEY` (JWT signing key)
   - `ALGORITHM` and `ACCESS_TOKEN_EXPIRE_MINUTES` (token configuration)
   - `EMAIL_USER` and `EMAIL_PASS` (SMTP)
+  - `SUPABASE_URL` and `SUPABASE_KEY` (Supabase client connection)
 - **Location**: `.env` (not versioned), loaded via `python-dotenv`
+
+**User Registration Implementation:**
+
+In `user_registration.py`, sensitive database credentials such as `SUPABASE_URL` and `SUPABASE_KEY` are securely loaded from the `.env` file using `python-dotenv`. These values are never exposed in the codebase or version control.
+
+```python
+# user_registration.py
+load_dotenv()
+url = os.getenv("SUPABASE_URL")
+key = os.getenv("SUPABASE_KEY")
+supabase: Client = create_client(url, key)
+```
 
 ### ✅ 8. HTTPS Communication
 - **Implemented**: The FastAPI API communicates with **Supabase** through HTTPS connections.
@@ -173,11 +220,11 @@ def crear_enlace_recuperacion(usuario: Usuario, db: Session, tipo="recuperacion_
 
 | Criterion | Status | Implementation | Notes |
 |-----------|--------|----------------|-------|
-| Password hashing | ✅ | Argon2 | Implemented in `auth.py` and `password_recovery.py` |
-| Password validation | ✅ | Regex | Minimum 8 characters, uppercase, number, and special character |
+| Password hashing | ✅ | Argon2 | Implemented in `auth.py`, `password_recovery.py`, and `user_registration.py` |
+| Password validation | ✅ | Regex | Minimum 8 characters, uppercase, number, and special character. Enforced in `user_registration.py` for new accounts |
 | JWT authentication | ✅ | HS256 | Secret key in `.env` |
 | Brute force protection | ✅ | Temporary lockout | 15 minutes after 3 failed attempts |
 | Token invalidation | ✅ | Blacklist | In-memory (improvable with Redis) |
 | Secure links | ✅ | UUID + expiration | 1-hour validity, single use |
-| Environment variables | ✅ | python-dotenv | Protected credentials |
+| Environment variables | ✅ | python-dotenv | Protected credentials. `SUPABASE_URL` and `SUPABASE_KEY` securely loaded |
 | **HTTPS** | ✅ | **Supabase SSL/TLS** | **Encrypted database, API requires HTTPS in production** |
