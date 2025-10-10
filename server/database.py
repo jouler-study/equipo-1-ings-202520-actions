@@ -1,3 +1,4 @@
+# database.py
 """
 This module sets up the SQLAlchemy database connection and session for the application.
 - Loads environment variables using python-dotenv.

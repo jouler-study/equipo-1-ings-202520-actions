@@ -1,3 +1,4 @@
+# password_recovery.py
 import os
 import smtplib
 from email.mime.text import MIMEText
@@ -29,19 +30,19 @@ def get_db():
 #   Pydantic Input Model      #
 # --------------------------- #
 class ResetPassword(BaseModel):
-    nueva_contrasena: str
+    new_password: str
 
 
 # ----------------------------- #
 #   Password Recovery (POST)    #
 # ----------------------------- #
 @router.post("/recover/{correo}")
-def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
+def recover_password(email: EmailStr, db: Session = Depends(get_db)):
     """
     Starts the password recovery process.
 
     Args:
-        correo (EmailStr): The email address of the user requesting password recovery.
+        email (EmailStr): The email address of the user requesting password recovery.
         db (Session): Database session.
 
     Raises:
@@ -50,7 +51,7 @@ def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
     Returns:
         dict: Message indicating that the recovery email has been sent.
     """
-    user = db.query(User).filter(User.correo == correo).first()
+    user = db.query(User).filter(User.correo == email).first()
     if not user:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
@@ -116,13 +117,13 @@ def recover_password(correo: EmailStr, db: Session = Depends(get_db)):
 
     msg["Subject"] = "🔐 Recuperación de contraseña"
     msg["From"] = f"Plaze Soporte <{os.getenv('EMAIL_USER')}>"
-    msg["To"] = correo
+    msg["To"] = email
 
     # Send email via Gmail SMTP
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(os.getenv("EMAIL_USER"), os.getenv("EMAIL_PASS"))
-            server.sendmail(os.getenv("EMAIL_USER"), correo, msg.as_string())
+            server.sendmail(os.getenv("EMAIL_USER"), email, msg.as_string())
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error en el envío del email: {e}")
 
@@ -169,15 +170,15 @@ def reset_password(token: str, body: ResetPassword, db: Session = Depends(get_db
     if not user:
         raise HTTPException(status_code=404, detail="Usuario no encontrado")
 
-    # Validar la nueva contraseña
-    if not validate_password(body.nueva_contrasena):
+    # Validate new password
+    if not validate_password(body.new_password):
         raise HTTPException(
             status_code=400,
             detail="La contraseña debe tener al menos 8 caracteres, una mayúscula, un número y un carácter especial (!@#$%^&*)"
         )
 
-    # Actualizar la contraseña y marcar el enlace como usado
-    user.contrasena_hash = argon2.hash(body.nueva_contrasena)
+    #Update password and mark link as used
+    user.contrasena_hash = argon2.hash(body.new_password)
     link.usado = True
     db.commit()
     db.refresh(user)

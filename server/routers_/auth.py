@@ -47,8 +47,8 @@ class UserLogin(BaseModel):
     """
     Input data for login.
     """
-    correo: EmailStr
-    contrasena: str
+    email: EmailStr
+    password: str
 
 
 # ===============================
@@ -117,19 +117,27 @@ def login(
 
     # Search user by email
     print("ATRIBUTOS DEL OBJETO user:", User.__dict__)
-    usuario = db.query(User).filter(User.correo == user.correo).first()
+    usuario = db.query(User).filter(User.correo == user.email).first()
+    print(f"Email recibido: {user.email}")
+    print(f"Usuario encontrado: {usuario.correo if usuario else None}")
     if not usuario:
         raise HTTPException(status_code=400, detail="Correo o contraseña incorrectos")
 
     # Check if account is temporarily locked
-    if usuario.cuenta_bloqueada_hasta and usuario.cuenta_bloqueada_hasta > datetime.utcnow():
-        raise HTTPException(
-            status_code=403,
-            detail="Cuenta bloqueada temporalmente. Revisa tu correo electrónico."
-        )
+    if usuario.cuenta_bloqueada_hasta:
+        if usuario.cuenta_bloqueada_hasta > datetime.utcnow():
+            raise HTTPException(
+                status_code=403,
+                detail="Cuenta bloqueada temporalmente. Revisa tu correo electrónico."
+            )
+        else:
+            # Unlock automatically if the lock period has expired
+            usuario.cuenta_bloqueada_hasta = None
+            usuario.intentos_fallidos = 0
+            db.commit()
 
     # Verify password
-    if not argon2.verify(user.contrasena, usuario.contrasena_hash):
+    if not argon2.verify(user.password, usuario.contrasena_hash):
         usuario.intentos_fallidos = (usuario.intentos_fallidos or 0) + 1
 
         # Lock account after 3 failed attempts
@@ -138,7 +146,7 @@ def login(
             db.commit()
 
             # 🔔 Send account lock notification email in background
-            send_lock_email( usuario.correo, usuario.nombre)
+            send_lock_email(usuario.correo, usuario.nombre)
 
             raise HTTPException(
                 status_code=403,
