@@ -2,6 +2,8 @@ import React from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
+import PasswordRecoveryPage from './pages/PasswordRecoveryPage'
 import Header from './components/Header'
 import Footer from './components/Footer'
 
@@ -13,9 +15,10 @@ import Footer from './components/Footer'
 function AppContent() {
   const location = useLocation()
   
-  // Hide header and footer on login page
-  const showHeader = location.pathname !== '/login'
-  const showFooter = location.pathname !== '/login'
+  // Hide header and footer on authentication pages
+  const authPages = ['/login', '/register', '/password-recovery']
+  const showHeader = !authPages.includes(location.pathname)
+  const showFooter = !authPages.includes(location.pathname)
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -24,6 +27,8 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/password-recovery" element={<PasswordRecoveryPage />} />
         </Routes>
       </main>
       {showFooter && <Footer />}

@@ -1,7 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const LoginPage = () => {
+const RegisterPage = () => {
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+
+  const handleRegister = () => {
+    if (password !== confirmPassword) {
+      setErrorMessage('Las contraseñas no coinciden')
+      return
+    }
+    setErrorMessage('')
+    // Handle registration logic here
+    console.log('Registration successful')
+  }
+
   return (
     <div style={{
       minHeight: '100vh',
@@ -30,7 +44,7 @@ const LoginPage = () => {
         </Link>
       </div>
 
-      {/* Centered login form */}
+      {/* Centered registration form */}
       <div style={{
         flex: 1,
         display: 'flex',
@@ -39,8 +53,8 @@ const LoginPage = () => {
         padding: '20px'
       }}>
         <div style={{
-          width: '680px',
-          height: '750px',
+          width: '600px',
+          minHeight: '230px',
           backgroundColor: '#F5F5F5',
           border: '1px solid rgba(0, 0, 0, 0.25)',
           boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
@@ -48,17 +62,17 @@ const LoginPage = () => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          padding: '60px 80px'
+          padding: '40px 65px'
         }}>
           {/* Page title */}
           <h1 style={{
             fontSize: '48px',
             fontWeight: '600',
-            marginBottom: '55px',
+            marginBottom: '35px',
             textAlign: 'center',
             lineHeight: '1.2'
           }}>
-            <span style={{ color: '#000000' }}>Inicia sesión en </span>
+            <span style={{ color: '#000000' }}>Registrate en </span>
             <span style={{ color: '#4CA772' }}>Plaze</span>
           </h1>
 
@@ -68,7 +82,7 @@ const LoginPage = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            marginBottom: '40px'
+            marginBottom: '35px'
           }}>
             {/* Background ellipse */}
             <img 
@@ -91,19 +105,35 @@ const LoginPage = () => {
             />
           </div>
 
-          {/* Username input field */}
+          {/* Full name input field */}
           <input
             type="text"
-            placeholder="Nombre de usuario"
+            placeholder="Nombre completo"
             style={{
-              width: '350px',
-              height: '60px',
+              width: '470px',
+              height: '65px',
               backgroundColor: 'rgba(217, 217, 217, 0.5)',
               border: '1px solid #000000',
               borderRadius: '4px',
-              padding: '0 12px',
+              padding: '0 15px',
               fontSize: '18px',
-              marginBottom: '32px'
+              marginBottom: '35px'
+            }}
+          />
+
+          {/* Email input field */}
+          <input
+            type="email"
+            placeholder="Correo electrónico"
+            style={{
+              width: '470px',
+              height: '65px',
+              backgroundColor: 'rgba(217, 217, 217, 0.5)',
+              border: '1px solid #000000',
+              borderRadius: '4px',
+              padding: '0 15px',
+              fontSize: '18px',
+              marginBottom: '35px'
             }}
           />
 
@@ -111,20 +141,63 @@ const LoginPage = () => {
           <input
             type="password"
             placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             style={{
-              width: '350px',
-              height: '60px',
+              width: '470px',
+              height: '65px',
               backgroundColor: 'rgba(217, 217, 217, 0.5)',
               border: '1px solid #000000',
               borderRadius: '4px',
-              padding: '0 12px',
+              padding: '0 15px',
               fontSize: '18px',
-              marginBottom: '32px'
+              marginBottom: '15px'
             }}
           />
 
-          {/* Login button */}
+          {/* Password requirements */}
+          <div style={{
+            width: '470px',
+            fontSize: '14px',
+            color: '#666666',
+            marginBottom: '35px',
+            lineHeight: '1.5'
+          }}>
+            La contraseña debe contener mínimo 8 caracteres, una mayúscula, un número y un carácter especial (!@#$%^&*).
+          </div>
+
+          {/* Confirm password input field */}
+          <input
+            type="password"
+            placeholder="Repetir contraseña"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            style={{
+              width: '470px',
+              height: '65px',
+              backgroundColor: 'rgba(217, 217, 217, 0.5)',
+              border: '1px solid #000000',
+              borderRadius: '4px',
+              padding: '0 15px',
+              fontSize: '18px',
+              marginBottom: '20px'
+            }}
+          />
+
+          {/* Error message */}
+          {errorMessage && (
+            <div style={{
+              color: '#FF0000',
+              fontSize: '16px',
+              marginBottom: '20px'
+            }}>
+              {errorMessage}
+            </div>
+          )}
+
+          {/* Register button */}
           <button
+            onClick={handleRegister}
             style={{
               width: '200px',
               height: '50px',
@@ -135,36 +208,18 @@ const LoginPage = () => {
               fontSize: '24px',
               fontWeight: '500',
               cursor: 'pointer',
+              padding: '10px',
               marginTop: '10px',
               boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
             }}
           >
-            Iniciar Sesión
+            Registrarse
           </button>
-
-          {/* Forgot password link */}
-          <div style={{
-            marginTop: '20px',
-            fontSize: '16px',
-            textAlign: 'center'
-          }}>
-            <span style={{ color: '#000000' }}>¿Olvidaste tu contraseña? </span>
-            <Link 
-              to="/password-recovery" 
-              style={{
-                color: '#4CA772',
-                textDecoration: 'underline',
-                cursor: 'pointer'
-              }}
-            >
-              Recuperar contraseña
-            </Link>
-          </div>
         </div>
       </div>
     </div>
   )
 }
 
-export default LoginPage
+export default RegisterPage
 
