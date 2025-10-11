@@ -10,3 +10,11 @@
 ![F-05 backlog viernes 3 octubre](images_sprint/Backlog-3oct-F05.png)
 ![F-01 backlog viernes 3 octubre](images_sprint/Backlog-3oct-F01.png)
 ![NF-01 backlog viernes 3 octubre](images_sprint/Backlog-3oct-NF01.png)
+
+## 🎃 Viernes 10 octubre
+
+> ### Diagrama burndown
+![Diagrama burndown viernes 10 octubre](images_sprint/Burndown-10oct.png)
+
+> ### Estado del tablero
+![Tablero backlog viernes 10 octubre](images_sprint/Backlog-10oct.png)
