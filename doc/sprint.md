@@ -14,7 +14,7 @@
 ## 🎃 Viernes 10 octubre
 
 > ### Diagrama burndown
-![Diagrama burndown viernes 10 octubre](images_sprint/Burndown_semana2.png)
+![Diagrama burndown viernes 10 octubre](images_sprint/Burndown_10oct.png)
 
 > ### Estado del tablero
 ![Tablero backlog viernes 10 octubre](images_sprint/Backlog-10oct.png)
