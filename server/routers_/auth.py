@@ -5,7 +5,7 @@ Authentication routes: login, logout and token-protected utilities.
 
 from fastapi import APIRouter, Depends, HTTPException,Header,BackgroundTasks,Security
 from sqlalchemy.orm import Session
-from database import SessionLocal
+from database import SessionLocal, get_db
 from models import User
 from pydantic import BaseModel, EmailStr
 from passlib.hash import argon2
@@ -21,23 +21,6 @@ router = APIRouter(prefix="/auth", tags=["Auth"])
 
 # In-memory blacklist for invalidated tokens (valid only while server runs)
 TOKEN_BLACKLIST: set[str] = set()
-
-
-# ===============================
-# DATABASE DEPENDENCY
-# ===============================
-# Provides a database session for route handlers.
-# Each request gets its own session, closed automatically after completion.
-def get_db():
-    """
-    Provide a DB session to route handlers.
-    """
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
 
 # ===============================
 # REQUEST MODELS
@@ -116,10 +99,7 @@ def login(
     """
 
     # Search user by email
-    print("ATRIBUTOS DEL OBJETO user:", User.__dict__)
     usuario = db.query(User).filter(User.correo == user.email).first()
-    print(f"Email recibido: {user.email}")
-    print(f"Usuario encontrado: {usuario.correo if usuario else None}")
     if not usuario:
         raise HTTPException(status_code=400, detail="Correo o contraseña incorrectos")
 

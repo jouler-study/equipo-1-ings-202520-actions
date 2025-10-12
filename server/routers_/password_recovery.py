@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from pydantic import BaseModel, EmailStr
-from database import SessionLocal
+from database import SessionLocal, get_db
 from models import User, EmailLink
 from utils.password_utils import create_password_recovery_link
 from passlib.hash import argon2
@@ -13,18 +13,6 @@ import re
 from datetime import datetime
 
 router = APIRouter(prefix="/password")
-
-# ------------------ #
-#   Database Dependency   #
-# ------------------ #
-def get_db():
-    """Creates and closes the database session."""
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
 
 # --------------------------- #
 #   Pydantic Input Model      #
