@@ -1,5 +1,19 @@
-fastapi
-uvicorn
-sqlalchemy
-python-dotenv
-psycopg2-binary
+# --- Core dependencies ---
+fastapi              # Framework for building APIs
+uvicorn              # ASGI server to run FastAPI
+
+# --- Database & ORM ---
+sqlalchemy           # ORM to handle database models and queries
+psycopg2-binary      # PostgreSQL driver (used for Supabase connection)
+
+# --- Authentication & Security ---
+python-jose[cryptography]  # JWT token creation and verification
+passlib[bcrypt]             # Password hashing (bcrypt algorithm)
+argon2-cffi                 # Optional: Argon2 hashing support
+
+# --- Environment variables ---
+python-dotenv         # Load configuration from .env file
+
+# --- Email handling ---
+email-validator       # Validate user email formats
+

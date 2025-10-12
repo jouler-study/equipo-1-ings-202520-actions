@@ -1,219 +1,301 @@
-# Market Prices API 🚀
+````markdown
+# 🛒 Market Prices & Login API
 
-REST API to query product prices in Medellín marketplaces, built with FastAPI and PostgreSQL.
+REST API built with **FastAPI** and **PostgreSQL** to:
+- Query product prices in Medellín marketplaces.
+- Manage user authentication (login, logout, password recovery).
 
-## What does this folder do?
+---
 
-This directory contains the project backend, which provides a REST API to:
-- Query updated product prices in different marketplaces
-- List all available products
-- List all Medellín marketplaces
-- Get combined options of products and markets in a single request
+## 🚀 Setup Guide
 
-## How to install this part of the project?
+### 1️⃣ Prerequisites
+- Python **3.13+** (compatible with 3.8+)
+- **PostgreSQL** installed and running
+- **pip** package manager
 
-### Prerequisites
-- Python 3.13 or higher
-- PostgreSQL installed and running
-- pip (Python package manager)
-
-### Installation steps
-
-1. **Create a virtual environment** (recommended):
+### 2️⃣ Create a virtual environment
 ```bash
 python -m venv venv
-```
+````
 
-2. **Activate the virtual environment**:
-   - Windows:
-   ```bash
-   venv\Scripts\activate
-   ```
-   - Linux/Mac:
-   ```bash
-   source venv/bin/activate
-   ```
+Activate it:
 
-3. **Install dependencies**:
+* **Windows:**
+
+  ```bash
+  venv\Scripts\activate
+  ```
+* **Linux/Mac:**
+
+  ```bash
+  source venv/bin/activate
+  ```
+
+### 3️⃣ Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
-4. **Configure environment variables**:
-   
-   Create a `.env` file in the project root with the following content:
-   ```env
-   DATABASE_URL=postgresql://[user]:[password]@[host]:[port]/[database_name]
-   ```
-   
-   **Example**:
-   ```env
-   DATABASE_URL=postgresql://myuser:mypassword@localhost:5432/market_prices_db
-   ```
-   
-   Replace the values in brackets with your actual PostgreSQL credentials.
+### 4️⃣ Create a `.env` file
 
-## How to run this part of the project?
+Inside the `server/` folder, create a `.env` file with the following variables:
 
-### Option 1 (recommended):
+```env
+DATABASE_URL=postgresql://[user]:[password]@[host]:[port]/[database_name]
+EMAIL_USER=
+EMAIL_PASS=
+SECRET_KEY=
+ALGORITHM=
+ACCESS_TOKEN_EXPIRE_MINUTES=
+```
+
+🔹 Replace `[user]`, `[password]`, `[host]`, `[port]`, and `[database_name]` with your PostgreSQL credentials.
+🔹 The other variables are used for authentication and email recovery.
+
+### 5️⃣ Run the API
+
+#### Option 1 (recommended)
+
 ```bash
 uvicorn main:app --reload
 ```
 
-### Option 2 (if the first one doesn't work):
+#### Option 2 (alternative)
+
 ```bash
 python -m uvicorn main:app --reload
 ```
 
-The API will be available at: `http://localhost:8000`
+✅ API available at: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+✅ ReDoc docs at: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
 
-### Interactive documentation
+---
 
-Once the server is running, you can access:
-- **Swagger UI**: `http://localhost:8000/docs`
-- **ReDoc**: `http://localhost:8000/redoc`
+## 🧱 Project Structure
 
-## What standards should be followed?
-
-### Python code standards
-- **PEP 8**: Style guide for Python code
-- **Type hints**: Use type annotations when possible
-- **Docstrings**: Document functions and classes using Google or NumPy format
-- **Descriptive names**: Variables and functions should have clear and descriptive names
-
-### Folder structure
 ```
 server/
-├── routers/          # Endpoints organized by module
-├── models.py         # SQLAlchemy models
-├── database.py       # Database configuration
-├── main.py           # Application entry point
-└── requirements.txt  # Project dependencies
+├── routers/              # Endpoints by module (e.g. auth, prices)
+├── models.py             # SQLAlchemy models
+├── database.py           # Database connection and session setup
+├── main.py               # Application entry point
+└── requirements.txt      # Project dependencies
 ```
 
-### API conventions
-- Use appropriate HTTP verbs (GET, POST, PUT, DELETE)
-- Structured and consistent JSON responses
-- Semantic HTTP status codes
-- Endpoint documentation with FastAPI decorators
+---
 
-## What Python version does it use?
+## 🔑 Authentication Endpoints
 
-**Python 3.13** (compatible with 3.8+)
+### `/auth/login`
 
-To check your Python version:
-```bash
-python --version
+**POST**
+
+**Body:**
+
+```json
+{
+  "correo": "user@example.com",
+  "contrasena": "1234"
+}
 ```
 
-## What do I need for the database?
+**Response:**
 
-### Database requirements
+```json
+{
+  "message": "Inicio de sesión exitoso",
+  "user": "user@example.com",
+  "role": "usuario",
+  "access_token": "<JWT_TOKEN>",
+  "token_type": "bearer"
+}
+```
 
-1. **PostgreSQL** installed and running (version 12 or higher recommended)
+📌 After login, use the `access_token` for authorized requests.
 
-2. **Table structure**:
+**Account Lock Test:**
 
-   The database must have the following tables:
+* Enter a wrong password **3 times** to lock the account.
+* A recovery email will be sent.
 
-   ```sql
-   -- Products table
-   CREATE TABLE productos (
-       producto_id SERIAL PRIMARY KEY,
-       nombre VARCHAR NOT NULL UNIQUE
-   );
+---
 
-   -- Marketplaces table
-   CREATE TABLE plazas_mercado (
-       plaza_id SERIAL PRIMARY KEY,
-       nombre VARCHAR NOT NULL,
-       ciudad VARCHAR NOT NULL
-   );
+### `/auth/logout`
 
-   -- Prices table
-   CREATE TABLE precios (
-       precio_id SERIAL PRIMARY KEY,
-       producto_id INTEGER NOT NULL REFERENCES productos(producto_id),
-       plaza_id INTEGER NOT NULL REFERENCES plazas_mercado(plaza_id),
-       precio_por_kg DECIMAL(10,2) NOT NULL,
-       fecha DATE NOT NULL
-   );
-   ```
+**POST**
 
-3. **Database connection**:
-   
-   Configure the `.env` file with the connection URL in format:
-   ```
-   postgresql://[user]:[password]@[host]:[port]/[database_name]
-   ```
-   
-   **Parameters**:
-   - `[user]`: Your PostgreSQL user
-   - `[password]`: Your PostgreSQL password
-   - `[host]`: Server address (usually `localhost`)
-   - `[port]`: PostgreSQL port (default `5432`)
-   - `[database_name]`: Your database name
+**Header:**
 
-### Sample data (optional)
+```
+Bearer <access_token>
+```
 
-To test the API, you can insert sample data:
+**Response:**
+
+```json
+{ "message": "Sesión cerrada correctamente" }
+```
+
+---
+
+### `/password/recover`
+
+**POST**
+
+**Body:**
+
+```json
+{
+  "correo": "user@example.com"
+}
+```
+
+**Response:**
+
+```json
+{ "message": "Correo de recuperación de contraseña enviado exitosamente" }
+```
+
+---
+
+### `/password/reset/{token}`
+
+**POST**
+
+**Body:**
+
+```json
+{
+  "nueva_contrasena": "newpassword123"
+}
+```
+
+**Response:**
+
+```json
+{ "message": "Contraseña restablecida exitosamente" }
+```
+
+---
+
+## 💰 Prices Endpoints
+
+### `GET /`
+
+Check that the API is running.
+
+### `GET /prices/latest/`
+
+Get the most recent price of a product in a marketplace.
+**Parameters:**
+
+* `product_name`
+* `market_name`
+
+### `GET /prices/options/`
+
+Get combined list of products and marketplaces.
+
+### `GET /prices/productos/`
+
+List all available products.
+
+### `GET /prices/plazas/medellin/`
+
+List all Medellín marketplaces.
+
+---
+
+## 🗃️ Database Setup
+
+### Required Tables
 
 ```sql
--- Insert products
-INSERT INTO productos (nombre) VALUES 
-    ('Tomate'),
-    ('Papa'),
-    ('Cebolla');
+CREATE TABLE productos (
+    producto_id SERIAL PRIMARY KEY,
+    nombre VARCHAR NOT NULL UNIQUE
+);
 
--- Insert marketplaces
+CREATE TABLE plazas_mercado (
+    plaza_id SERIAL PRIMARY KEY,
+    nombre VARCHAR NOT NULL,
+    ciudad VARCHAR NOT NULL
+);
+
+CREATE TABLE precios (
+    precio_id SERIAL PRIMARY KEY,
+    producto_id INTEGER NOT NULL REFERENCES productos(producto_id),
+    plaza_id INTEGER NOT NULL REFERENCES plazas_mercado(plaza_id),
+    precio_por_kg DECIMAL(10,2) NOT NULL,
+    fecha DATE NOT NULL
+);
+```
+
+### Sample Data
+
+```sql
+INSERT INTO productos (nombre) VALUES 
+    ('Tomate'), ('Papa'), ('Cebolla');
+
 INSERT INTO plazas_mercado (nombre, ciudad) VALUES 
     ('Minorista', 'Medellín'),
     ('La América', 'Medellín');
 
--- Insert prices
 INSERT INTO precios (producto_id, plaza_id, precio_por_kg, fecha) VALUES 
     (1, 1, 3500.00, CURRENT_DATE),
     (2, 1, 2800.00, CURRENT_DATE);
 ```
 
-## Available endpoints
+---
 
-### `GET /`
-Check that the API is working.
+## 🧰 Development Standards
 
-### `GET /prices/latest/`
-Get the most recent price of a product in a specific marketplace.
+### Code style
 
-**Parameters**:
-- `product_name`: Product name (partial search)
-- `market_name`: Marketplace name (partial search)
+* Follow **PEP 8**
+* Use **type hints** and **docstrings**
+* Prefer descriptive variable names
 
-### `GET /prices/options/`
-Get combined list of available products and marketplaces.
+### API design
 
-### `GET /prices/productos/`
-List all available products.
+* Consistent JSON responses
+* Semantic HTTP status codes
+* Documented endpoints via FastAPI decorators
 
-### `GET /prices/plazas/medellin/`
-List all Medellín marketplaces.
+---
 
-## Common troubleshooting
+## ⚠️ Common Troubleshooting
 
-### Error running uvicorn
-If `uvicorn main:app --reload` doesn't work, use:
+### `uvicorn` not running
+
+Try:
+
 ```bash
 python -m uvicorn main:app --reload
 ```
 
 ### Database connection error
-Verify that:
-- PostgreSQL is running
-- Credentials in `.env` are correct
-- The database exists
-- The user has sufficient permissions
 
-### ModuleNotFoundError
-Make sure you have activated the virtual environment and run:
+* Verify PostgreSQL is running
+* Check `.env` credentials
+* Ensure database exists and user has permissions
+
+### `ModuleNotFoundError`
+
+Make sure you’ve activated your environment and installed dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
+
+---
+
+📘 **Author:** Plaze Development Team
+🔐 **Includes:** Authentication, Email Recovery & Market Prices API
+
+```
+
+
+
