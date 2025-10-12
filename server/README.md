@@ -1,43 +1,94 @@
+````markdown
+# 🛒 Market Prices & Login API
 
-# 🔐 Plaze Login API
+REST API built with **FastAPI** and **PostgreSQL** to:
+- Query product prices in Medellín marketplaces.
+- Manage user authentication (login, logout, password recovery).
 
-## 🚀 Setup
+---
 
-1️⃣ Go to the `server` folder in the project.
+## 🚀 Setup Guide
 
-2️⃣ Install dependencies:
+### 1️⃣ Prerequisites
+- Python **3.13+** (compatible with 3.8+)
+- **PostgreSQL** installed and running
+- **pip** package manager
+
+### 2️⃣ Create a virtual environment
+```bash
+python -m venv venv
+````
+
+Activate it:
+
+* **Windows:**
+
+  ```bash
+  venv\Scripts\activate
+  ```
+* **Linux/Mac:**
+
+  ```bash
+  source venv/bin/activate
+  ```
+
+### 3️⃣ Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-3️⃣ Create a `.env` file **inside the same folder (`server/`)** with the following structure:
+### 4️⃣ Create a `.env` file
 
-```
-DATABASE_URL=
+Inside the `server/` folder, create a `.env` file with the following variables:
+
+```env
+DATABASE_URL=postgresql://[user]:[password]@[host]:[port]/[database_name]
 EMAIL_USER=
 EMAIL_PASS=
 SECRET_KEY=
-ALGORITHM =
-ACCESS_TOKEN_EXPIRE_MINUTES =
+ALGORITHM=
+ACCESS_TOKEN_EXPIRE_MINUTES=
 ```
 
-Replace the values with the credentials shared by the team.
+🔹 Replace `[user]`, `[password]`, `[host]`, `[port]`, and `[database_name]` with your PostgreSQL credentials.
+🔹 The other variables are used for authentication and email recovery.
 
-4️⃣ Run the API:
+### 5️⃣ Run the API
+
+#### Option 1 (recommended)
 
 ```bash
 uvicorn main:app --reload
 ```
 
-The API documentation is available at:
-👉 [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+#### Option 2 (alternative)
+
+```bash
+python -m uvicorn main:app --reload
+```
+
+✅ API available at: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+✅ ReDoc docs at: [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc)
 
 ---
 
-## 🔑 Login
+## 🧱 Project Structure
 
-### 🔹 `/auth/login`
+```
+server/
+├── routers/              # Endpoints by module (e.g. auth, prices)
+├── models.py             # SQLAlchemy models
+├── database.py           # Database connection and session setup
+├── main.py               # Application entry point
+└── requirements.txt      # Project dependencies
+```
+
+---
+
+## 🔑 Authentication Endpoints
+
+### `/auth/login`
 
 **POST**
 
@@ -62,19 +113,16 @@ The API documentation is available at:
 }
 ```
 
-📌 The `access_token` is returned in the response after login — this is the token you will use to log out.
+📌 After login, use the `access_token` for authorized requests.
 
 **Account Lock Test:**
 
-* To test the account block feature, enter the **wrong password 3 times**.
-* A recovery email will be sent to the user.
-* You can register using your own email or with already existing emails for testing.
+* Enter a wrong password **3 times** to lock the account.
+* A recovery email will be sent.
 
 ---
 
-## 🚪 Logout
-
-### 🔹 `/auth/logout`
+### `/auth/logout`
 
 **POST**
 
@@ -84,8 +132,6 @@ The API documentation is available at:
 Bearer <access_token>
 ```
 
-Add it in the **lock icon (Authorize)** in Swagger, then click **Close**. After that, click in Try it out and execute. The response should look like the example below:
-
 **Response:**
 
 ```json
@@ -94,9 +140,7 @@ Add it in the **lock icon (Authorize)** in Swagger, then click **Close**. After 
 
 ---
 
-## 🔐 Password Recovery
-
-### 🔹 `/password/recover`
+### `/password/recover`
 
 **POST**
 
@@ -108,8 +152,6 @@ Add it in the **lock icon (Authorize)** in Swagger, then click **Close**. After 
 }
 ```
 
-**Description:** The argument is the user's email (`correo`).
-
 **Response:**
 
 ```json
@@ -118,7 +160,7 @@ Add it in the **lock icon (Authorize)** in Swagger, then click **Close**. After 
 
 ---
 
-### 🔹 `/password/reset/{token}`
+### `/password/reset/{token}`
 
 **POST**
 
@@ -135,3 +177,125 @@ Add it in the **lock icon (Authorize)** in Swagger, then click **Close**. After 
 ```json
 { "message": "Contraseña restablecida exitosamente" }
 ```
+
+---
+
+## 💰 Prices Endpoints
+
+### `GET /`
+
+Check that the API is running.
+
+### `GET /prices/latest/`
+
+Get the most recent price of a product in a marketplace.
+**Parameters:**
+
+* `product_name`
+* `market_name`
+
+### `GET /prices/options/`
+
+Get combined list of products and marketplaces.
+
+### `GET /prices/productos/`
+
+List all available products.
+
+### `GET /prices/plazas/medellin/`
+
+List all Medellín marketplaces.
+
+---
+
+## 🗃️ Database Setup
+
+### Required Tables
+
+```sql
+CREATE TABLE productos (
+    producto_id SERIAL PRIMARY KEY,
+    nombre VARCHAR NOT NULL UNIQUE
+);
+
+CREATE TABLE plazas_mercado (
+    plaza_id SERIAL PRIMARY KEY,
+    nombre VARCHAR NOT NULL,
+    ciudad VARCHAR NOT NULL
+);
+
+CREATE TABLE precios (
+    precio_id SERIAL PRIMARY KEY,
+    producto_id INTEGER NOT NULL REFERENCES productos(producto_id),
+    plaza_id INTEGER NOT NULL REFERENCES plazas_mercado(plaza_id),
+    precio_por_kg DECIMAL(10,2) NOT NULL,
+    fecha DATE NOT NULL
+);
+```
+
+### Sample Data
+
+```sql
+INSERT INTO productos (nombre) VALUES 
+    ('Tomate'), ('Papa'), ('Cebolla');
+
+INSERT INTO plazas_mercado (nombre, ciudad) VALUES 
+    ('Minorista', 'Medellín'),
+    ('La América', 'Medellín');
+
+INSERT INTO precios (producto_id, plaza_id, precio_por_kg, fecha) VALUES 
+    (1, 1, 3500.00, CURRENT_DATE),
+    (2, 1, 2800.00, CURRENT_DATE);
+```
+
+---
+
+## 🧰 Development Standards
+
+### Code style
+
+* Follow **PEP 8**
+* Use **type hints** and **docstrings**
+* Prefer descriptive variable names
+
+### API design
+
+* Consistent JSON responses
+* Semantic HTTP status codes
+* Documented endpoints via FastAPI decorators
+
+---
+
+## ⚠️ Common Troubleshooting
+
+### `uvicorn` not running
+
+Try:
+
+```bash
+python -m uvicorn main:app --reload
+```
+
+### Database connection error
+
+* Verify PostgreSQL is running
+* Check `.env` credentials
+* Ensure database exists and user has permissions
+
+### `ModuleNotFoundError`
+
+Make sure you’ve activated your environment and installed dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+📘 **Author:** Plaze Development Team
+🔐 **Includes:** Authentication, Email Recovery & Market Prices API
+
+```
+
+
+
