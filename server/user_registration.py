@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 import os
 import re
 
-# Cargar variables de entorno desde la carpeta /server
+# Load environment variables
 env_path = os.path.join(os.path.dirname(__file__), ".env")
 load_dotenv(dotenv_path=env_path)
 
@@ -18,25 +18,24 @@ supabase: Client = create_client(url, key)
 
 app = FastAPI(title="Registro de Usuarios API", version="1.1")
 
-# Modelo de entrada para el registro
+# Input model for user registration
 class UserRegister(BaseModel):
     name: str
     email: EmailStr
     password: constr(min_length=8)
 
-# Validar complejidad de la contraseña
+# Validate password complexity
 def validate_password(password: str) -> bool:
     regex = r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$'
     return re.match(regex, password) is not None
 
-# Manejador de errores de validación (traducción al español)
+# Error handler for validation errors with Spanish translations
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request, exc):
     translated_errors = []
     for error in exc.errors():
         msg = error["msg"]
 
-        # Traducciones comunes
         if "field required" in msg:
             msg = "Este campo es obligatorio."
         elif "at least" in msg:
@@ -58,11 +57,11 @@ async def validation_exception_handler(request, exc):
         content={"errores": translated_errors}
     )
 
-# Endpoint de registro de usuario
+# User registration endpoint
 @app.post("/registro")
 def register_user(user: UserRegister):
     try:
-        # 1️⃣ Verificar si el correo ya existe
+        # Validate email uniqueness
         existing = supabase.table("usuarios").select("*").eq("correo", user.email).execute()
         if existing.data:
             raise HTTPException(
@@ -70,17 +69,17 @@ def register_user(user: UserRegister):
                 detail="Este correo ya ha sido registrado."
             )
 
-        # 2️⃣ Validar complejidad de la contraseña
+        # Validate password complexity
         if not validate_password(user.password):
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un carácter especial (!@#$%^&*)."
             )
 
-        # 3️⃣ Encriptar contraseña
+        # Encrypt password
         hashed_password = argon2.hash(user.password)
 
-        # 4️⃣ Insertar nuevo usuario en la base de datos
+        # Insert user into database
         try:
             response = supabase.table("usuarios").insert({
                 "nombre": user.name,
@@ -93,15 +92,15 @@ def register_user(user: UserRegister):
                 detail="Error al conectarse con la base de datos. Inténtalo nuevamente más tarde."
             )
 
-        # 5️⃣ Validar respuesta de Supabase
+        #  Validate insertion response
         if not response.data:
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail="El usuario no se pudo crear debido a un error interno."
             )
 
-        # 🔒 6️⃣ Remover contraseñas u otros datos sensibles antes de retornar al frontend
-        created_user = response.data[0]  # Supabase retorna lista
+        # Remove passwords or other sensitive data before returning to the frontend
+        created_user = response.data[0]  # Supabase returns a list of inserted rows
         if "contrasena_hash" in created_user:
             del created_user["contrasena_hash"]
 
@@ -113,7 +112,7 @@ def register_user(user: UserRegister):
     except HTTPException as e:
         raise e
     except Exception as e:
-        # Error no controlado
+        # No handle unexpected errors
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error inesperado en el servidor: {str(e)}"
