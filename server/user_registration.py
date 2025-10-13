@@ -8,34 +8,35 @@ from dotenv import load_dotenv
 import os
 import re
 
-# Load environment variables
-load_dotenv()
+# Cargar variables de entorno desde la carpeta /server
+env_path = os.path.join(os.path.dirname(__file__), ".env")
+load_dotenv(dotenv_path=env_path)
 
 url = os.getenv("SUPABASE_URL")
 key = os.getenv("SUPABASE_KEY")
 supabase: Client = create_client(url, key)
 
-app = FastAPI(title="Registro de Usuarios API", version="1.0")
+app = FastAPI(title="Registro de Usuarios API", version="1.1")
 
-# Input model for user registration
+# Modelo de entrada para el registro
 class UserRegister(BaseModel):
     name: str
     email: EmailStr
     password: constr(min_length=8)
 
-# Validate password with custom rules
+# Validar complejidad de la contraseña
 def validate_password(password: str) -> bool:
     regex = r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$'
     return re.match(regex, password) is not None
 
-# Error handler to translate validation errors to Spanish
+# Manejador de errores de validación (traducción al español)
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request, exc):
     translated_errors = []
     for error in exc.errors():
         msg = error["msg"]
 
-        # Translate common pydantic error messages to Spanish
+        # Traducciones comunes
         if "field required" in msg:
             msg = "Este campo es obligatorio."
         elif "at least" in msg:
@@ -57,32 +58,63 @@ async def validation_exception_handler(request, exc):
         content={"errores": translated_errors}
     )
 
-# Register user endpoint
+# Endpoint de registro de usuario
 @app.post("/registro")
 def register_user(user: UserRegister):
-    # 1. Validate if email already exists
-    existing = supabase.table("usuarios").select("*").eq("correo", user.email).execute()
-    if existing.data:
-        raise HTTPException(status_code=400, detail="Este correo ya ha sido registrado")
+    try:
+        # 1️⃣ Verificar si el correo ya existe
+        existing = supabase.table("usuarios").select("*").eq("correo", user.email).execute()
+        if existing.data:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Este correo ya ha sido registrado."
+            )
 
-    # 2. Validate password complexity
-    if not validate_password(user.password):
+        # 2️⃣ Validar complejidad de la contraseña
+        if not validate_password(user.password):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un carácter especial (!@#$%^&*)."
+            )
+
+        # 3️⃣ Encriptar contraseña
+        hashed_password = argon2.hash(user.password)
+
+        # 4️⃣ Insertar nuevo usuario en la base de datos
+        try:
+            response = supabase.table("usuarios").insert({
+                "nombre": user.name,
+                "correo": user.email,
+                "contrasena_hash": hashed_password,
+            }).execute()
+        except Exception:
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Error al conectarse con la base de datos. Inténtalo nuevamente más tarde."
+            )
+
+        # 5️⃣ Validar respuesta de Supabase
+        if not response.data:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="El usuario no se pudo crear debido a un error interno."
+            )
+
+        # 🔒 6️⃣ Remover contraseñas u otros datos sensibles antes de retornar al frontend
+        created_user = response.data[0]  # Supabase retorna lista
+        if "contrasena_hash" in created_user:
+            del created_user["contrasena_hash"]
+
+        return {
+            "message": "Usuario creado correctamente.",
+            "user": created_user
+        }
+
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        # Error no controlado
         raise HTTPException(
-            status_code=400, 
-            detail="La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un carácter especial (!@#$%^&*)."
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error inesperado en el servidor: {str(e)}"
         )
-
-    # 3. Encrypt password
-    hashed_password = argon2.hash(user.password)
-
-    # 4. Insert the new user into the database
-    response = supabase.table("usuarios").insert({
-        "nombre": user.name,
-        "correo": user.email,
-        "contrasena_hash": hashed_password,
-    }).execute()
-
-    if not response.data:
-        return {"error": "El usuario no se pudo crear"}
-
-    return {"message": "Usuario creado correctamente", "user": response.data}
