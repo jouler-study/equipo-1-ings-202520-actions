@@ -16,7 +16,7 @@ url = os.getenv("SUPABASE_URL")
 key = os.getenv("SUPABASE_KEY")
 supabase: Client = create_client(url, key)
 
-app = FastAPI(title="Registro de Usuarios API", version="1.1")
+app = FastAPI(title="Registro de Usuarios API", version="1.2")
 
 # Input model for user registration
 class UserRegister(BaseModel):
@@ -25,9 +25,16 @@ class UserRegister(BaseModel):
     password: constr(min_length=8)
 
 # Validate password complexity
-def validate_password(password: str) -> bool:
-    regex = r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$'
-    return re.match(regex, password) is not None
+def validate_password(password: str) -> tuple[bool, str]:
+    if len(password) < 8:
+        return False, "La contraseña debe tener al menos 8 caracteres."
+    if not re.search(r"[A-Z]", password):
+        return False, "La contraseña debe contener al menos una letra mayúscula."
+    if not re.search(r"[0-9]", password):
+        return False, "La contraseña debe contener al menos un número."
+    if not re.search(r"[!@#$%^&*]", password):
+        return False, "La contraseña debe contener al menos un carácter especial (!@#$%^&*)."
+    return True, ""
 
 # Error handler for validation errors with Spanish translations
 @app.exception_handler(RequestValidationError)
@@ -70,10 +77,11 @@ def register_user(user: UserRegister):
             )
 
         # Validate password complexity
-        if not validate_password(user.password):
+        is_valid, message = validate_password(user.password)
+        if not is_valid:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="La contraseña debe tener mínimo 8 caracteres, una mayúscula, un número y un carácter especial (!@#$%^&*)."
+                detail=message
             )
 
         # Encrypt password
@@ -92,7 +100,7 @@ def register_user(user: UserRegister):
                 detail="Error al conectarse con la base de datos. Inténtalo nuevamente más tarde."
             )
 
-        #  Validate insertion response
+        # Validate supabase response
         if not response.data:
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -100,7 +108,7 @@ def register_user(user: UserRegister):
             )
 
         # Remove passwords or other sensitive data before returning to the frontend
-        created_user = response.data[0]  # Supabase returns a list of inserted rows
+        created_user = response.data[0]
         if "contrasena_hash" in created_user:
             del created_user["contrasena_hash"]
 
@@ -112,7 +120,7 @@ def register_user(user: UserRegister):
     except HTTPException as e:
         raise e
     except Exception as e:
-        # No handle unexpected errors
+        # No handled exceptions
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error inesperado en el servidor: {str(e)}"
