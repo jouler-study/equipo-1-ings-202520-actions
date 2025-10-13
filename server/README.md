@@ -7,10 +7,12 @@ This module implements a **user registration system** using **FastAPI**, **Supab
 ## 🚀 Features
 
 - **User registration** via `/registro` endpoint.  
-- **Validation** for email and password strength.  
-- **Secure password hashing** with Argon2.  
+- **Detailed password validation** with specific feedback messages.  
+- **Email format and duplication validation**.  
+- **Secure password hashing** using Argon2 (never returned to the client).  
 - **Supabase integration** for PostgreSQL database operations.  
-- **Environment variables (.env)** for sensitive credentials.  
+- **Proper HTTP error handling** with `HTTPException`.  
+- **Environment variables (.env)** loaded from the `/server` directory.  
 
 ---
 
@@ -18,59 +20,39 @@ This module implements a **user registration system** using **FastAPI**, **Supab
 
 ### Python version
 - Python **3.11+**
--Access to an account and project in Supabase
--Environment variables configured correctly
+- Access to an account and project in **Supabase**
+- Environment variables configured correctly
 
 ### Dependencies
 Make sure you have **pip** installed, then run:
 
 ```PowerShell
-pip install fastapi "uvicorn[standard]" supabase passlib[bcrypt] python-dotenv "pydantic[email]"
+pip install fastapi "uvicorn[standard]" supabase passlib[argon2] python-dotenv "pydantic[email]"
 ```
 
-> 💡 If you encounter errors with `bcrypt`, try:
 ```PowerShell
-pip install --upgrade passlib bcrypt
+If you encounter errors with bcrypt, try:
+> pip install --upgrade passlib bcrypt
 ```
 
-> 💡 If you encounter errors with `uvicorn`:
-WARNING: The script uvicorn.exe is installed in 'C:\Users\<tu_usuario>\AppData\Roaming\Python\Python313\Scripts' which is not on PATH.
+If you encounter errors with uvicorn:
+> WARNING: The script uvicorn.exe is installed in 'C:\Users\<your_user>\AppData\Roaming\Python\Python313\Scripts' which is not on PATH.
 
 Add that path to your PATH or use the following alternative command to run the server:
+```PowerShell
+> python -m uvicorn server.user_registration:app --reload
 ```
-python -m uvicorn server.user_registration:app --reload
-```
 
----
+### ⚙️ Environment Setup
+In the server directory, create a .env file with the following content:
 
-## ⚙️ Environment Setup
-
-In the root of your project (same level as `server/`), create a file named `.env` with:
-
-```bash
-SUPABASE_URL=https://YOUR_PROJECT_ID.supabase.co
+>  SUPABASE_URL=https://YOUR_PROJECT_ID.supabase.co
 SUPABASE_KEY=YOUR_SUPABASE_API_KEY
-```
 
-> ⚠️ Never push your `.env` file to GitHub — make sure it’s listed in `.gitignore`.
+⚠️ Ensure that the URL begins with https://, or the following error will appear:
+> supabase._sync.client.SupabaseException: Invalid URL
 
-Example `.gitignore`:
-```
-__pycache__/
-*.pyc
-.env
-```
-
-> ⚠️ Ensure that the URL begins with https://, or the following error will appear:
-```
-supabase._sync.client.SupabaseException: Invalid URL
-```
-
----
-
-## 🧩 Project Structure
-
-```
+### 🧩 Project Structure
 EQUIPO-1-INGS-202520/
 │
 ├── client/
@@ -79,58 +61,54 @@ EQUIPO-1-INGS-202520/
 │   └── user_registration.py
 ├── .env
 └── .gitignore
+
+### ▶️ Running the Server
+From the root directory of your project, run:
+#### Option 1 (if uvicorn is in PATH)
+```PowerShell
+uvicorn server.user_registration:app --reload
 ```
 
----
-
-## ▶️ Running the Server
-
-From the **root directory** of your project, run:
-
-```Powershell
-# Opción 1 (si uvicorn está en PATH)
-uvicorn server.user_registration:app --reload
-
-# Opción 2 (alternativa recomendada en Windows)
+#### Option 2 (recommended for Windows)
+```PowerShell
 python -m uvicorn server.user_registration:app --reload
 ```
 
 Then open your browser or API tool (like Postman) and go to:
+> http://127.0.0.1:8000/docs
 
-👉 **http://127.0.0.1:8000/docs**
+You will find the interactive Swagger UI where you can test the /registro endpoint.
 
-You’ll find the interactive Swagger UI where you can test the `/registro` endpoint.
-
----
-
-## 🧪 Example Request
-
-**Endpoint:** `POST /registro`
-
-**Body:**
-```json
-{
+### Example Request
+Endpoint: POST /registro
+Body:
+> {
   "name": "Molly",
   "email": "molly@example.com",
   "password": "UnaBuenaContraseña*1"
 }
-```
 
-**Possible Responses:**
-- ✅ `200 OK` → User created successfully.
-- ⚠️ `400 Bad Request` → Invalid password or email already registered.
-- ❌ `500 Internal Server Error` → Connection or database issue.
+Possible Responses:
+* 200 OK → User created successfully.
 
----
+* 400 Bad Request → Invalid password or email already registered.
 
-## 🧾 Notes
+* 422 Unprocessable Entity → Validation error in one or more fields.
 
-- Passwords must contain **at least 8 characters**, including **one uppercase**, **one number**, and **one special character (!@#$%^&*)**.
-- All user data is stored in the Supabase table `usuarios`.
-- Update `.env` credentials if Supabase project details change.
+* 503 Service Unavailable → Database connection issue.
 
----
+* 500 Internal Server Error → Unexpected server error.
 
-### 👩‍💻 Maintainers
-Equipo 1 - Software Engineering  
-University Project – 2025-2
+### Security & Improvements
+* Passwords are hashed with Argon2 before storage.
+
+* The password hash is never returned to the frontend in any response.
+
+* The function validate_password() now provides detailed user feedback when the password fails validation
+
+### Notes
+* Passwords must contain at least 8 characters, including one uppercase, one number, and one special character (!@#$%^&*).
+
+* All user data is stored in the Supabase table usuarios.
+
+* Update .env credentials if Supabase project details change.
