@@ -90,7 +90,7 @@ Before running any of the availability features, make sure you have the followin
 
 📦 Install them with:
 ```PowerShell
-pip install fastapi uvicorn python-dotenv httpx supabase
+pip install fastapi uvicorn python-dotenv httpx supabase python-dateutil
 ```
 
 ✅ Environment variables
