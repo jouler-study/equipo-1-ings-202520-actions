@@ -7,7 +7,7 @@ const Header = () => {
     <header className="sticky top-0 z-50" style={{ backgroundColor: 'rgba(76, 167, 114, 0.7)', position: 'relative', overflow: 'visible' }}>
       <div className="container" style={{ overflow: 'visible' }}>
         <div className="flex items-center justify-between" style={{ height: '100px', overflow: 'visible' }}>
-          {/* Logo - Sobresale del header */}
+          {/* Logo - Extends beyond the header */}
           <div className="flex items-center" style={{ position: 'relative', overflow: 'visible' }}>
             <img 
               src="/client_images/Plaze-Logo.png" 

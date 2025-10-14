@@ -18,13 +18,13 @@ const UserMenu = ({ userName = "Usuario" }) => {
   }, [])
 
   const handleLogout = () => {
-    console.log('Cerrando sesión...')
+    console.log('Logging out...')
     // TODO: Implement logout logic with backend
     setIsOpen(false)
   }
 
   const handleProfile = () => {
-    console.log('Ir a información personal...')
+    console.log('Going to personal information...')
     // TODO: Navigate to profile page
     setIsOpen(false)
   }

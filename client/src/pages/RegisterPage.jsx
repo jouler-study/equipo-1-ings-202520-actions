@@ -1,19 +1,48 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const RegisterPage = () => {
+  const [fullName, setFullName] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
+  const navigate = useNavigate()
 
   const handleRegister = () => {
+    setErrorMessage('')
+
+    // Check if all fields are filled
+    if (!fullName.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
+      setErrorMessage('Por favor completa todos los campos')
+      return
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      setErrorMessage('Por favor ingresa un correo electrónico válido')
+      return
+    }
+
+    // Validate password requirements
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/
+    if (!passwordRegex.test(password)) {
+      setErrorMessage('La contraseña no cumple con los requisitos mínimos')
+      return
+    }
+
+    // Check if passwords match
     if (password !== confirmPassword) {
       setErrorMessage('Las contraseñas no coinciden')
       return
     }
-    setErrorMessage('')
-    // Handle registration logic here
-    console.log('Registration successful')
+
+    // TODO: Implement API call to register user
+    console.log('Registration successful:', { fullName, email })
+    
+    // Navigate to confirmation page
+    navigate('/register-confirmation')
   }
 
   return (
@@ -109,6 +138,8 @@ const RegisterPage = () => {
           <input
             type="text"
             placeholder="Nombre completo"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
             style={{
               width: '470px',
               height: '65px',
@@ -125,6 +156,8 @@ const RegisterPage = () => {
           <input
             type="email"
             placeholder="Correo electrónico"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             style={{
               width: '470px',
               height: '65px',
