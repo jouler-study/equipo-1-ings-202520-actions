@@ -1,5 +1,24 @@
 # 🧩 Availability documentation
 
+### ⚙️ Requirements and dependencies
+
+Before running any of the availability features, make sure you have the following installed:
+
+> fastapi, uvicorn, httpx, python-dotenv, supabase-py
+
+📦 Install them with:
+```PowerShell
+pip install fastapi uvicorn python-dotenv httpx supabase python-dateutil
+```
+
+✅ Environment variables
+Create a .env file in the project root with the following keys:
+
+SUPABASE_URL=https://<your-project>.supabase.co
+SUPABASE_SERVICE_KEY=<your-service-role-key>
+
+> ⚠️ Use the Service Role Key, since it grants read/write permissions needed for backend operations.
+
 ### Availability monitoring (monthly uptime)
 
 You can test it by entering the server folder and running:
@@ -79,27 +98,6 @@ The load balancer randomly forwards each request to one of the running backend i
 If one instance becomes unavailable, the other continues serving requests, demonstrating resilience against node failures.
 
 In production, this setup can be extended with Nginx or cloud-managed load balancers for real-world fault tolerance.
-
----
-
-### ⚙️ Requirements and dependencies
-
-Before running any of the availability features, make sure you have the following installed:
-
-> fastapi, uvicorn, httpx, python-dotenv, supabase-py
-
-📦 Install them with:
-```PowerShell
-pip install fastapi uvicorn python-dotenv httpx supabase python-dateutil
-```
-
-✅ Environment variables
-Create a .env file in the project root with the following keys:
-
-SUPABASE_URL=https://<your-project>.supabase.co
-SUPABASE_SERVICE_KEY=<your-service-role-key>
-
-> ⚠️ Use the Service Role Key, since it grants read/write permissions needed for backend operations.
 
 ---
 
