@@ -189,17 +189,6 @@ Make sure the backend server has CORS configured to allow requests from `http://
 
 ---
 
-## 🎯 Next Steps
-
-1. **Complete authentication pages** (Register, Password Recovery)
-2. **Connect with real server** when available
-3. **Implement backend authentication** (F-05, F-06)
-4. **Add price history** (F-02)
-5. **Implement predictions** (F-03)
-6. **Add custom baskets** (F-07)
-
----
-
 ## 🤝 Contributing
 
 1. Create a branch for the new feature
