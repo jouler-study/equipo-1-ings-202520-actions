@@ -1,25 +1,27 @@
-# Python cache
-__pycache__/
-*.py[cod]
-*$py.class
-
 # Environment folders
 .venv/
 env/
 venv/
 .env
+*.env
+*.env.*
 
 # IDE settings
 .vscode/
 .idea/
+*.iml
 
 # System files
 .DS_Store
-Thumbs.db
+server/__pycache__/user_registration.cpython-311.pyc
+
 # Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyc
+*.pyo
+*.pyd
 *.so
 .Python
 env/
@@ -56,5 +58,3 @@ wheels/
 
 # OS
 .DS_Store
-Thumbs.db
-
