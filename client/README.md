@@ -54,10 +54,11 @@ npm install
 ```
 
 ### 2. Configure Environment Variables
-Create a `.env` file in the `client` folder:
+Create a `.env` file in the `client` folder (if it doesn't exist):
 ```env
-VITE_API_URL=http://localhost:8000
+VITE_API_URL=http://127.0.0.1:8000
 ```
+**Note**: Do NOT add `/api` at the end. The routes are configured without this prefix.
 
 ### 3. Run in Development Mode
 ```bash
