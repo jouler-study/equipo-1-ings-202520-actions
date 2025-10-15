@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { User, LogOut, ChevronDown } from 'lucide-react'
 
 const UserMenu = ({ userName = "Usuario" }) => {
   const [isOpen, setIsOpen] = useState(false)
   const menuRef = useRef(null)
+  const navigate = useNavigate()
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -18,13 +20,15 @@ const UserMenu = ({ userName = "Usuario" }) => {
   }, [])
 
   const handleLogout = () => {
-    console.log('Cerrando sesión...')
-    // TODO: Implement logout logic with backend
+    console.log('Logging out...')
+    // TODO: Implement logout logic with backend (clear session, tokens, etc.)
     setIsOpen(false)
+    // Redirect to landing page
+    navigate('/')
   }
 
   const handleProfile = () => {
-    console.log('Ir a información personal...')
+    console.log('Going to personal information...')
     // TODO: Navigate to profile page
     setIsOpen(false)
   }
