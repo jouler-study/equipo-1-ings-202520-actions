@@ -1,0 +1,10 @@
+fastapi
+"uvicorn[standard]"
+supabase
+passlib[argon2]
+python-dotenv
+"pydantic[email]"
+sqlalchemy
+psycopg2-binary
+python-jose
+email-validator
