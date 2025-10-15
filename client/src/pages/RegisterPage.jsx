@@ -55,8 +55,13 @@ const RegisterPage = () => {
 
       console.log('Registration successful:', response)
       
-      // Navigate to confirmation page
-      navigate('/register-confirmation')
+      // Navigate to confirmation page with success state
+      navigate('/register-confirmation', { 
+        state: { 
+          registrationSuccess: true,
+          userName: fullName
+        } 
+      })
     } catch (error) {
       console.error('Registration error:', error)
       

@@ -1,5 +1,6 @@
 # password_utils.py
 import uuid
+import os
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
 from models import User, EmailLink
@@ -32,6 +33,9 @@ def create_password_recovery_link(user: User, db: Session, link_type: str = "rec
     db.commit()
     db.refresh(email_link)
 
-    reset_link = f"http://localhost:8000/password/reset/{token}"
+    # Get frontend URL from environment variable or use default
+    frontend_url = os.getenv("FRONTEND_URL", "http://localhost:3000")
+    reset_link = f"{frontend_url}/reset-password?token={token}"
+    
     return token, reset_link
 

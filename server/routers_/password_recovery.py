@@ -24,7 +24,10 @@ class ResetPassword(BaseModel):
 # ----------------------------- #
 #   Password Recovery (POST)    #
 # ----------------------------- #
-@router.post("/recover/{correo}")
+# CHANGED: Updated route from "/recover/{correo}" to "/recover/{email}"
+# to match the function parameter name and fix 422 Unprocessable Entity error
+# Previous: @router.post("/recover/{correo}")
+@router.post("/recover/{email}")
 def recover_password(email: EmailStr, db: Session = Depends(get_db)):
     """
     Starts the password recovery process.
