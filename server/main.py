@@ -1,11 +1,12 @@
 # main.py
 from fastapi import FastAPI
+from routers_.user_registration import router as user_registration_router
 from routers_ import auth, password_recovery
 from routers.prices import router as prices_router
 from database import Base, engine
 from dotenv import load_dotenv
-from routes.health_routes import router as health_router
-from routes.maintenance_routes import router as maintenance_router
+from routers_.health_routes import router as health_router
+from routers_.maintenance_routes import router as maintenance_router
 
 # Load environment variables
 load_dotenv()
@@ -16,6 +17,7 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(title="Market Prices Plaze API 🛒")
 
 # Include routers
+app.include_router(user_registration_router)
 app.include_router(auth.router, tags=["Auth"])
 app.include_router(password_recovery.router, tags=["Password Recovery"])
 app.include_router(prices_router, tags=["Prices"])
