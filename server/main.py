@@ -1,5 +1,6 @@
 # main.py
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware  # CORS middleware for cross-origin requests
 from routers_.user_registration import router as user_registration_router
 from routers_ import auth, password_recovery
 from routers.prices import router as prices_router
@@ -15,6 +16,25 @@ load_dotenv()
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Market Prices Plaze API 🛒")
+
+# ========================================
+# CORS Configuration
+# ========================================
+# Enable Cross-Origin Resource Sharing (CORS) to allow frontend requests
+# This is required for the React frontend to communicate with the API
+# Allowed origins include common development ports (3000, 5173)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:3000",      # Create React App default port
+        "http://localhost:5173",      # Vite default port
+        "http://127.0.0.1:3000",      # Alternative localhost notation
+        "http://127.0.0.1:5173",      # Alternative localhost notation (Vite)
+    ],
+    allow_credentials=True,           # Allow cookies and authentication headers
+    allow_methods=["*"],              # Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],              # Allow all headers (including Authorization)
+)
 
 # Include routers
 app.include_router(user_registration_router)

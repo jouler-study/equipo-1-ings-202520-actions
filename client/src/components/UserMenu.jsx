@@ -1,11 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { User, LogOut, ChevronDown } from 'lucide-react'
+import { authService } from '../config/api'
 
-const UserMenu = ({ userName = "Usuario" }) => {
+const UserMenu = ({ userName = null }) => {
   const [isOpen, setIsOpen] = useState(false)
   const menuRef = useRef(null)
   const navigate = useNavigate()
+  
+  // Get user info from localStorage
+  const currentUser = authService.getCurrentUser()
+  const displayName = userName || currentUser.name || currentUser.email?.split('@')[0] || "Usuario"
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -19,10 +24,18 @@ const UserMenu = ({ userName = "Usuario" }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     console.log('Logging out...')
-    // TODO: Implement logout logic with backend (clear session, tokens, etc.)
     setIsOpen(false)
+    
+    try {
+      // Call logout API and clear local storage
+      await authService.logout()
+    } catch (error) {
+      console.error('Logout error:', error)
+      // Even if API fails, clear local storage
+    }
+    
     // Redirect to landing page
     navigate('/')
   }
@@ -39,7 +52,7 @@ const UserMenu = ({ userName = "Usuario" }) => {
       <div className="flex items-center" style={{ gap: '8px' }}>
         <User className="w-5 h-5" style={{ color: '#333' }} />
         <span className="text-sm font-medium" style={{ color: '#333' }}>
-          Hola, {userName}
+          Hola, {displayName}
         </span>
       </div>
 
