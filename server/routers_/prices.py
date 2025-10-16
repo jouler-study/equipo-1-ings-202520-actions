@@ -1,4 +1,10 @@
-# prices.py
+"""
+Price routes module for product queries in market plazas.
+
+This module provides endpoints to query updated prices, list available
+products and market plazas in Medellín.
+"""
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import text

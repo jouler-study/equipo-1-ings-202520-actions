@@ -1,6 +1,9 @@
-# auth.py
 """
-Authentication routes: login, logout and token-protected utilities.
+Authentication routes module for user login, logout and token management.
+
+This module provides secure authentication endpoints with JWT token generation,
+account locking mechanism after failed attempts, and token invalidation through
+an in-memory blacklist system.
 """
 
 from fastapi import APIRouter, Depends, HTTPException,Header,BackgroundTasks,Security
