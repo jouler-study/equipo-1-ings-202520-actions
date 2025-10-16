@@ -149,6 +149,7 @@ def login(
     return {
         "mensaje": "Inicio de sesión exitoso",
         "usuario": usuario.correo,
+        "nombre": usuario.nombre,  # Include user's name in response
         "rol": role,
         "access_token": token,
         "tipo_token": "bearer"

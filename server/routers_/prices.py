@@ -1,17 +1,10 @@
+# prices.py
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from sqlalchemy import text
-from database import SessionLocal
+from database import get_db
 
 router = APIRouter(prefix="/prices", tags=["Prices"])
-
-# --- Database dependency ---
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 # --- Endpoint 1: Get the latest price ---
 @router.get("/latest/")

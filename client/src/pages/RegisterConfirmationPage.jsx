@@ -1,11 +1,25 @@
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 const RegisterConfirmationPage = () => {
   const navigate = useNavigate()
+  const location = useLocation()
+  const { registrationSuccess, userName } = location.state || {}
+
+  // Redirect if user didn't come from a successful registration
+  useEffect(() => {
+    if (!registrationSuccess) {
+      navigate('/register')
+    }
+  }, [registrationSuccess, navigate])
 
   const handleBackToLogin = () => {
     navigate('/login')
+  }
+
+  // Don't render if no valid state
+  if (!registrationSuccess) {
+    return null
   }
 
   return (
@@ -54,10 +68,10 @@ const RegisterConfirmationPage = () => {
           marginBottom: '100px',
           color: '#000000'
         }}>
-          ¡Tu registro en <span style={{ color: '#4CA772' }}>Plaze</span> está casi listo!
+          ¡Tu registro en <span style={{ color: '#4CA772' }}>Plaze</span> fue exitoso!
         </h1>
 
-        {/* Message box with mail icon */}
+        {/* Success message box with icon */}
         <div style={{
           position: 'relative',
           width: '800px',
@@ -107,18 +121,18 @@ const RegisterConfirmationPage = () => {
             lineHeight: '1.6'
           }}>
             <p style={{ marginBottom: '16px' }}>
-              Hemos enviado un <strong>correo de verificación a tu email</strong>.
+              <strong>¡Bienvenido a Plaze{userName ? `, ${userName}` : ''}!</strong>
             </p>
             <p style={{ marginBottom: '16px' }}>
-              Revisa tu bandeja de entrada y haz clic en el enlace para activar tu cuenta.
+              Tu cuenta ha sido creada exitosamente y ya puedes comenzar a disfrutar de toda la experiencia que Plaze tiene para ti.
             </p>
             <p>
-              <strong>¿No lo ves?</strong> Revisa tu carpeta de spam o solicita un nuevo correo.
+              Descubre los mejores precios de productos en las plazas de mercado de tu ciudad y toma decisiones inteligentes de compra.
             </p>
           </div>
         </div>
 
-        {/* Back to login button */}
+        {/* Go to login button */}
         <button
           onClick={handleBackToLogin}
           style={{
@@ -136,7 +150,7 @@ const RegisterConfirmationPage = () => {
             marginTop: '20px'
           }}
         >
-          Volver a Inicio de sesión
+          Ir a Inicio de sesión
         </button>
       </div>
     </div>

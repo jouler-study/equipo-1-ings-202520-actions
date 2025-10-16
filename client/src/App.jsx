@@ -6,6 +6,7 @@ import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import RegisterConfirmationPage from './pages/RegisterConfirmationPage'
 import PasswordRecoveryPage from './pages/PasswordRecoveryPage'
+import ResetPasswordPage from './pages/ResetPasswordPage'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import PageTransition from './components/PageTransition'
@@ -19,7 +20,7 @@ function AppContent() {
   const location = useLocation()
   
   // Hide header and footer on authentication pages and landing page (they have their own)
-  const pagesWithoutLayout = ['/', '/login', '/register', '/register-confirmation', '/password-recovery']
+  const pagesWithoutLayout = ['/', '/login', '/register', '/register-confirmation', '/password-recovery', '/reset-password']
   const showHeader = !pagesWithoutLayout.includes(location.pathname)
   const showFooter = !pagesWithoutLayout.includes(location.pathname)
 
@@ -35,6 +36,7 @@ function AppContent() {
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/register-confirmation" element={<RegisterConfirmationPage />} />
             <Route path="/password-recovery" element={<PasswordRecoveryPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
           </Routes>
         </PageTransition>
       </main>

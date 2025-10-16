@@ -1,7 +1,68 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { authService } from '../config/api'
 
 const LoginPage = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate()
+
+  const handleLogin = async () => {
+    setErrorMessage('')
+    setIsLoading(true)
+
+    try {
+      // Validate fields
+      if (!email.trim() || !password.trim()) {
+        setErrorMessage('Por favor completa todos los campos')
+        setIsLoading(false)
+        return
+      }
+
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(email)) {
+        setErrorMessage('Por favor ingresa un correo electrónico válido')
+        setIsLoading(false)
+        return
+      }
+
+      // Call API to login
+      const response = await authService.login(email, password)
+      
+      console.log('Login successful:', response)
+      
+      // Redirect to home page
+      navigate('/home')
+    } catch (error) {
+      console.error('Login error:', error)
+      
+      // User-friendly error messages
+      let message = error.message
+      if (message.includes('Correo o contraseña incorrectos')) {
+        message = 'Correo o contraseña incorrectos'
+      } else if (message.includes('bloqueada')) {
+        message = 'Tu cuenta ha sido bloqueada temporalmente. Revisa tu correo electrónico.'
+      } else if (message.includes('Network Error')) {
+        message = 'Error de conexión. Verifica tu conexión a internet.'
+      } else if (!message || message === 'Error al iniciar sesión') {
+        message = 'Error al iniciar sesión. Intenta nuevamente.'
+      }
+      
+      setErrorMessage(message)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleLogin()
+    }
+  }
+
   return (
     <div style={{
       minHeight: '100vh',
@@ -91,10 +152,13 @@ const LoginPage = () => {
             />
           </div>
 
-          {/* Username input field */}
+          {/* Email input field */}
           <input
-            type="text"
-            placeholder="Nombre de usuario"
+            type="email"
+            placeholder="Correo electrónico"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onKeyPress={handleKeyPress}
             style={{
               width: '350px',
               height: '60px',
@@ -111,6 +175,9 @@ const LoginPage = () => {
           <input
             type="password"
             placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyPress={handleKeyPress}
             style={{
               width: '350px',
               height: '60px',
@@ -119,27 +186,47 @@ const LoginPage = () => {
               borderRadius: '4px',
               padding: '0 12px',
               fontSize: '18px',
-              marginBottom: '32px'
+              marginBottom: '20px'
             }}
           />
 
+          {/* Error message */}
+          {errorMessage && (
+            <div style={{
+              color: '#D32F2F',
+              backgroundColor: '#FFEBEE',
+              padding: '12px 20px',
+              borderRadius: '4px',
+              fontSize: '14px',
+              marginBottom: '20px',
+              width: '350px',
+              textAlign: 'center',
+              border: '1px solid #EF5350'
+            }}>
+              {errorMessage}
+            </div>
+          )}
+
           {/* Login button */}
           <button
+            onClick={handleLogin}
+            disabled={isLoading}
             style={{
               width: '200px',
               height: '50px',
-              backgroundColor: '#D2EDCC',
+              backgroundColor: isLoading ? '#A8E88D' : '#D2EDCC',
               border: 'none',
               borderRadius: '20px',
               color: '#000000',
               fontSize: '24px',
               fontWeight: '500',
-              cursor: 'pointer',
+              cursor: isLoading ? 'not-allowed' : 'pointer',
               marginTop: '10px',
-              boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+              boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+              opacity: isLoading ? 0.7 : 1
             }}
           >
-            Iniciar Sesión
+            {isLoading ? 'Iniciando...' : 'Iniciar Sesión'}
           </button>
 
           {/* Forgot password link */}

@@ -1,8 +1,12 @@
 import React from 'react'
 import { Search } from 'lucide-react'
 import UserMenu from './UserMenu'
+import { authService } from '../config/api'
 
 const Header = () => {
+  // Get current user info
+  const currentUser = authService.getCurrentUser()
+  
   return (
     <header className="sticky top-0 z-50" style={{ backgroundColor: 'rgba(76, 167, 114, 0.7)', position: 'relative', overflow: 'visible' }}>
       <div className="container" style={{ overflow: 'visible' }}>
@@ -18,8 +22,10 @@ const Header = () => {
                 objectFit: 'contain',
                 position: 'relative',
                 top: '40px',
-                zIndex: 100
+                zIndex: 100,
+                cursor: 'pointer'
               }}
+              onClick={() => window.location.href = '/home'}
             />
           </div>
 
@@ -40,7 +46,7 @@ const Header = () => {
 
           {/* User Menu */}
           <div className="flex items-center">
-            <UserMenu userName="Juan Pérez" />
+            <UserMenu userName={currentUser.name} />
           </div>
         </div>
       </div>

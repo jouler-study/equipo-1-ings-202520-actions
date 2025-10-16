@@ -1,32 +1,56 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { authService } from '../config/api'
 
 const PasswordRecoveryPage = () => {
   const [email, setEmail] = useState('')
   const [emailSent, setEmailSent] = useState(false)
   const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
+    setIsLoading(true)
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!email.trim()) {
       setError('Por favor ingresa tu correo electrónico')
+      setIsLoading(false)
       return
     }
     if (!emailRegex.test(email)) {
       setError('Por favor ingresa un correo electrónico válido')
+      setIsLoading(false)
       return
     }
 
-    // TODO: Implement API call to send recovery email
-    console.log('Sending recovery email to:', email)
-    
-    // Show success message
-    setEmailSent(true)
+    try {
+      // Call backend API to send recovery email
+      const response = await authService.recoverPassword(email)
+      console.log('Recovery email sent:', response)
+      
+      // Show success message
+      setEmailSent(true)
+    } catch (err) {
+      console.error('Recovery error:', err)
+      
+      // User-friendly error messages
+      let errorMsg = err.message || 'Ocurrió un error al enviar el correo'
+      if (errorMsg.includes('no encontrado') || errorMsg.includes('404')) {
+        errorMsg = 'No existe una cuenta con este correo electrónico'
+      } else if (errorMsg.includes('Network Error')) {
+        errorMsg = 'Error de conexión. Verifica tu conexión a internet.'
+      } else if (errorMsg.includes('500')) {
+        errorMsg = 'Error del servidor. Intenta más tarde.'
+      }
+      
+      setError(errorMsg)
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleBackToLogin = () => {
@@ -113,6 +137,7 @@ const PasswordRecoveryPage = () => {
                 placeholder="Correo electrónico"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                disabled={isLoading}
                 style={{
                   width: '100%',
                   height: '65px',
@@ -121,17 +146,22 @@ const PasswordRecoveryPage = () => {
                   borderRadius: '4px',
                   padding: '0 15px',
                   fontSize: '18px',
-                  marginBottom: '20px'
+                  marginBottom: '20px',
+                  opacity: isLoading ? 0.6 : 1
                 }}
               />
 
               {/* Error message */}
               {error && (
                 <div style={{
-                  color: '#FF0000',
-                  fontSize: '16px',
+                  color: '#D32F2F',
+                  backgroundColor: '#FFEBEE',
+                  padding: '12px 20px',
+                  borderRadius: '4px',
+                  fontSize: '14px',
                   marginBottom: '20px',
-                  textAlign: 'center'
+                  textAlign: 'center',
+                  border: '1px solid #EF5350'
                 }}>
                   {error}
                 </div>
@@ -141,21 +171,23 @@ const PasswordRecoveryPage = () => {
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <button
                   type="submit"
+                  disabled={isLoading}
                   style={{
                     width: '200px',
                     height: '50px',
-                    backgroundColor: '#D2EDCC',
+                    backgroundColor: isLoading ? '#A8E88D' : '#D2EDCC',
                     border: '1px solid #000000',
                     borderRadius: '20px',
                     color: '#000000',
                     fontSize: '24px',
                     fontWeight: '500',
-                    cursor: 'pointer',
+                    cursor: isLoading ? 'not-allowed' : 'pointer',
                     marginTop: '10px',
-                    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)'
+                    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+                    opacity: isLoading ? 0.7 : 1
                   }}
                 >
-                  Enviar
+                  {isLoading ? 'Enviando...' : 'Enviar'}
                 </button>
               </div>
             </form>
