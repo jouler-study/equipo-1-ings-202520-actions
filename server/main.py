@@ -1,4 +1,11 @@
-# main.py
+"""
+Main application module for Market Prices Plaze API.
+
+This module initializes the FastAPI application, configures CORS middleware,
+creates database tables, and registers all API routers for different
+functional domains (authentication, prices, health checks, etc.).
+"""
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware  # CORS middleware for cross-origin requests
 from routers_.user_registration import router as user_registration_router
@@ -51,7 +58,21 @@ def root():
     """
     Root endpoint of the API.
 
+    This endpoint serves as a simple health check and welcome message
+    for the Market Prices Plaze API. It confirms that the application
+    is running and accessible.
+
     Returns:
-        dict: A JSON response containing a message indicating that the API is running.
+        dict: A dictionary containing:
+            - message (str): Confirmation message that the API is operational.
+
+    Example:
+        >>> response = root()
+        >>> print(response)
+        {'message': 'API funcionando 🚀'}
+
+    Note:
+        This endpoint does not require authentication and can be used
+        for basic connectivity testing.
     """
     return {"message": "API funcionando 🚀"}

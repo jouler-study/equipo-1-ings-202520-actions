@@ -1,7 +1,13 @@
-# jwt_manager.py
 """
-JWT manager: create and verify JWT access tokens.
-Keep secrets out of source code in production (use environment variables).
+JWT token management module.
+
+This module provides functionality to create and verify JWT access tokens
+for user authentication. It uses the Jose library for token encoding/decoding
+and includes security features like expiration times and unique token identifiers.
+
+Security Note:
+    Keep SECRET_KEY and other sensitive configuration out of source code.
+    Always use environment variables in production environments.
 """
 
 from datetime import datetime, timedelta
@@ -42,8 +48,38 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None) -> s
 def verify_token(token: str) -> dict:
     """
     Verify and decode a JWT token.
-    Raises a JWTError (from python-jose) if invalid or expired.
-    Returns the decoded payload (dict) when valid.
+
+    This function validates the token signature, checks expiration, and
+    decodes the payload. It ensures the token hasn't been tampered with
+    and is still valid.
+
+    Args:
+        token (str): The JWT token string to verify and decode.
+
+    Returns:
+        dict: Decoded token payload containing all claims and custom data.
+            Includes standard claims (sub, exp, iat, jti) and any custom
+            fields that were added during token creation.
+
+    Raises:
+        JWTError: If the token is invalid, expired, or has been tampered with.
+            Possible reasons include:
+            - Invalid signature
+            - Expired token (past exp claim)
+            - Malformed token structure
+            - Algorithm mismatch
+
+    Example:
+        >>> token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        >>> try:
+        ...     payload = verify_token(token)
+        ...     print(payload["sub"])
+        ... except JWTError:
+        ...     print("Invalid or expired token")
+
+    Note:
+        The caller is responsible for handling JWTError exceptions,
+        typically by returning an HTTP 401 Unauthorized response.
     """
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])

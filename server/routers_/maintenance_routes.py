@@ -1,3 +1,10 @@
+"""
+System maintenance routes module.
+
+This module provides endpoints to check for active maintenance windows
+and retrieve maintenance messages from the database.
+"""
+
 from fastapi import APIRouter
 from supabase import create_client, Client
 import os
@@ -16,6 +23,37 @@ supabase: Client = create_client(url, key)
 
 @router.get("/maintenance")
 def get_maintenance():
+    """
+    Check for active system maintenance windows.
+
+    This endpoint queries the system_maintenance table to determine if
+    there is currently an active maintenance window. It compares the
+    current UTC time against the start and end times of all maintenance
+    records.
+
+    Returns:
+        dict: A dictionary containing maintenance status:
+            - active (bool): True if there is an active maintenance window,
+              False otherwise.
+            - message (str, optional): The maintenance message if active.
+
+    Example:
+        >>> # Active maintenance
+        >>> response = get_maintenance()
+        >>> print(response)
+        {'active': True, 'message': 'Scheduled maintenance in progress'}
+
+        >>> # No active maintenance
+        >>> response = get_maintenance()
+        >>> print(response)
+        {'active': False}
+
+    Note:
+        - All times are compared in UTC timezone.
+        - Maintenance records must have 'start_time' and 'end_time' fields
+          in ISO 8601 format.
+        - Debug messages are printed to console for monitoring.
+    """
     now_utc = datetime.now(timezone.utc)
     response = supabase.table("system_maintenance").select("*").execute()
 

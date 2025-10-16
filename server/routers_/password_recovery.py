@@ -1,4 +1,11 @@
-# password_recovery.py
+"""
+Password recovery module for secure user password reset functionality.
+
+This module provides endpoints for initiating password recovery via email
+and resetting passwords using time-limited, single-use tokens. Includes
+email delivery through Gmail SMTP and password strength validation.
+"""
+
 import os
 import smtplib
 from email.mime.text import MIMEText
@@ -125,6 +132,27 @@ def recover_password(email: EmailStr, db: Session = Depends(get_db)):
 #   Password Validation    #
 # ------------------------ #
 def validate_password(password: str) -> bool:
+    """
+    Validate password strength according to security requirements.
+
+    Checks that the password meets minimum security standards:
+    - At least 8 characters long
+    - Contains at least one uppercase letter (A-Z)
+    - Contains at least one digit (0-9)
+    - Contains at least one special character (!@#$%^&*)
+
+    Args:
+        password (str): Password string to validate.
+
+    Returns:
+        bool: True if password meets all requirements, False otherwise.
+
+    Example:
+        >>> validate_password("Weak123")
+        False
+        >>> validate_password("Strong123!")
+        True
+    """
     regex = r'^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$'
     return re.match(regex, password) is not None
 

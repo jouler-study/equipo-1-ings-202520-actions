@@ -1,4 +1,28 @@
-# password_utils.py
+"""
+Password recovery utilities for generating secure reset tokens.
+
+This module provides functions for creating time-limited, single-use password
+recovery tokens. Tokens are stored in the database with expiration timestamps
+and can only be used once for security purposes.
+
+Security Features:
+    - Cryptographically random tokens (UUID4)
+    - Time-limited validity (default: 1 hour)
+    - Single-use enforcement via database flag
+    - Unique token per request
+
+Usage:
+    from utils.password_utils import create_password_recovery_link
+    from models import User
+    from database import SessionLocal
+
+    db = SessionLocal()
+    user = db.query(User).filter(User.correo == "user@example.com").first()
+    token, reset_link = create_password_recovery_link(user, db)
+    
+    # Send reset_link via email to user
+"""
+
 import uuid
 import os
 from datetime import datetime, timedelta
