@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware  # CORS middleware for cross-origin requests
 from routers_.user_registration import router as user_registration_router
 from routers_ import auth, password_recovery
-from routers.prices import router as prices_router
+from routers_.prices import router as prices_router
 from database import Base, engine
 from dotenv import load_dotenv
 from routers_.health_routes import router as health_router
