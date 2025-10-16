@@ -420,7 +420,10 @@ Make sure the backend server has CORS configured to allow requests from `http://
 4. Check email for recovery link
 5. Use link to reset password
 
----
+### Database 
+- Nothing directly on the client
+- All you need is Backend running on port 8000
+- .env file with VITE_API_URL
 
 ## 📞 Support
 
