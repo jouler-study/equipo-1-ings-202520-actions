@@ -422,16 +422,6 @@ Make sure the backend server has CORS configured to allow requests from `http://
 
 ---
 
-## 🤝 Contributing
-
-1. Create a branch for the new feature
-2. Implement changes
-3. Test functionality thoroughly
-4. Ensure no linter errors
-5. Create a Pull Request
-
----
-
 ## 📞 Support
 
 For issues or questions:
@@ -439,10 +429,3 @@ For issues or questions:
 - Verify that the backend server is running
 - Consult the API documentation at `http://localhost:8000/docs`
 - Check Network tab in DevTools for failed requests
-
----
-
-## 📄 License
-
-Academic project - Universidad Pontificia Bolivariana
-
