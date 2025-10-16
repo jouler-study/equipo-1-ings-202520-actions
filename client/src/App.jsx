@@ -7,6 +7,7 @@ import RegisterPage from './pages/RegisterPage'
 import RegisterConfirmationPage from './pages/RegisterConfirmationPage'
 import PasswordRecoveryPage from './pages/PasswordRecoveryPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
+import ProductDetailPage from './pages/ProductDetailPage'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import PageTransition from './components/PageTransition'
@@ -21,8 +22,8 @@ function AppContent() {
   
   // Hide header and footer on authentication pages and landing page (they have their own)
   const pagesWithoutLayout = ['/', '/login', '/register', '/register-confirmation', '/password-recovery', '/reset-password']
-  const showHeader = !pagesWithoutLayout.includes(location.pathname)
-  const showFooter = !pagesWithoutLayout.includes(location.pathname)
+  const showHeader = !pagesWithoutLayout.includes(location.pathname) && !location.pathname.startsWith('/reset-password/')
+  const showFooter = !pagesWithoutLayout.includes(location.pathname) && !location.pathname.startsWith('/reset-password/')
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -37,6 +38,7 @@ function AppContent() {
             <Route path="/register-confirmation" element={<RegisterConfirmationPage />} />
             <Route path="/password-recovery" element={<PasswordRecoveryPage />} />
             <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/product/:productName" element={<ProductDetailPage />} />
           </Routes>
         </PageTransition>
       </main>

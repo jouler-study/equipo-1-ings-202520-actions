@@ -21,7 +21,10 @@ Web application for querying product prices in Medellín's market plazas.
 
 ### Application Features
 - **Current price queries** (F-01): Search prices by product, city, and plaza
+- **Price history visualization** (F-02): Interactive charts showing historical price trends
+- **Advanced filtering**: Filter searches by specific market plazas
 - **Price comparison**: Compare prices between different plazas
+- **Statistical analysis**: Key metrics, trends, and price variations over time
 - **Intuitive interface**: Usability-focused design (NF-01)
 - **Responsive**: Adaptable to different devices
 - **Quick search**: With automatic suggestions
@@ -32,6 +35,7 @@ Web application for querying product prices in Medellín's market plazas.
 - **Vite** - Build tool
 - **React Router** - Navigation with page transitions
 - **Axios** - HTTP client for API communication
+- **Recharts** - Interactive data visualization and charts
 - **Lucide React** - Icons
 - **CSS3** - Custom styles with animations
 
@@ -51,6 +55,11 @@ Web application for querying product prices in Medellín's market plazas.
 ```bash
 cd client
 npm install
+```
+
+**Note**: The project uses **Recharts** for data visualization. It will be automatically installed with `npm install`. If you need to install it separately:
+```bash
+npm install recharts
 ```
 
 ### 2. Configure Environment Variables
@@ -91,7 +100,10 @@ npm run dev
 - [x] **Password recovery flow** with email integration
 - [x] **Password reset page** with token validation
 - [x] **Account lockout protection** (3 failed attempts)
-- [x] Product search component
+- [x] Product search component with plaza filtering
+- [x] **Price history visualization** (F-02) with interactive charts
+- [x] **Product detail page** with comprehensive analysis
+- [x] **Statistical analysis** (trends, variations, key metrics)
 - [x] Price results visualization
 - [x] Responsive design
 - [x] **Full API integration** with backend
@@ -104,13 +116,11 @@ npm run dev
 - [x] Loading states for async operations
 
 ### 🔄 In Progress
-- [ ] Price history visualization (F-02)
 - [ ] Price predictions (F-03)
 - [ ] Plaza management (admin features)
 - [ ] User profile management
 
 ### 📝 Pending
-- [ ] Price history (F-02)
 - [ ] Predictions (F-03)
 - [ ] Comparison between plazas (F-04)
 - [ ] Custom baskets (F-07)
@@ -128,20 +138,25 @@ client/
 │   │   ├── LandingHeader.jsx    # Landing page header
 │   │   ├── Footer.jsx           # Footer
 │   │   ├── PageTransition.jsx   # Page transition wrapper
-│   │   ├── ProductSearch.jsx    # Search form
+│   │   ├── ProductSearch.jsx    # Search form with plaza filtering
 │   │   ├── PriceResults.jsx     # Price results
+│   │   ├── PriceHistoryChart.jsx # Interactive price history chart (recharts)
+│   │   ├── PriceStats.jsx       # Price statistics cards
+│   │   ├── TrendPeriods.jsx     # Price trend analysis display
 │   │   ├── QuickStats.jsx       # Quick statistics
 │   │   └── UserMenu.jsx         # User menu with logout
 │   ├── pages/                   # Main pages
 │   │   ├── LandingPage.jsx      # Landing page (root)
 │   │   ├── HomePage.jsx         # Main application page
+│   │   ├── ProductDetailPage.jsx # Product detail with price history (F-02)
 │   │   ├── LoginPage.jsx        # Login page
 │   │   ├── RegisterPage.jsx     # Registration page
 │   │   ├── RegisterConfirmationPage.jsx  # Registration success
 │   │   ├── PasswordRecoveryPage.jsx      # Password recovery
 │   │   └── ResetPasswordPage.jsx         # Password reset with token
 │   ├── styles/                  # Style files
-│   │   └── transitions.css      # Page transition animations
+│   │   ├── transitions.css      # Page transition animations
+│   │   └── product-detail.css   # Product detail page styles
 │   ├── config/                  # Configuration
 │   │   └── api.js               # API services and interceptors
 │   ├── App.jsx                  # Root component with routing
@@ -149,7 +164,7 @@ client/
 │   └── index.css                # Global styles
 ├── public/                      # Static files
 │   └── client_images/           # Images and SVG icons
-├── package.json                 # Dependencies
+├── package.json                 # Dependencies (includes recharts)
 ├── vite.config.js               # Vite configuration
 └── index.html                   # Main HTML
 ```
@@ -170,6 +185,8 @@ The application uses the following route structure:
 
 ### Protected Routes (require authentication)
 - **`/home`** - Main application page with product search and price queries
+- **`/product/:productName`** - Product detail page with price history and analysis (F-02)
+  - Supports query parameter: `?plaza=PlazaName` for filtering by specific plaza
 - More routes will be added for authenticated users
 
 ### Route Behavior
@@ -271,10 +288,11 @@ The client connects to the following server endpoints:
 - `POST /password/recover/{email}` - Request password recovery email
 - `POST /password/reset/{token}` - Reset password with token
 
-### Price Queries (F-01)
-- `GET /prices/current` - Current prices
-- `GET /prices/history` - Price history
-- `GET /prices/predictions` - Predictions
+### Price Queries
+- `GET /prices/latest/?product_name={product}&market_name={market}` - Get latest price for specific product and market (F-01)
+- `GET /prices/options/` - Get all available products and plazas
+- `GET /price-history/{product_name}?months={months}` - Get price history with statistical analysis (F-02)
+- `GET /prices/predictions` - Predictions (F-03)
 
 ### Products
 - `GET /products/search` - Product search
@@ -309,8 +327,19 @@ The `api.js` file includes:
 
 ### Service Modules
 - **`productService`**: Product and price queries
+  - `getPriceHistory(productName, months)` - Get historical price data with trends (F-02)
+  - `getLatestPrice(productName, marketName)` - Get current price for specific market
+  - `getOptions()` - Get all available products and plazas
+  - `getCurrentPrices(product, city, plaza)` - Query current prices
+  - `getPricePredictions(product, city, plaza, months)` - Get price predictions
+  - `searchProducts(query)` - Search products by name
+  - `getSearchSuggestions(query)` - Get search autocomplete suggestions
 - **`plazaService`**: Market plaza information
+  - `getPlazas(city)` - Get list of plazas by city
+  - `getPlazaDetails(plazaId)` - Get detailed plaza information
 - **`statsService`**: Statistics and analytics
+  - `getQuickStats()` - Get quick statistics
+  - `getPriceVariations(period)` - Get price variations by period
 - **`authService`**: Authentication and user management
   - `register(userData)` - User registration
   - `login(email, password)` - User login
@@ -319,6 +348,65 @@ The `api.js` file includes:
   - `resetPassword(token, newPassword)` - Reset password
   - `isAuthenticated()` - Check authentication status
   - `getCurrentUser()` - Get current user info from localStorage
+
+---
+
+## 📊 Price History Visualization (F-02)
+
+The product detail page provides comprehensive price analysis and visualization:
+
+### Features
+- **Interactive Line Chart**: Historical price visualization using Recharts library
+- **Statistical Analysis**: 
+  - Current price
+  - Price variation percentage
+  - Average, maximum, and minimum prices
+  - General trend (Increase/Decrease/Stability)
+- **Trend Periods**: Automatic detection of price trend periods with dates and variations
+- **Price Filtering**: Filter results by specific market plaza
+- **Time Period Selection**: View data for 3, 6, or 12 months
+- **Current Prices by Plaza**: Compare current prices across different market plazas
+
+### Components
+
+#### PriceHistoryChart
+- Line chart with date axis and price axis
+- Reference line showing current price
+- Interactive tooltip with formatted prices
+- Responsive design that adapts to screen size
+
+#### PriceStats
+- Four statistics cards displaying:
+  - Current price (green)
+  - Percentage variation (color-coded by trend)
+  - Average price (gray)
+  - General trend with icon (up/down/stable)
+
+#### TrendPeriods
+- Visual list of detected trend periods
+- Shows date ranges, price changes, and percentage variations
+- Color-coded by trend type (green for decrease, orange for increase)
+
+### User Flow
+1. User searches for a product from home page
+2. Optionally selects a specific plaza using the filter dropdown
+3. Clicks "Buscar precios"
+4. Navigates to `/product/{productName}?plaza={plazaName}`
+5. Views comprehensive analysis:
+   - Statistical cards at the top
+   - Interactive price history chart
+   - Trend periods analysis
+   - Current prices by plaza (filtered if plaza was selected)
+6. Can change time period (3/6/12 months) to update the view
+7. Click "Volver" to return to home page
+
+### Technical Details
+- **Chart Library**: Recharts (React-based charting library)
+- **Data Source**: `/price-history/{product_name}` endpoint
+- **Update Frequency**: Real-time when changing time period or product
+- **Error Handling**: User-friendly messages for missing data or connection issues
+- **Loading States**: Spinner during data fetch
+- **Responsive**: Mobile-friendly layout with collapsible sections
 
 ---
 

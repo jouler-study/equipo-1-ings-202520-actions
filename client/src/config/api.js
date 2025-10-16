@@ -64,19 +64,50 @@ export const productService = {
   },
 
   // Get price history (F-02)
-  getPriceHistory: async (product, city, plaza = '', months = 12) => {
+  getPriceHistory: async (productName, months = 12) => {
     try {
-      const params = {
-        product: product.trim(),
-        city: city || 'Medellín',
-        months,
-        ...(plaza && { plaza })
-      }
-      
-      const response = await api.get('/prices/history', { params })
+      const response = await api.get(`/price-history/${encodeURIComponent(productName)}`, {
+        params: { months }
+      })
       return response.data
     } catch (error) {
-      throw new Error(`Error getting history: ${error.message}`)
+      // Better error handling
+      if (error.response) {
+        // Server responded with error status
+        const detail = error.response.data?.detail || error.response.statusText
+        throw new Error(`Error ${error.response.status}: ${detail}`)
+      } else if (error.request) {
+        // Request was made but no response received
+        throw new Error('No se pudo conectar al servidor. Verifica que el backend esté corriendo en http://localhost:8000')
+      } else {
+        // Something else happened
+        throw new Error(`Error getting history: ${error.message}`)
+      }
+    }
+  },
+
+  // Get latest price for a specific product and market
+  getLatestPrice: async (productName, marketName) => {
+    try {
+      const response = await api.get('/prices/latest/', {
+        params: {
+          product_name: productName,
+          market_name: marketName
+        }
+      })
+      return response.data
+    } catch (error) {
+      throw new Error(`Error getting latest price: ${error.message}`)
+    }
+  },
+
+  // Get all available options (products and markets)
+  getOptions: async () => {
+    try {
+      const response = await api.get('/prices/options/')
+      return response.data
+    } catch (error) {
+      throw new Error(`Error getting options: ${error.message}`)
     }
   },
 

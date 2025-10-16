@@ -1,5 +1,6 @@
 /* Import page transition animations */
 @import './styles/transitions.css';
+@import './styles/product-detail.css';
 
 /* Reset and base styles */
 * {
