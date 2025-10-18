@@ -1,0 +1,23 @@
+# --- Core dependencies ---
+fastapi                       # Framework for building APIs
+uvicorn[standard]             # ASGI server for FastAPI with extras
+
+# --- Database & ORM ---
+sqlalchemy                     # ORM for database models and queries
+psycopg2-binary                # PostgreSQL driver (for Supabase or Postgres)
+supabase                        # Supabase client
+
+# --- Authentication & Security ---
+python-jose[cryptography]      # JWT creation and verification
+passlib[bcrypt,argon2]         # Password hashing (bcrypt and Argon2)
+argon2-cffi                    # Argon2 hashing support
+
+# --- Environment variables ---
+python-dotenv                  # Load environment variables from .env
+
+# --- Email handling & validation ---
+email-validator                # Validate email formats
+pydantic[email]                # Email validation in Pydantic models
+
+# --- Date & Time utilities ---
+python-dateutil                # Date parsing and manipulation utilities
