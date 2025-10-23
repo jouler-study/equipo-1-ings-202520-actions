@@ -4,10 +4,11 @@ import react from '@vitejs/plugin-react'
 export default defineConfig(({ mode }) => {
   // Carga las variables de entorno según el modo (development, production, etc.)
   const env = loadEnv(mode, process.cwd(), '')
+  const base = (env.VITE_BASE_URL || '/').replace(/([^/])$/, '$1/') // asegura trailing "/"
 
   return {
     plugins: [react()],
-    base: env.VITE_BASE_URL || '/', // Base URL de la app (por ejemplo, /mi-app/ en GitHub Pages)
+    base: base,
     server: {
       port: 3000,
       host: true,
