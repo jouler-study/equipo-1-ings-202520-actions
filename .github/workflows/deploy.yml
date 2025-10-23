@@ -27,8 +27,10 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      VITE_API_BASE_URL: http://127.0.0.1:8000
+      # Variables para producción (GitHub Pages)
+      VITE_API_BASE_URL: https://api.ejemplo.com  # Ajusta a tu API real
       VITE_BASE_URL: /equipo-1-ings-202520-actions/
+      NODE_ENV: production
 
     defaults:
       run:
