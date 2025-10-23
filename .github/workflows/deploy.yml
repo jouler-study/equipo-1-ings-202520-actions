@@ -1,50 +1,60 @@
 name: CI/CD
 
+# Permisos mínimos requeridos (deploy-pages@v4 además pide actions:read)
 permissions:
-  contents: write
+  contents: read
+  actions: read
   pages: write
   id-token: write
 
 on:
   push:
     branches:
-      - "**" # CI en cualquier push
-      - main  
+      - "**" # CI en cualquier rama
   pull_request:
     branches:
       - main # CI en PRs a main
   workflow_dispatch: {}
+
+# Evita despliegues solapados por rama
+concurrency:
+  group: "pages-${{ github.ref }}"
+  cancel-in-progress: true
 
 jobs:
   ci:
     name: CI — build & test
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: client
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: "23.5.0"
+          # Usa LTS estable para Vite/React; puedes cambiar a 24 si quieres "current"
+          node-version: "22.x"
+          cache: "npm"
+          cache-dependency-path: "client/package-lock.json"
 
-      - name: Install dependencies (client)
+      - name: Install dependencies
         run: npm ci
-        working-directory: client
 
-      - name: Run tests (client)
+      - name: Run tests
         run: echo "corriendo los test imaginarios 🧪"
-        working-directory: client
 
-      - name: Build project (client)
+      - name: Build project
+        # Si usas rutas de proyecto (no user/ORG pages), asegúrate de base en vite.config.ts
         run: npm run build
-        working-directory: client
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
         with:
-          name: dist
           path: client/dist
 
   deploy:
@@ -53,16 +63,18 @@ jobs:
     needs: ci
     if: github.ref == 'refs/heads/main' # solo desplegar desde main
 
-    steps:
-      - name: Download build artifact
-        uses: actions/download-artifact@v4
-        # extraemos dentro de client/
-        with:
-          name: dist
-          path: client/dist
+    # Permisos mínimos para este job (recomendado por el action)
+    permissions:
+      pages: write
+      id-token: write
+      actions: read
 
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: client/dist
+        id: deploy
+        uses: actions/deploy-pages@v4
+        # No hace falta pasar token explícito; usa GITHUB_TOKEN por defecto
