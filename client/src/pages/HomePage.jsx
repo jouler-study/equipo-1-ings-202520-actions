@@ -47,7 +47,7 @@ const HomePage = () => {
               {/* Left Half - Image */}
               <div className="w-1/2 pr-8" style={{ position: 'relative', zIndex: 1 }}>
                 <img 
-                  src="/client_images/Plaze-hero-background.jpg" 
+                  src="./client_images/Plaze-hero-background.jpg" 
                   alt="Plaze Hero Background" 
                   style={{
                     width: '90%',

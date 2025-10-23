@@ -79,7 +79,7 @@ const LoginPage = () => {
       }}>
         <Link to="/">
           <img 
-            src="/client_images/Plaze-Logo.png" 
+            src="./client_images/Plaze-Logo.png" 
             alt="Plaze Logo" 
             style={{
               height: '220px',
@@ -133,7 +133,7 @@ const LoginPage = () => {
           }}>
             {/* Background ellipse */}
             <img 
-              src="/client_images/Ellipse-user-auth.svg" 
+              src="./client_images/Ellipse-user-auth.svg" 
               alt="User Background" 
               style={{
                 width: 'auto',
@@ -142,7 +142,7 @@ const LoginPage = () => {
             />
             {/* User icon on top */}
             <img 
-              src="/client_images/User-icon.svg" 
+              src="./client_images/User-icon.svg" 
               alt="User Icon" 
               style={{
                 position: 'absolute',

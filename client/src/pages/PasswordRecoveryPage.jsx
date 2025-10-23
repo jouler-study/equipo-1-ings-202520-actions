@@ -73,7 +73,7 @@ const PasswordRecoveryPage = () => {
       }}>
         <Link to="/">
           <img 
-            src="/client_images/Plaze-Logo.png" 
+            src="./client_images/Plaze-Logo.png" 
             alt="Plaze Logo" 
             style={{
               height: '220px',
@@ -218,7 +218,7 @@ const PasswordRecoveryPage = () => {
               }}>
                 {/* Rectangle background */}
                 <img 
-                  src="/client_images/Rectangle-mail.svg" 
+                  src="./client_images/Rectangle-mail.svg" 
                   alt="Mail Background" 
                   style={{
                     width: 'auto',
@@ -227,7 +227,7 @@ const PasswordRecoveryPage = () => {
                 />
                 {/* Mail icon on top */}
                 <img 
-                  src="/client_images/Mail-icon.svg" 
+                  src="./client_images/Mail-icon.svg" 
                   alt="Mail Icon" 
                   style={{
                     position: 'absolute',

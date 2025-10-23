@@ -82,7 +82,7 @@ const ResetPasswordPage = () => {
       <div style={{ position: 'absolute', top: '10px', left: '40px' }}>
         <Link to="/">
           <img
-            src="/client_images/Plaze-Logo.png"
+            src="./client_images/Plaze-Logo.png"
             alt="Plaze Logo"
             style={{ height: '220px', width: 'auto', objectFit: 'contain', cursor: 'pointer' }}
           />

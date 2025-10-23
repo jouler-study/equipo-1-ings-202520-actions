@@ -75,7 +75,7 @@ const LandingPage = () => {
           }}>
             {/* Feature image */}
             <img
-              src="/client_images/LandingPageImage1.png"
+              src="./client_images/LandingPageImage1.png"
               alt="Plaze Products"
               style={{
                 width: '400px',
@@ -225,7 +225,7 @@ const LandingPage = () => {
               marginLeft: '37px'
             }}>
               <img
-                src="/client_images/LandingPageAboutPlaze.png"
+                src="./client_images/LandingPageAboutPlaze.png"
                 alt="About Plaze"
                 style={{
                   width: '328px',
@@ -330,7 +330,7 @@ const LandingPage = () => {
               justifyContent: 'center'
             }}>
               <img
-                src="/client_images/LandingPageAboutUs.png"
+                src="./client_images/LandingPageAboutUs.png"
                 alt="About Us"
                 style={{
                   width: '364px',

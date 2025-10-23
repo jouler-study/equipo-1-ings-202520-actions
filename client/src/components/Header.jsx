@@ -14,7 +14,7 @@ const Header = () => {
           {/* Logo - Extends beyond the header */}
           <div className="flex items-center" style={{ position: 'relative', overflow: 'visible' }}>
             <img 
-              src="/client_images/Plaze-Logo.png" 
+              src="./client_images/Plaze-Logo.png" 
               alt="Plaze Logo" 
               style={{ 
                 height: '220px', 
