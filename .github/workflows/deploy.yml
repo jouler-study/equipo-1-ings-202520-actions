@@ -1,12 +1,17 @@
-name: Deploy to GitHub Pages
+name: CI/CD
 
 on:
   push:
     branches:
-      - main # Or your production branch
+      - "**" # CI en cualquier push
+  pull_request:
+    branches:
+      - main # CI en PRs a main
+  workflow_dispatch: {}
 
 jobs:
-  build-and-deploy:
+  ci:
+    name: CI — build & test
     runs-on: ubuntu-latest
 
     steps:
@@ -18,14 +23,40 @@ jobs:
         with:
           node-version: "23.5.0"
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies (client)
+        run: npm ci
+        working-directory: client
 
-      - name: Build project
+      - name: Run tests (client)
+        run: echo "corriendo los test imaginarios 🧪"
+        working-directory: client
+
+      - name: Build project (client)
         run: npm run build
+        working-directory: client
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: client/dist
+
+  deploy:
+    name: CD — Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: ci
+    if: github.ref == 'refs/heads/main' # solo desplegar desde main
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        # extraemos dentro de client/
+        with:
+          name: dist
+          path: client/dist
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist # The output directory of your Vite build
+          publish_dir: client/dist
