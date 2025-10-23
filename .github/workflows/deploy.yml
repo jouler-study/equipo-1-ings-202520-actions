@@ -52,6 +52,12 @@ jobs:
 
       - name: Run tests
         run: echo "corriendo los test imaginarios 🧪"
+      
+      - name: Variables
+        run: |
+          echo "VITE_API_BASE_URL=$VITE_API_BASE_URL"
+          echo "VITE_BASE_URL=$VITE_BASE_URL"
+          echo "NODE_ENV=$NODE_ENV"
 
       - name: Build project
         # Si usas rutas de proyecto (no user/ORG pages), asegúrate de base en vite.config.ts

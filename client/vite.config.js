@@ -5,6 +5,7 @@ export default defineConfig(({ mode }) => {
   // Carga las variables de entorno según el modo (development, production, etc.)
   const env = loadEnv(mode, process.cwd(), '')
   const base = (env.VITE_BASE_URL || '/').replace(/([^/])$/, '$1/') // asegura trailing "/"
+  console.log("BASE", base)
 
   return {
     plugins: [react()],
