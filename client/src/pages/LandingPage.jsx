@@ -27,7 +27,7 @@ const LandingPage = () => {
           lineHeight: '1.2',
           marginBottom: '76px'
         }}>
-          Consulta precios de la canasta familiar colombiana en tiempo real.
+          Consulta precios de la canasta familiar colombiana en tiempo real. en dev
         </h1>
 
         {/* Hero section */}
